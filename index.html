@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>113入學商經科畢業檢核表</title>
+    <style>
+        /* --- 1. 全局設定 --- */
+        html, body {
+            margin: 0; padding: 0;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            font-size: 16px;
+            background-color: #f0f2f5; 
+            overflow: hidden; 
+            display: flex; flex-direction: column;
+        }
+
+        /* --- 2. 儀表板區 --- */
+        .section-dashboard {
+            flex: 0 0 auto;
+            background: white;
+            z-index: 30;
+            padding: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #ddd;
+        }
+
+        .status-bar {
+            text-align: center;
+            font-size: 1em; 
+            font-weight: 900;
+            padding: 6px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            color: white;
+        }
+        .status-pass { background: linear-gradient(135deg, #28a745, #218838); } 
+        .status-fail { background: linear-gradient(135deg, #dc3545, #c82333); } 
+
+        .result-table { width: 100%; max-width: 1000px; margin: 0 auto; border-collapse: collapse; font-size: 0.9em; }
+        .result-table th { 
+            background-color: #444; color: white; 
+            padding: 4px; border: 1px solid #666; font-weight: normal; font-size: 0.9em;
+        }
+        .result-table td { 
+            background-color: #fff; padding: 4px; border: 1px solid #ddd; 
+            text-align: center; font-weight: bold; font-size: 1.1em;
+        }
+        .result-table small { font-size: 0.7em; opacity: 0.8; }
+
+        .btn-group { display: flex; gap: 8px; margin-top: 8px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .action-btn {
+            flex: 1; padding: 8px;
+            border: none; border-radius: 6px;
+            font-size: 0.95em; font-weight: bold;
+            cursor: pointer; color: white;
+        }
+        .btn-pass-all { background-color: #218838; }
+        .btn-fail-all { background-color: #6c757d; }
+
+        /* --- 3. 表格容器 --- */
+        .table-container-wrapper {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            background: #f0f2f5;
+            display: flex; flex-direction: column;
+        }
+
+        .scrollable-body {
+            flex: 1;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* === 表格佈局 === */
+        table.main-table {
+            width: 100%;       
+            min-width: 800px;  /* 維持最小寬度，手機版保留橫向滑動 */
+            border-collapse: collapse; 
+            table-layout: fixed; 
+            background: white;
+        }
+
+        /* 標題列 */
+        .main-table thead th {
+            position: sticky; top: 0; z-index: 20;
+            background-color: #6c757d; color: white;
+            height: 36px; 
+            border: 1px solid #999;
+            font-size: 0.95em;
+            white-space: nowrap; 
+        }
+
+        .main-table td {
+            border: 1px solid #999;
+            text-align: center; vertical-align: middle;
+            height: 48px;
+            padding: 2px;
+            color: #333;
+            overflow: hidden; 
+        }
+
+        /* === 欄位樣式 === */
+        
+        .col-cat-major {
+            writing-mode: vertical-rl; 
+            text-orientation: upright;
+            letter-spacing: 1px;
+            font-weight: 800;
+            font-size: 0.9em;
+            color: #000;
+        }
+
+        /* ★ 修改重點：字體改回標準大小 (1em) ★ */
+        .col-cat-minor {
+            font-weight: bold; 
+            font-size: 1em;   /* 改回原本大小 */
+            line-height: 1.2;
+            padding: 0 4px;
+            word-wrap: break-word;
+        }
+
+        .col-name { 
+            text-align: left !important; 
+            padding-left: 6px !important; 
+            padding-right: 2px !important;
+            font-weight: bold;
+            background-color: #fff;
+            font-size: 0.95em;
+            white-space: normal;
+            line-height: 1.3;
+        }
+
+        .col-sem { background-color: #fff; }
+
+        /* 配色方案 */
+        .bg-dept-main { background-color: #ff9999; }
+        .bg-dept-sub { background-color: #ffcccc; }
+        .bg-sch-req-main { background-color: #99ff99; }
+        .bg-sch-req-sub { background-color: #ccffcc; }
+        .bg-sch-opt-main { background-color: #9999ff; }
+        .bg-sch-opt-sub { background-color: #ccccff; }
+
+        /* Checkbox & Label */
+        .toggle-checkbox { display: none; }
+        
+        .score-label {
+            display: flex; align-items: center; justify-content: center;
+            width: 100%; height: 100%;
+            cursor: pointer; font-weight: bold; font-size: 1.3em;
+            position: relative; user-select: none;
+            transition: background-color 0.1s;
+        }
+        
+        .toggle-checkbox:checked + .score-label { color: #000; background-color: #fff; }
+        .toggle-checkbox:checked + .score-label::after {
+            content: '✔'; font-size: 0.8em; color: #28a745; font-weight: 900;
+            position: absolute; right: 2px; top: 2px;
+        }
+        
+        .toggle-checkbox:not(:checked) + .score-label {
+            background-color: #fff5f5; color: #dc3545; 
+            box-shadow: inset 0 0 0 1px #ffdce0; 
+        }
+        
+        .zero-score { color: #e0e0e0; font-size: 1em; background: #fafafa; }
+
+        /* === 手機版提示區 === */
+        @media (max-width: 768px) {
+            .main-table td { height: 44px; padding: 1px; }
+            .scrollable-body {
+                background: linear-gradient(to right, white 30%, #f0f0f0 100%);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="section-dashboard">
+        <div id="finalStatus" class="status-bar status-fail">計算中...</div>
+        
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th>總學分<br><small>(160)</small></th>
+                    <th>部定必修<br><small id="dept-limit-text">(-)</small></th>
+                    <th>專業實習<br><small>(60)</small></th>
+                    <th>實習<br><small>(45)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="cell-total">0</td>
+                    <td id="cell-dept">0</td>
+                    <td id="cell-prof-prac">0</td>
+                    <td id="cell-prac">0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="btn-group">
+            <button class="action-btn btn-pass-all" onclick="setAllStatus(true)">全部通過</button>
+            <button class="action-btn btn-fail-all" onclick="setAllStatus(false)">重置</button>
+        </div>
+    </div>
+
+    <div class="table-container-wrapper">
+        <div class="scrollable-body">
+            <table class="main-table">
+                <colgroup>
+                    <col style="width: 6%;">   <col style="width: 14%;">  <col style="width: 35%;">  <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> </colgroup>
+                <thead>
+                    <tr>
+                        <th colspan="2">屬性</th>
+                        <th>科目名稱</th>
+                        <th>一上</th><th>一下</th>
+                        <th>二上</th><th>二下</th>
+                        <th>三上</th><th>三下</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+<script>
+    const curriculum = [
+        // === 部定必修 ===
+        { cat: "dept", type: 1, name: "國語文", credits: [3,3,3,3,2,2] },
+        { cat: "dept", type: 1, name: "英語文", credits: [2,2,2,2,2,2] },
+        { cat: "dept", type: 1, name: "閩南語文", credits: [1,1,0,0,0,0] },
+        { cat: "dept", type: 1, name: "數學", credits: [3,3,0,0,0,0] },
+        { cat: "dept", type: 1, name: "歷史", credits: [2,0,0,0,0,0] },
+        { cat: "dept", type: 1, name: "地理", credits: [0,2,0,0,0,0] },
+        { cat: "dept", type: 1, name: "公民與社會", credits: [0,0,0,0,2,0] },
+        { cat: "dept", type: 1, name: "物理", credits: [2,0,0,0,0,0] },
+        { cat: "dept", type: 1, name: "化學", credits: [1,0,0,0,0,0] },
+        { cat: "dept", type: 1, name: "生物", credits: [1,0,0,0,0,0] },
+        { cat: "dept", type: 1, name: "音樂", credits: [1,1,0,0,0,0] },
+        { cat: "dept", type: 1, name: "美術", credits: [1,1,0,0,0,0] },
+        { cat: "dept", type: 1, name: "生涯規劃", credits: [0,0,0,0,1,1] },
+        { cat: "dept", type: 1, name: "資訊科技", credits: [2,0,0,0,0,0] },
+        { cat: "dept", type: 1, name: "健康與護理", credits: [1,1,0,0,0,0] },
+        { cat: "dept", type: 1, name: "體育", credits: [2,2,2,2,2,2] },
+        { cat: "dept", type: 1, name: "全民國防教育", credits: [1,1,0,0,0,0] },
+        // 部定-專業
+        { cat: "dept", type: 2, name: "商業概論", credits: [2,2,0,0,0,0] },
+        { cat: "dept", type: 2, name: "數位科技概論", credits: [2,2,0,0,0,0] },
+        { cat: "dept", type: 2, name: "會計學", credits: [3,3,2,2,0,0] },
+        { cat: "dept", type: 2, name: "經濟學", credits: [0,0,4,4,0,0] },
+        // 部定-實習
+        { cat: "dept", type: 3, name: "數位科技應用", credits: [0,0,2,2,0,0] },
+        { cat: "dept", type: 3, name: "商業溝通", credits: [0,0,0,0,0,2] },
+        { cat: "dept", type: 3, name: "門市經營實務", credits: [2,2,0,0,0,0] },
+        { cat: "dept", type: 3, name: "行銷實務", credits: [0,0,2,2,0,0] },
+        { cat: "dept", type: 3, name: "會計軟體應用", credits: [0,0,2,2,0,0] },
+        { cat: "dept", type: 3, name: "金融與證券投資實務", credits: [0,0,0,0,0,2] },
+
+        // === 校定必修 ===
+        { cat: "sch_req", type: 1, name: "各類文選選讀", credits: [0,0,0,0,1,1] },
+        { cat: "sch_req", type: 1, name: "英文會話", credits: [1,1,0,0,0,0] },
+        { cat: "sch_req", type: 1, name: "英文閱讀初階", credits: [0,0,1,1,0,0] },
+        { cat: "sch_req", type: 1, name: "英文閱讀進階", credits: [0,0,0,0,1,1] },
+        { cat: "sch_req", type: 1, name: "數學(校定)", credits: [0,0,3,3,0,0] },
+        // 校定-實習
+        { cat: "sch_req", type: 3, name: "專題實作", credits: [0,0,0,0,2,2] },
+        { cat: "sch_req", type: 3, name: "進階門市實務", credits: [0,0,2,2,0,0] },
+        { cat: "sch_req", type: 3, name: "會計實務", credits: [0,0,2,2,4,4] },
+        { cat: "sch_req", type: 3, name: "經濟應用實務", credits: [0,0,0,0,4,4] },
+
+        // === 校定選修 ===
+        { cat: "sch_opt", type: 1, name: "數學演習", credits: [0,0,0,0,3,3] },
+        { cat: "sch_opt", type: 2, name: "計算機探究", credits: [0,0,0,0,4,4] },
+        { cat: "sch_opt", type: 2, name: "商業專論", credits: [0,0,0,0,2,2] },
+        { cat: "sch_opt", type: 3, name: "文書處理", credits: [0,2,0,0,0,0] },
+        { cat: "sch_opt", type: 3, name: "記帳實務", credits: [1,1,0,0,0,0] },
+        { cat: "sch_opt", type: 3, name: "商業簡報實務", credits: [0,0,2,0,0,0] },
+        { cat: "sch_opt", type: 3, name: "同科單班(2選1)<br>市場調查實務 / 電腦記帳實務", credits: [0,0,0,0,2,0] }, 
+        { cat: "sch_opt", type: 3, name: "同科單班(2選1)<br>財務報表分析 / 電子商務實務", credits: [0,0,0,0,0,2] }, 
+        { cat: "sch_opt", type: 3, name: "跨群選修(6選1)", credits: [0,0,2,2,0,0] } 
+    ];
+
+    const mapping = {
+        cat: {
+            "dept": { text: "部定必修", class: "bg-dept-main", subClass: "bg-dept-sub" },
+            "sch_req": { text: "校定必修", class: "bg-sch-req-main", subClass: "bg-sch-req-sub" },
+            "sch_opt": { text: "校定選修", class: "bg-sch-opt-main", subClass: "bg-sch-opt-sub" }
+        },
+        type: {
+            1: "一般科目",
+            2: "專業科目",
+            3: "實習科目"
+        }
+    };
+
+    let DEPT_THRESHOLD = 0;
+
+    function initThresholds() {
+        let maxDeptCredits = 0;
+        curriculum.forEach(item => {
+            if (item.cat === 'dept') {
+                maxDeptCredits += item.credits.reduce((a, b) => a + b, 0);
+            }
+        });
+        DEPT_THRESHOLD = Math.round(maxDeptCredits * 0.85);
+        document.getElementById('dept-limit-text').innerText = `(${DEPT_THRESHOLD})`;
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById("tableBody");
+        tbody.innerHTML = ""; 
+
+        const countMap = {};
+        curriculum.forEach(item => {
+            if(!countMap[item.cat]) countMap[item.cat] = { total: 0, types: {} };
+            countMap[item.cat].total++;
+            if(!countMap[item.cat].types[item.type]) countMap[item.cat].types[item.type] = 0;
+            countMap[item.cat].types[item.type]++;
+        });
+
+        let renderedCatCount = {}; 
+        let renderedTypeCount = {};
+
+        curriculum.forEach((item, index) => {
+            const tr = document.createElement("tr");
+
+            // Col 1: Major Cat
+            if (!renderedCatCount[item.cat]) {
+                let tdCat = document.createElement("td");
+                tdCat.innerText = mapping.cat[item.cat].text;
+                tdCat.className = "col-cat-major " + mapping.cat[item.cat].class;
+                tdCat.rowSpan = countMap[item.cat].total;
+                tr.appendChild(tdCat);
+                renderedCatCount[item.cat] = true;
+                renderedTypeCount[item.cat] = {};
+            }
+
+            // Col 2: Minor Cat
+            if (!renderedTypeCount[item.cat][item.type]) {
+                let tdType = document.createElement("td");
+                tdType.innerText = mapping.type[item.type];
+                tdType.className = "col-cat-minor " + mapping.cat[item.cat].subClass;
+                tdType.rowSpan = countMap[item.cat].types[item.type];
+                tr.appendChild(tdType);
+                renderedTypeCount[item.cat][item.type] = true;
+            }
+
+            // Col 3: Name
+            let tdName = document.createElement("td");
+            tdName.innerHTML = item.name; 
+            tdName.className = "col-name";
+            tr.appendChild(tdName);
+
+            // Col 4-9: Credits
+            item.credits.forEach((credit, semIndex) => {
+                let td = document.createElement("td");
+                td.className = "col-sem";
+                
+                if(credit > 0) {
+                    let uniqueID = `chk-${index}-${semIndex}`;
+                    let checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.className = "toggle-checkbox";
+                    checkbox.id = uniqueID;
+                    checkbox.checked = true;
+                    
+                    checkbox.dataset.val = credit;
+                    checkbox.dataset.cat = item.cat;
+                    checkbox.dataset.type = item.type;
+                    checkbox.onchange = calculate; 
+
+                    let label = document.createElement("label");
+                    label.className = "score-label";
+                    label.htmlFor = uniqueID; 
+                    label.innerText = credit;
+
+                    td.appendChild(checkbox);
+                    td.appendChild(label);
+                } else {
+                    td.innerText = "-";
+                    td.className = "zero-score";
+                }
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+    }
+
+    function calculate() {
+        let total = 0, deptTotal = 0, profPrac = 0, pracOnly = 0;
+        const checkedInputs = document.querySelectorAll(".toggle-checkbox:checked");
+        
+        checkedInputs.forEach(input => {
+            let val = parseInt(input.dataset.val);
+            let cat = input.dataset.cat;
+            let type = parseInt(input.dataset.type);
+
+            total += val;
+            if (cat === 'dept') deptTotal += val;
+            if (type === 2 || type === 3) profPrac += val;
+            if (type === 3) pracOnly += val;
+        });
+
+        updateCell("total", total, 160);
+        updateCell("dept", deptTotal, DEPT_THRESHOLD);
+        updateCell("prof-prac", profPrac, 60);
+        updateCell("prac", pracOnly, 45);
+
+        const finalStatus = document.getElementById("finalStatus");
+        if(total >= 160 && deptTotal >= DEPT_THRESHOLD && profPrac >= 60 && pracOnly >= 45) {
+            finalStatus.innerText = "已達到畢業條件";
+            finalStatus.className = "status-bar status-pass";
+        } else {
+            finalStatus.innerText = "未達到畢業條件";
+            finalStatus.className = "status-bar status-fail";
+        }
+    }
+
+    function updateCell(id, current, limit) {
+        const cell = document.getElementById(`cell-${id}`);
+        if(current >= limit) {
+            cell.innerHTML = `<span style="color:#155724;">${current}</span>`;
+            cell.style.backgroundColor = "#d4edda"; 
+            cell.style.borderColor = "#c3e6cb";
+        } else {
+            cell.innerHTML = `<span style="color:#721c24;">${current}</span>`;
+            cell.style.backgroundColor = "#f8d7da"; 
+            cell.style.borderColor = "#f5c6cb";
+        }
+    }
+
+    function setAllStatus(isPass) {
+        const checkboxes = document.querySelectorAll(".toggle-checkbox");
+        checkboxes.forEach(chk => {
+            chk.checked = isPass;
+        });
+        calculate();
+    }
+
+    initThresholds();
+    renderTable();
+    calculate();
+
+</script>
+
+</body>
+</html>
