@@ -468,10 +468,10 @@
 
         const finalStatus = document.getElementById("finalStatus");
         if(total >= 160 && deptTotal >= DEPT_THRESHOLD && profPrac >= 60 && pracOnly >= 45) {
-            finalStatus.innerText = "🎉 已達到畢業條件";
+            finalStatus.innerText = "唉呦不錯喔~你竟然可以畢業";
             finalStatus.className = "status-bar status-pass";
         } else {
-            finalStatus.innerText = "尚未達到畢業條件";
+            finalStatus.innerText = "你不能畢業欸~好可憐";
             finalStatus.className = "status-bar status-fail";
         }
     }
