@@ -20,122 +20,109 @@
         .section-dashboard {
             flex: 0 0 auto;
             background: white;
-            z-index: 30;
-            padding: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-bottom: 1px solid #ddd;
+            z-index: 50;
+            padding: 10px; /* 預設寬鬆內距 */
+            padding-right: 10px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #ccc;
+            box-sizing: border-box;
+            transition: all 0.3s ease; /* 讓切換時有平滑動畫 */
         }
 
         .status-bar {
             text-align: center;
-            font-size: 1em; 
+            font-size: 1.4rem; 
             font-weight: 900;
-            padding: 6px;
-            margin-bottom: 6px;
-            border-radius: 6px;
+            padding: 10px; 
+            margin-bottom: 10px;
+            border-radius: 8px;
             color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         .status-pass { background: linear-gradient(135deg, #28a745, #218838); } 
         .status-fail { background: linear-gradient(135deg, #dc3545, #c82333); } 
 
-        .result-table { width: 100%; max-width: 1000px; margin: 0 auto; border-collapse: collapse; font-size: 0.9em; }
-        .result-table th { 
-            background-color: #444; color: white; 
-            padding: 4px; border: 1px solid #666; font-weight: normal; font-size: 0.9em;
+        .result-table { 
+            width: 100%; 
+            margin: 0 auto; 
+            border-collapse: separate; 
+            border-spacing: 4px; 
+            table-layout: fixed; 
         }
-        .result-table td { 
-            background-color: #fff; padding: 4px; border: 1px solid #ddd; 
-            text-align: center; font-weight: bold; font-size: 1.1em;
-        }
-        .result-table small { font-size: 0.7em; opacity: 0.8; }
 
-        .btn-group { display: flex; gap: 8px; margin-top: 8px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .result-table th { 
+            background-color: #555; 
+            color: white; 
+            padding: 6px; 
+            border-radius: 4px; 
+            font-weight: normal; 
+            font-size: 0.9rem; 
+            vertical-align: middle;
+        }
+        
+        .result-table td { 
+            background-color: #fff; 
+            padding: 4px; 
+            border: 2px solid #eee; 
+            border-radius: 6px;
+            text-align: center; 
+            font-weight: 800; 
+            font-size: 1.6rem; 
+            height: 50px; 
+            vertical-align: middle;
+        }
+        .result-table small { display: block; font-size: 0.75rem; opacity: 0.8; margin-top: 4px; font-weight: normal;}
+
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; width: 100%; margin-left: auto; margin-right: auto; }
         .action-btn {
-            flex: 1; padding: 8px;
-            border: none; border-radius: 6px;
-            font-size: 0.95em; font-weight: bold;
-            cursor: pointer; color: white;
+            flex: 1; 
+            padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .btn-pass-all { background-color: #218838; }
         .btn-fail-all { background-color: #6c757d; }
 
         /* --- 3. 表格容器 --- */
-        .table-container-wrapper {
+        .table-container {
             flex: 1;
-            overflow: hidden;
+            overflow-y: scroll;
             position: relative;
-            background: #f0f2f5;
-            display: flex; flex-direction: column;
+            background-color: white;
         }
 
-        .scrollable-body {
-            flex: 1;
-            overflow: auto;
-            -webkit-overflow-scrolling: touch; 
-        }
-
-        /* === 表格佈局 === */
         table.main-table {
             width: 100%;       
-            min-width: 800px;  /* 維持最小寬度，手機版保留橫向滑動 */
             border-collapse: collapse; 
             table-layout: fixed; 
-            background: white;
         }
 
-        /* 標題列 */
         .main-table thead th {
-            position: sticky; top: 0; z-index: 20;
-            background-color: #6c757d; color: white;
-            height: 36px; 
+            position: sticky; 
+            top: 0;           
+            z-index: 40;      
+            background-color: #6c757d; 
+            color: white;
+            height: 45px; 
             border: 1px solid #999;
-            font-size: 0.95em;
-            white-space: nowrap; 
+            font-size: 1rem;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.1);
         }
 
         .main-table td {
             border: 1px solid #999;
             text-align: center; vertical-align: middle;
-            height: 48px;
+            height: 55px; /* 預設行高 */
             padding: 2px;
             color: #333;
             overflow: hidden; 
         }
 
-        /* === 欄位樣式 === */
-        
-        .col-cat-major {
-            writing-mode: vertical-rl; 
-            text-orientation: upright;
-            letter-spacing: 1px;
-            font-weight: 800;
-            font-size: 0.9em;
-            color: #000;
-        }
-
-        /* ★ 修改重點：字體改回標準大小 (1em) ★ */
-        .col-cat-minor {
-            font-weight: bold; 
-            font-size: 1em;   /* 改回原本大小 */
-            line-height: 1.2;
-            padding: 0 4px;
-            word-wrap: break-word;
-        }
-
-        .col-name { 
-            text-align: left !important; 
-            padding-left: 6px !important; 
-            padding-right: 2px !important;
-            font-weight: bold;
-            background-color: #fff;
-            font-size: 0.95em;
-            white-space: normal;
-            line-height: 1.3;
-        }
-
+        /* 欄位樣式 */
+        .col-cat-major { writing-mode: vertical-rl; text-orientation: upright; letter-spacing: 2px; font-weight: 800; font-size: 1rem; color: #000; }
+        .col-cat-minor { font-weight: bold; font-size: 1rem; line-height: 1.3; padding: 0 4px; word-wrap: break-word; }
+        .col-name { text-align: left !important; padding-left: 8px !important; font-weight: bold; background-color: #fff; font-size: 1rem; white-space: normal; line-height: 1.4; }
         .col-sem { background-color: #fff; }
 
-        /* 配色方案 */
         .bg-dept-main { background-color: #ff9999; }
         .bg-dept-sub { background-color: #ffcccc; }
         .bg-sch-req-main { background-color: #99ff99; }
@@ -143,52 +130,84 @@
         .bg-sch-opt-main { background-color: #9999ff; }
         .bg-sch-opt-sub { background-color: #ccccff; }
 
-        /* Checkbox & Label */
         .toggle-checkbox { display: none; }
-        
         .score-label {
             display: flex; align-items: center; justify-content: center;
             width: 100%; height: 100%;
-            cursor: pointer; font-weight: bold; font-size: 1.3em;
+            cursor: pointer; font-weight: bold; font-size: 1.5em; 
             position: relative; user-select: none;
-            transition: background-color 0.1s;
         }
-        
         .toggle-checkbox:checked + .score-label { color: #000; background-color: #fff; }
         .toggle-checkbox:checked + .score-label::after {
             content: '✔'; font-size: 0.8em; color: #28a745; font-weight: 900;
             position: absolute; right: 2px; top: 2px;
         }
-        
         .toggle-checkbox:not(:checked) + .score-label {
-            background-color: #fff5f5; color: #dc3545; 
-            box-shadow: inset 0 0 0 1px #ffdce0; 
+            background-color: #fff5f5; color: #dc3545; box-shadow: inset 0 0 0 1px #ffdce0; 
         }
-        
         .zero-score { color: #e0e0e0; font-size: 1em; background: #fafafa; }
 
-        /* === 手機版提示區 === */
-        @media (max-width: 768px) {
-            .main-table td { height: 44px; padding: 1px; }
-            .scrollable-body {
-                background: linear-gradient(to right, white 30%, #f0f0f0 100%);
+        /* =========================================
+           ★ 關鍵修改：手機橫向 / 高度不足時的優化 ★
+           當螢幕高度小於 500px (通常是手機橫放) 時觸發
+           ========================================= */
+        @media (max-height: 500px) {
+            /* 1. 儀表板變緊湊 */
+            .section-dashboard {
+                padding: 4px; /* 內距縮小 */
+                /* padding-right 會由 JS 動態計算，這裡設基礎值 */
             }
-        }
 
+            /* 2. 狀態列 (及格/不及格) 變細 */
+            .status-bar {
+                font-size: 1rem;
+                padding: 4px;
+                margin-bottom: 5px;
+                line-height: 1.2;
+            }
+
+            /* 3. 成績顯示格 變矮、字變小 */
+            .result-table td {
+                height: 32px;      /* 原本 50px */
+                font-size: 1.2rem; /* 原本 1.6rem */
+            }
+            .result-table th {
+                padding: 2px;
+                font-size: 0.8rem;
+            }
+            .result-table small {
+                display: inline;   /* 讓說明文字(160)變成同一行 */
+                margin-left: 4px;
+            }
+
+            /* 4. 按鈕變扁 */
+            .btn-group { margin-top: 5px; }
+            .action-btn {
+                padding: 6px;
+                font-size: 0.9rem;
+            }
+
+            /* 5. 下方的主表格，每一列也變矮，讓你能看更多行 */
+            .main-table td {
+                height: 40px;      /* 原本 55px */
+                font-size: 0.95rem;
+            }
+            .score-label { font-size: 1.3em; } /* 分數勾選字體微調 */
+        }
     </style>
 </head>
 <body>
 
-    <div class="section-dashboard">
+    <div id="dashboardSection" class="section-dashboard">
         <div id="finalStatus" class="status-bar status-fail">計算中...</div>
         
         <table class="result-table">
             <thead>
                 <tr>
-                    <th>總學分<br><small>(160)</small></th>
-                    <th>部定必修<br><small id="dept-limit-text">(-)</small></th>
-                    <th>專業實習<br><small>(60)</small></th>
-                    <th>實習<br><small>(45)</small></th>
+                    <th>總學分<small>(160)</small></th>
+                    <th>部定必修<small id="dept-limit-text">(-)</small></th>
+                    <th>專業實習<small>(60)</small></th>
+                    <th>實習<small>(45)</small></th>
                 </tr>
             </thead>
             <tbody>
@@ -202,32 +221,66 @@
         </table>
 
         <div class="btn-group">
-            <button class="action-btn btn-pass-all" onclick="setAllStatus(true)">全部通過</button>
+            <button class="action-btn btn-pass-all" onclick="setAllStatus(true)">全部及格</button>
             <button class="action-btn btn-fail-all" onclick="setAllStatus(false)">重置</button>
         </div>
     </div>
 
-    <div class="table-container-wrapper">
-        <div class="scrollable-body">
-            <table class="main-table">
-                <colgroup>
-                    <col style="width: 6%;">   <col style="width: 14%;">  <col style="width: 35%;">  <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> <col style="width: 7.5%;"> </colgroup>
-                <thead>
-                    <tr>
-                        <th colspan="2">屬性</th>
-                        <th>科目名稱</th>
-                        <th>一上</th><th>一下</th>
-                        <th>二上</th><th>二下</th>
-                        <th>三上</th><th>三下</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    </tbody>
-            </table>
-        </div>
+    <div id="tableContainer" class="table-container">
+        <table class="main-table">
+            <colgroup>
+                <col style="width: 7%;">   
+                <col style="width: 18%;">  
+                <col style="width: 25%;">  
+                <col style="width: 8.33%;"> 
+                <col style="width: 8.33%;"> 
+                <col style="width: 8.33%;"> 
+                <col style="width: 8.33%;"> 
+                <col style="width: 8.33%;"> 
+                <col style="width: 8.33%;"> 
+            </colgroup>
+            
+            <thead>
+                <tr>
+                    <th colspan="2">屬性</th>
+                    <th>科目名稱</th>
+                    <th>一上</th><th>一下</th>
+                    <th>二上</th><th>二下</th>
+                    <th>三上</th><th>三下</th>
+                </tr>
+            </thead>
+            
+            <tbody id="tableBody"></tbody>
+        </table>
     </div>
 
 <script>
+    // --- 捲軸對齊 & 響應式修正 JS ---
+    function adjustScrollbarPadding() {
+        const container = document.getElementById('tableContainer');
+        const dashboard = document.getElementById('dashboardSection');
+        
+        // 計算捲軸寬度
+        const scrollbarWidth = container.offsetWidth - container.clientWidth;
+        
+        // 判斷現在是否為「手機橫向/矮螢幕」模式 (對應 CSS @media max-height: 500px)
+        // 如果高度 < 500，CSS 基礎 padding 是 4px，否則是 10px
+        const isCompactMode = window.innerHeight <= 500;
+        const basePadding = isCompactMode ? 4 : 10;
+        
+        // 動態設定 padding-right
+        dashboard.style.paddingRight = (basePadding + scrollbarWidth) + 'px';
+        
+        // 同步更新 CSS 變數或直接設定 padding (確保 padding-left 也一致，保持美觀)
+        dashboard.style.paddingLeft = basePadding + 'px';
+        dashboard.style.paddingTop = basePadding + 'px';
+        dashboard.style.paddingBottom = basePadding + 'px';
+    }
+
+    // 監聽視窗大小改變 (包含旋轉螢幕)
+    window.addEventListener('resize', adjustScrollbarPadding);
+    
+
     const curriculum = [
         // === 部定必修 ===
         { cat: "dept", type: 1, name: "國語文", credits: [3,3,3,3,2,2] },
@@ -388,6 +441,9 @@
             });
             tbody.appendChild(tr);
         });
+
+        // Render 完畢後修正間距
+        setTimeout(adjustScrollbarPadding, 0);
     }
 
     function calculate() {
@@ -412,10 +468,10 @@
 
         const finalStatus = document.getElementById("finalStatus");
         if(total >= 160 && deptTotal >= DEPT_THRESHOLD && profPrac >= 60 && pracOnly >= 45) {
-            finalStatus.innerText = "已達到畢業條件";
+            finalStatus.innerText = "🎉 已達到畢業條件";
             finalStatus.className = "status-bar status-pass";
         } else {
-            finalStatus.innerText = "未達到畢業條件";
+            finalStatus.innerText = "尚未達到畢業條件";
             finalStatus.className = "status-bar status-fail";
         }
     }
@@ -440,7 +496,7 @@
         });
         calculate();
     }
-
+    
     initThresholds();
     renderTable();
     calculate();
