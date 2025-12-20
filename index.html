@@ -21,12 +21,12 @@
             flex: 0 0 auto;
             background: white;
             z-index: 50;
-            padding: 10px; /* 預設寬鬆內距 */
+            padding: 10px; 
             padding-right: 10px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             border-bottom: 1px solid #ccc;
             box-sizing: border-box;
-            transition: all 0.3s ease; /* 讓切換時有平滑動畫 */
+            transition: all 0.3s ease; 
         }
 
         .status-bar {
@@ -78,9 +78,12 @@
             flex: 1; 
             padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
         }
+        .action-btn:active { transform: scale(0.98); }
         .btn-pass-all { background-color: #218838; }
         .btn-fail-all { background-color: #6c757d; }
+        .btn-help { background-color: #17a2b8; } 
 
         /* --- 3. 表格容器 --- */
         .table-container {
@@ -98,8 +101,8 @@
 
         .main-table thead th {
             position: sticky; 
-            top: 0;           
-            z-index: 40;      
+            top: 0;            
+            z-index: 40;       
             background-color: #6c757d; 
             color: white;
             height: 45px; 
@@ -147,52 +150,123 @@
         }
         .zero-score { color: #e0e0e0; font-size: 1em; background: #fafafa; }
 
-        /* =========================================
-           ★ 關鍵修改：手機橫向 / 高度不足時的優化 ★
-           當螢幕高度小於 500px (通常是手機橫放) 時觸發
-           ========================================= */
+        /* --- 新增：彈窗樣式 (Modal) --- */
+        .modal-overlay {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(2px); 
+            align-items: center; justify-content: center;
+            animation: fadeIn 0.2s;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            width: 90%; max-width: 500px;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto; 
+            animation: scaleUp 0.2s;
+            box-sizing: border-box;
+        }
+
+        .modal-header { 
+            font-size: 1.4rem; font-weight: bold; 
+            margin-bottom: 16px; border-bottom: 2px solid #eee; padding-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-body { font-size: 1.05rem; line-height: 1.7; color: #333; }
+        
+        .modal-body ul.score-examples { padding-left: 0; list-style: none; margin: 20px 0; }
+        .modal-body ul.score-examples li { margin-bottom: 18px; display: flex; align-items: center; }
+
+        .modal-body p { margin-bottom: 8px; }
+        
+        /* 彈窗：成績範例按鈕 */
+        .modal-score-example {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px; height: 50px; 
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 1.6rem; 
+            margin-right: 20px; 
+            box-sizing: border-box; 
+            flex-shrink: 0; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .modal-score-pass {
+            color: #000;
+            background-color: #fff;
+            border: 2px solid #eee; 
+            position: relative;
+        }
+        .modal-score-pass::after {
+            content: '✔'; font-size: 0.6em; color: #28a745; font-weight: 900;
+            position: absolute; right: 3px; top: 2px; line-height: 1;
+        }
+
+        .modal-score-fail {
+            background-color: #fff5f5;
+            color: #dc3545;
+            border: 2px solid #ffdce0;
+            box-shadow: none;
+        }
+
+        /* [新增] 彈窗：統計燈號 (加大版) */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;      /* 內距加大 */
+            font-size: 1.3rem;      /* 字體加大 */
+            font-weight: 900;       /* 粗體 */
+            border-radius: 8px;     /* 圓角 */
+            margin-right: 12px;     /* 右側間距 */
+            vertical-align: middle; /* 垂直置中 */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.2;
+        }
+        .badge-green { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .badge-red   { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+
+        .modal-body ul.status-list {
+            padding-left: 0;
+            list-style: none;
+            margin-top: 15px;
+        }
+        .modal-body ul.status-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .close-modal-btn {
+            font-size: 2rem; color: #aaa; cursor: pointer;
+            line-height: 1; padding: 0 5px;
+        }
+        .close-modal-btn:hover { color: #000; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* 手機橫向優化 */
         @media (max-height: 500px) {
-            /* 1. 儀表板變緊湊 */
-            .section-dashboard {
-                padding: 4px; /* 內距縮小 */
-                /* padding-right 會由 JS 動態計算，這裡設基礎值 */
-            }
-
-            /* 2. 狀態列 (及格/不及格) 變細 */
-            .status-bar {
-                font-size: 1rem;
-                padding: 4px;
-                margin-bottom: 5px;
-                line-height: 1.2;
-            }
-
-            /* 3. 成績顯示格 變矮、字變小 */
-            .result-table td {
-                height: 32px;      /* 原本 50px */
-                font-size: 1.2rem; /* 原本 1.6rem */
-            }
-            .result-table th {
-                padding: 2px;
-                font-size: 0.8rem;
-            }
-            .result-table small {
-                display: inline;   /* 讓說明文字(160)變成同一行 */
-                margin-left: 4px;
-            }
-
-            /* 4. 按鈕變扁 */
+            .section-dashboard { padding: 4px; }
+            .status-bar { font-size: 1rem; padding: 4px; margin-bottom: 5px; line-height: 1.2; }
+            .result-table td { height: 32px; font-size: 1.2rem; }
+            .result-table th { padding: 2px; font-size: 0.8rem; }
+            .result-table small { display: inline; margin-left: 4px; }
             .btn-group { margin-top: 5px; }
-            .action-btn {
-                padding: 6px;
-                font-size: 0.9rem;
-            }
-
-            /* 5. 下方的主表格，每一列也變矮，讓你能看更多行 */
-            .main-table td {
-                height: 40px;      /* 原本 55px */
-                font-size: 0.95rem;
-            }
-            .score-label { font-size: 1.3em; } /* 分數勾選字體微調 */
+            .action-btn { padding: 6px; font-size: 0.9rem; }
+            .main-table td { height: 40px; font-size: 0.95rem; }
+            .score-label { font-size: 1.3em; }
         }
     </style>
 </head>
@@ -222,7 +296,49 @@
 
         <div class="btn-group">
             <button class="action-btn btn-pass-all" onclick="setAllStatus(true)">全部及格</button>
-            <button class="action-btn btn-fail-all" onclick="setAllStatus(false)">重置</button>
+            <button class="action-btn btn-fail-all" onclick="setAllStatus(false)">學分歸零</button>
+            <button class="action-btn btn-help" onclick="toggleModal(true)">使用說明</button>
+        </div>
+    </div>
+
+    <div id="helpModal" class="modal-overlay" onclick="handleOutsideClick(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>使用說明</span>
+                <span class="close-modal-btn" onclick="toggleModal(false)">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>小孩們歡迎來到 殘酷的畢業檢核表<br>請依自己的成績切換狀態</p>
+                
+                <p style="margin-top: 15px; font-weight:bold;">切換狀態：點擊表格中的數字</p>
+                <ul class="score-examples">
+                    <li>
+                        <span class="modal-score-example modal-score-pass">3</span>
+                        <span>代表該科 <strong>及　格</strong> (獲得學分)</span>
+                    </li>
+                    <li>
+                        <span class="modal-score-example modal-score-fail">3</span>
+                        <span>代表該科 <strong>不及格</strong> (未獲學分)</span>
+                    </li>
+                </ul>
+
+                <p style="margin-top: 25px; font-weight:bold;">上方儀表板說明</p>
+                
+                <ul class="status-list">
+                    <li>
+                        <span class="status-badge badge-green">綠底</span> 
+                        <span>代表該項目已達畢業門檻</span>
+                    </li>
+                    <li>
+                        <span class="status-badge badge-red">紅底</span> 
+                        <span>代表該項目未達畢業門檻</span>
+                    </li>
+                </ul>
+
+                <p style="font-size:0.95rem; color:#666; margin-top:25px; border-top:1px solid #eee; padding-top:15px; text-align: center;">
+                    記住哦~此系統僅供試算 最後還是教務處註冊組的結果為準<br>by最愛你們的學長製作
+                </p>
+            </div>
         </div>
     </div>
 
@@ -255,29 +371,39 @@
     </div>
 
 <script>
+    // --- 彈窗邏輯 ---
+    function toggleModal(show) {
+        const modal = document.getElementById('helpModal');
+        if (show) {
+            modal.style.display = 'flex';
+        } else {
+            modal.style.display = 'none';
+        }
+    }
+
+    function handleOutsideClick(event) {
+        const modal = document.getElementById('helpModal');
+        if (event.target === modal) {
+            toggleModal(false);
+        }
+    }
+
     // --- 捲軸對齊 & 響應式修正 JS ---
     function adjustScrollbarPadding() {
         const container = document.getElementById('tableContainer');
         const dashboard = document.getElementById('dashboardSection');
         
-        // 計算捲軸寬度
         const scrollbarWidth = container.offsetWidth - container.clientWidth;
         
-        // 判斷現在是否為「手機橫向/矮螢幕」模式 (對應 CSS @media max-height: 500px)
-        // 如果高度 < 500，CSS 基礎 padding 是 4px，否則是 10px
         const isCompactMode = window.innerHeight <= 500;
         const basePadding = isCompactMode ? 4 : 10;
         
-        // 動態設定 padding-right
         dashboard.style.paddingRight = (basePadding + scrollbarWidth) + 'px';
-        
-        // 同步更新 CSS 變數或直接設定 padding (確保 padding-left 也一致，保持美觀)
         dashboard.style.paddingLeft = basePadding + 'px';
         dashboard.style.paddingTop = basePadding + 'px';
         dashboard.style.paddingBottom = basePadding + 'px';
     }
 
-    // 監聽視窗大小改變 (包含旋轉螢幕)
     window.addEventListener('resize', adjustScrollbarPadding);
     
 
@@ -442,7 +568,6 @@
             tbody.appendChild(tr);
         });
 
-        // Render 完畢後修正間距
         setTimeout(adjustScrollbarPadding, 0);
     }
 
