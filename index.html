@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>113入學商經科畢業檢核表</title>
     <style>
-        /* --- 1. 全局設定 --- */
         html, body {
             margin: 0; padding: 0;
             height: 100%;
@@ -15,8 +14,6 @@
             overflow: hidden; 
             display: flex; flex-direction: column;
         }
-
-        /* --- 2. 儀表板區 --- */
         .section-dashboard {
             flex: 0 0 auto;
             background: white;
@@ -28,7 +25,6 @@
             box-sizing: border-box;
             transition: all 0.3s ease; 
         }
-
         .status-bar {
             text-align: center;
             font-size: 1.4rem; 
@@ -41,7 +37,6 @@
         }
         .status-pass { background: linear-gradient(135deg, #28a745, #218838); } 
         .status-fail { background: linear-gradient(135deg, #dc3545, #c82333); } 
-
         .result-table { 
             width: 100%; 
             margin: 0 auto; 
@@ -49,7 +44,6 @@
             border-spacing: 4px; 
             table-layout: fixed; 
         }
-
         .result-table th { 
             background-color: #555; 
             color: white; 
@@ -59,7 +53,6 @@
             font-size: 0.9rem; 
             vertical-align: middle;
         }
-        
         .result-table td { 
             background-color: #fff; 
             padding: 4px; 
@@ -72,7 +65,6 @@
             vertical-align: middle;
         }
         .result-table small { display: block; font-size: 0.75rem; opacity: 0.8; margin-top: 4px; font-weight: normal;}
-
         .btn-group { display: flex; gap: 10px; margin-top: 10px; width: 100%; margin-left: auto; margin-right: auto; }
         .action-btn {
             flex: 1; 
@@ -84,25 +76,21 @@
         .btn-pass-all { background-color: #218838; }
         .btn-fail-all { background-color: #6c757d; }
         .btn-help { background-color: #17a2b8; } 
-
-        /* --- 3. 表格容器 --- */
         .table-container {
             flex: 1;
             overflow-y: scroll;
             position: relative;
             background-color: white;
         }
-
         table.main-table {
             width: 100%;       
             border-collapse: collapse; 
             table-layout: fixed; 
         }
-
         .main-table thead th {
             position: sticky; 
             top: 0;            
-            z-index: 40;       
+            z-index: 40;        
             background-color: #6c757d; 
             color: white;
             height: 45px; 
@@ -110,29 +98,24 @@
             font-size: 1rem;
             box-shadow: 0 2px 2px rgba(0,0,0,0.1);
         }
-
         .main-table td {
             border: 1px solid #999;
             text-align: center; vertical-align: middle;
-            height: 55px; /* 預設行高 */
+            height: 55px;
             padding: 2px;
             color: #333;
             overflow: hidden; 
         }
-
-        /* 欄位樣式 */
         .col-cat-major { writing-mode: vertical-rl; text-orientation: upright; letter-spacing: 2px; font-weight: 800; font-size: 1rem; color: #000; }
         .col-cat-minor { font-weight: bold; font-size: 1rem; line-height: 1.3; padding: 0 4px; word-wrap: break-word; }
         .col-name { text-align: left !important; padding-left: 8px !important; font-weight: bold; background-color: #fff; font-size: 1rem; white-space: normal; line-height: 1.4; }
         .col-sem { background-color: #fff; }
-
         .bg-dept-main { background-color: #ff9999; }
         .bg-dept-sub { background-color: #ffcccc; }
         .bg-sch-req-main { background-color: #99ff99; }
         .bg-sch-req-sub { background-color: #ccffcc; }
         .bg-sch-opt-main { background-color: #9999ff; }
         .bg-sch-opt-sub { background-color: #ccccff; }
-
         .toggle-checkbox { display: none; }
         .score-label {
             display: flex; align-items: center; justify-content: center;
@@ -149,8 +132,6 @@
             background-color: #fff5f5; color: #dc3545; box-shadow: inset 0 0 0 1px #ffdce0; 
         }
         .zero-score { color: #e0e0e0; font-size: 1em; background: #fafafa; }
-
-        /* --- 新增：彈窗樣式 (Modal) --- */
         .modal-overlay {
             display: none; 
             position: fixed; 
@@ -162,7 +143,6 @@
             align-items: center; justify-content: center;
             animation: fadeIn 0.2s;
         }
-        
         .modal-content {
             background-color: #fff;
             width: 90%; max-width: 500px;
@@ -175,20 +155,15 @@
             animation: scaleUp 0.2s;
             box-sizing: border-box;
         }
-
         .modal-header { 
             font-size: 1.4rem; font-weight: bold; 
             margin-bottom: 16px; border-bottom: 2px solid #eee; padding-bottom: 12px;
             display: flex; justify-content: space-between; align-items: center;
         }
         .modal-body { font-size: 1.05rem; line-height: 1.7; color: #333; }
-        
         .modal-body ul.score-examples { padding-left: 0; list-style: none; margin: 20px 0; }
         .modal-body ul.score-examples li { margin-bottom: 18px; display: flex; align-items: center; }
-
         .modal-body p { margin-bottom: 8px; }
-        
-        /* 彈窗：成績範例按鈕 */
         .modal-score-example {
             display: inline-flex;
             align-items: center;
@@ -202,7 +177,6 @@
             flex-shrink: 0; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-
         .modal-score-pass {
             color: #000;
             background-color: #fff;
@@ -213,29 +187,25 @@
             content: '✔'; font-size: 0.6em; color: #28a745; font-weight: 900;
             position: absolute; right: 3px; top: 2px; line-height: 1;
         }
-
         .modal-score-fail {
             background-color: #fff5f5;
             color: #dc3545;
             border: 2px solid #ffdce0;
             box-shadow: none;
         }
-
-        /* [新增] 彈窗：統計燈號 (加大版) */
         .status-badge {
             display: inline-block;
-            padding: 6px 14px;      /* 內距加大 */
-            font-size: 1.3rem;      /* 字體加大 */
-            font-weight: 900;       /* 粗體 */
-            border-radius: 8px;     /* 圓角 */
-            margin-right: 12px;     /* 右側間距 */
-            vertical-align: middle; /* 垂直置中 */
+            padding: 6px 14px;      
+            font-size: 1.3rem;      
+            font-weight: 900;       
+            border-radius: 8px;     
+            margin-right: 12px;     
+            vertical-align: middle; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             line-height: 1.2;
         }
         .badge-green { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
         .badge-red   { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
-
         .modal-body ul.status-list {
             padding-left: 0;
             list-style: none;
@@ -246,17 +216,13 @@
             display: flex;
             align-items: center;
         }
-
         .close-modal-btn {
             font-size: 2rem; color: #aaa; cursor: pointer;
             line-height: 1; padding: 0 5px;
         }
         .close-modal-btn:hover { color: #000; }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        /* 手機橫向優化 */
         @media (max-height: 500px) {
             .section-dashboard { padding: 4px; }
             .status-bar { font-size: 1rem; padding: 4px; margin-bottom: 5px; line-height: 1.2; }
@@ -271,10 +237,8 @@
     </style>
 </head>
 <body>
-
     <div id="dashboardSection" class="section-dashboard">
         <div id="finalStatus" class="status-bar status-fail">計算中...</div>
-        
         <table class="result-table">
             <thead>
                 <tr>
@@ -293,14 +257,12 @@
                 </tr>
             </tbody>
         </table>
-
         <div class="btn-group">
             <button class="action-btn btn-help" onclick="toggleModal(true)">使用說明</button>
             <button class="action-btn btn-pass-all" onclick="setAllStatus(true)">全部及格</button>
             <button class="action-btn btn-fail-all" onclick="setAllStatus(false)">學分歸零</button>
         </div>
     </div>
-
     <div id="helpModal" class="modal-overlay" onclick="handleOutsideClick(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -309,7 +271,6 @@
             </div>
             <div class="modal-body">
                 <p>小孩們~歡迎來到殘酷的畢業檢核表<br>請依自己的成績切換狀態</p>
-                
                 <p style="margin-top: 15px; font-weight:bold;">切換狀態：點擊表格中的數字</p>
                 <ul class="score-examples">
                     <li>
@@ -321,9 +282,7 @@
                         <span>代表該科 <strong>不及格</strong> (未獲學分)</span>
                     </li>
                 </ul>
-
                 <p style="margin-top: 25px; font-weight:bold;">上方儀表板說明</p>
-                
                 <ul class="status-list">
                     <li>
                         <span class="status-badge badge-green">綠底</span> 
@@ -334,14 +293,12 @@
                         <span>代表該項目未達畢業門檻</span>
                     </li>
                 </ul>
-
                 <p style="font-size:0.95rem; color:#666; margin-top:25px; border-top:1px solid #eee; padding-top:15px; text-align: center;">
                     記住哦~系統只是試算 最終結果依教務處註冊組為準<br>by 最愛你們的學長製作
                 </p>
             </div>
         </div>
     </div>
-
     <div id="tableContainer" class="table-container">
         <table class="main-table">
             <colgroup>
@@ -355,7 +312,6 @@
                 <col style="width: 8.33%;"> 
                 <col style="width: 8.33%;"> 
             </colgroup>
-            
             <thead>
                 <tr>
                     <th colspan="2">屬性</th>
@@ -365,13 +321,10 @@
                     <th>三上</th><th>三下</th>
                 </tr>
             </thead>
-            
             <tbody id="tableBody"></tbody>
         </table>
     </div>
-
 <script>
-    // --- 彈窗邏輯 ---
     function toggleModal(show) {
         const modal = document.getElementById('helpModal');
         if (show) {
@@ -380,35 +333,25 @@
             modal.style.display = 'none';
         }
     }
-
     function handleOutsideClick(event) {
         const modal = document.getElementById('helpModal');
         if (event.target === modal) {
             toggleModal(false);
         }
     }
-
-    // --- 捲軸對齊 & 響應式修正 JS ---
     function adjustScrollbarPadding() {
         const container = document.getElementById('tableContainer');
         const dashboard = document.getElementById('dashboardSection');
-        
         const scrollbarWidth = container.offsetWidth - container.clientWidth;
-        
         const isCompactMode = window.innerHeight <= 500;
         const basePadding = isCompactMode ? 4 : 10;
-        
         dashboard.style.paddingRight = (basePadding + scrollbarWidth) + 'px';
         dashboard.style.paddingLeft = basePadding + 'px';
         dashboard.style.paddingTop = basePadding + 'px';
         dashboard.style.paddingBottom = basePadding + 'px';
     }
-
     window.addEventListener('resize', adjustScrollbarPadding);
-    
-
     const curriculum = [
-        // === 部定必修 ===
         { cat: "dept", type: 1, name: "國語文", credits: [3,3,3,3,2,2] },
         { cat: "dept", type: 1, name: "英語文", credits: [2,2,2,2,2,2] },
         { cat: "dept", type: 1, name: "閩南語文", credits: [1,1,0,0,0,0] },
@@ -426,32 +369,25 @@
         { cat: "dept", type: 1, name: "健康與護理", credits: [1,1,0,0,0,0] },
         { cat: "dept", type: 1, name: "體育", credits: [2,2,2,2,2,2] },
         { cat: "dept", type: 1, name: "全民國防教育", credits: [1,1,0,0,0,0] },
-        // 部定-專業
         { cat: "dept", type: 2, name: "商業概論", credits: [2,2,0,0,0,0] },
         { cat: "dept", type: 2, name: "數位科技概論", credits: [2,2,0,0,0,0] },
         { cat: "dept", type: 2, name: "會計學", credits: [3,3,2,2,0,0] },
         { cat: "dept", type: 2, name: "經濟學", credits: [0,0,4,4,0,0] },
-        // 部定-實習
         { cat: "dept", type: 3, name: "數位科技應用", credits: [0,0,2,2,0,0] },
         { cat: "dept", type: 3, name: "商業溝通", credits: [0,0,0,0,0,2] },
         { cat: "dept", type: 3, name: "門市經營實務", credits: [2,2,0,0,0,0] },
         { cat: "dept", type: 3, name: "行銷實務", credits: [0,0,2,2,0,0] },
         { cat: "dept", type: 3, name: "會計軟體應用", credits: [0,0,2,2,0,0] },
         { cat: "dept", type: 3, name: "金融與證券投資實務", credits: [0,0,0,0,0,2] },
-
-        // === 校定必修 ===
         { cat: "sch_req", type: 1, name: "各類文選選讀", credits: [0,0,0,0,1,1] },
         { cat: "sch_req", type: 1, name: "英文會話", credits: [1,1,0,0,0,0] },
         { cat: "sch_req", type: 1, name: "英文閱讀初階", credits: [0,0,1,1,0,0] },
         { cat: "sch_req", type: 1, name: "英文閱讀進階", credits: [0,0,0,0,1,1] },
         { cat: "sch_req", type: 1, name: "數學(校定)", credits: [0,0,3,3,0,0] },
-        // 校定-實習
         { cat: "sch_req", type: 3, name: "專題實作", credits: [0,0,0,0,2,2] },
         { cat: "sch_req", type: 3, name: "進階門市實務", credits: [0,0,2,2,0,0] },
         { cat: "sch_req", type: 3, name: "會計實務", credits: [0,0,2,2,4,4] },
         { cat: "sch_req", type: 3, name: "經濟應用實務", credits: [0,0,0,0,4,4] },
-
-        // === 校定選修 ===
         { cat: "sch_opt", type: 1, name: "數學演習", credits: [0,0,0,0,3,3] },
         { cat: "sch_opt", type: 2, name: "計算機探究", credits: [0,0,0,0,4,4] },
         { cat: "sch_opt", type: 2, name: "商業專論", credits: [0,0,0,0,2,2] },
@@ -462,7 +398,6 @@
         { cat: "sch_opt", type: 3, name: "同科單班(2選1)<br>財務報表分析 / 電子商務實務", credits: [0,0,0,0,0,2] }, 
         { cat: "sch_opt", type: 3, name: "跨群選修(6選1)", credits: [0,0,2,2,0,0] } 
     ];
-
     const mapping = {
         cat: {
             "dept": { text: "部定必修", class: "bg-dept-main", subClass: "bg-dept-sub" },
@@ -475,9 +410,7 @@
             3: "實習科目"
         }
     };
-
     let DEPT_THRESHOLD = 0;
-
     function initThresholds() {
         let maxDeptCredits = 0;
         curriculum.forEach(item => {
@@ -488,11 +421,9 @@
         DEPT_THRESHOLD = Math.round(maxDeptCredits * 0.85);
         document.getElementById('dept-limit-text').innerText = `(${DEPT_THRESHOLD})`;
     }
-
     function renderTable() {
         const tbody = document.getElementById("tableBody");
         tbody.innerHTML = ""; 
-
         const countMap = {};
         curriculum.forEach(item => {
             if(!countMap[item.cat]) countMap[item.cat] = { total: 0, types: {} };
@@ -500,14 +431,10 @@
             if(!countMap[item.cat].types[item.type]) countMap[item.cat].types[item.type] = 0;
             countMap[item.cat].types[item.type]++;
         });
-
         let renderedCatCount = {}; 
         let renderedTypeCount = {};
-
         curriculum.forEach((item, index) => {
             const tr = document.createElement("tr");
-
-            // Col 1: Major Cat
             if (!renderedCatCount[item.cat]) {
                 let tdCat = document.createElement("td");
                 tdCat.innerText = mapping.cat[item.cat].text;
@@ -517,8 +444,6 @@
                 renderedCatCount[item.cat] = true;
                 renderedTypeCount[item.cat] = {};
             }
-
-            // Col 2: Minor Cat
             if (!renderedTypeCount[item.cat][item.type]) {
                 let tdType = document.createElement("td");
                 tdType.innerText = mapping.type[item.type];
@@ -527,18 +452,13 @@
                 tr.appendChild(tdType);
                 renderedTypeCount[item.cat][item.type] = true;
             }
-
-            // Col 3: Name
             let tdName = document.createElement("td");
             tdName.innerHTML = item.name; 
             tdName.className = "col-name";
             tr.appendChild(tdName);
-
-            // Col 4-9: Credits
             item.credits.forEach((credit, semIndex) => {
                 let td = document.createElement("td");
                 td.className = "col-sem";
-                
                 if(credit > 0) {
                     let uniqueID = `chk-${index}-${semIndex}`;
                     let checkbox = document.createElement("input");
@@ -546,17 +466,14 @@
                     checkbox.className = "toggle-checkbox";
                     checkbox.id = uniqueID;
                     checkbox.checked = true;
-                    
                     checkbox.dataset.val = credit;
                     checkbox.dataset.cat = item.cat;
                     checkbox.dataset.type = item.type;
                     checkbox.onchange = calculate; 
-
                     let label = document.createElement("label");
                     label.className = "score-label";
                     label.htmlFor = uniqueID; 
                     label.innerText = credit;
-
                     td.appendChild(checkbox);
                     td.appendChild(label);
                 } else {
@@ -567,30 +484,24 @@
             });
             tbody.appendChild(tr);
         });
-
         setTimeout(adjustScrollbarPadding, 0);
     }
-
     function calculate() {
         let total = 0, deptTotal = 0, profPrac = 0, pracOnly = 0;
         const checkedInputs = document.querySelectorAll(".toggle-checkbox:checked");
-        
         checkedInputs.forEach(input => {
             let val = parseInt(input.dataset.val);
             let cat = input.dataset.cat;
             let type = parseInt(input.dataset.type);
-
             total += val;
             if (cat === 'dept') deptTotal += val;
             if (type === 2 || type === 3) profPrac += val;
             if (type === 3) pracOnly += val;
         });
-
         updateCell("total", total, 160);
         updateCell("dept", deptTotal, DEPT_THRESHOLD);
         updateCell("prof-prac", profPrac, 60);
         updateCell("prac", pracOnly, 45);
-
         const finalStatus = document.getElementById("finalStatus");
         if(total >= 160 && deptTotal >= DEPT_THRESHOLD && profPrac >= 60 && pracOnly >= 45) {
             finalStatus.innerText = "唉呦不錯喔~你竟然可以畢業";
@@ -600,7 +511,6 @@
             finalStatus.className = "status-bar status-fail";
         }
     }
-
     function updateCell(id, current, limit) {
         const cell = document.getElementById(`cell-${id}`);
         if(current >= limit) {
@@ -613,7 +523,6 @@
             cell.style.borderColor = "#f5c6cb";
         }
     }
-
     function setAllStatus(isPass) {
         const checkboxes = document.querySelectorAll(".toggle-checkbox");
         checkboxes.forEach(chk => {
@@ -621,13 +530,9 @@
         });
         calculate();
     }
-    
     initThresholds();
     renderTable();
     calculate();
-
 </script>
-
 </body>
 </html>
-
