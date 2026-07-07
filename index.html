@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>新社高中畢業自我檢核系統</title>
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-  <script src="[https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2](https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    @import url('[https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap](https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap)');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
     html, body {
       margin: 0;
       padding: 0;
@@ -1009,7 +1009,7 @@
         <label>導師</label>
         <div id="newTutorWrapper"></div>
       </div>
-      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自动產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號**作為帳號密碼直接登入！</p>
+      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號**作為帳號密碼直接登入！</p>
       <p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號預設登入密碼亦為其帳號，請提醒他們登入後進行修改。</p>
       <button class="action-btn btn-pass-all" style="width:100%;" onclick="saveNewUser()">確認建立新帳號</button>
     </div>
@@ -1061,7 +1061,7 @@
     </div>
   </div>
   <script>
-    const SB_URL = "[https://tsavuxtqwfugoraomoyc.supabase.co](https://tsavuxtqwfugoraomoyc.supabase.co)",
+    const SB_URL = "https://tsavuxtqwfugoraomoyc.supabase.co",
       SB_KEY = "sb_publishable_ojrdIB0TeCnl8eZXbzWsdQ_2W3JB3xT";
     const EMAIL_DOMAIN = "@sshs.tc.edu.tw";
     const YEAR_OPTIONS = ["113", "114", "115"];
@@ -1181,7 +1181,7 @@
       if (msg.includes("Database error") || msg.includes("database")) return "資料庫連線異常，請稍後重試。";
       return msg;
     }
-    function initThresholds() {
+     Bark: function initThresholds() {
       let maxDept = 0;
       curriculum.forEach(i => {
         if (i.cat === 'dept') maxDept += i.credits.reduce((a, b) => a + b, 0);
@@ -1867,7 +1867,7 @@
                 .update({ id: uid })
                 .eq('id', preCreated.id);
               if (!updateError) {
-                data = { ...preCreated, id: uuid };
+                data = { ...preCreated, id: uid };
                 showMsg("已成功繼承並綁定您的檢核試算與學分資料！");
               }
             }
@@ -2281,6 +2281,11 @@
           st.className = "status-bar " + (pass ? "status-pass text-white" : "status-fail text-white");
         }
       }
+    }
+    function setAllStatus(p) {
+      document.querySelectorAll(".toggle-checkbox").forEach(chk => { chk.checked = p; });
+      calculate();
+      saveToCloud(true);
     }
     initDropdowns(false); 
     selectCurriculum(currentYear, currentDept);
