@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>新社高中畢業自我檢核系統</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+  <script src="[https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2](https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+    @import url('[https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap](https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap)');
     html, body {
       margin: 0;
       padding: 0;
@@ -820,7 +820,7 @@
       <div id="authSwitchLink" class="auth-switch-link" onclick="switchAuthMode()">尚未有帳號？點此註冊</div>
     </div>
   </div>
-  <div id="appWorkspace" style="display: none;" class="flex-grow flex flex-col h-screen overflow-hidden">
+  <div id="appWorkspace" style="display: none;" class="flex-grow flex flex-col h-full overflow-hidden">
     <div id="statusHeader" class="shrink-0" style="display: none;">
       <div class="app-container">
         <div id="userStatusDisplay"></div>
@@ -1009,7 +1009,7 @@
         <label>導師</label>
         <div id="newTutorWrapper"></div>
       </div>
-      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號**作為帳號密碼直接登入！</p>
+      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自动產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號**作為帳號密碼直接登入！</p>
       <p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號預設登入密碼亦為其帳號，請提醒他們登入後進行修改。</p>
       <button class="action-btn btn-pass-all" style="width:100%;" onclick="saveNewUser()">確認建立新帳號</button>
     </div>
@@ -1061,7 +1061,7 @@
     </div>
   </div>
   <script>
-    const SB_URL = "https://tsavuxtqwfugoraomoyc.supabase.co",
+    const SB_URL = "[https://tsavuxtqwfugoraomoyc.supabase.co](https://tsavuxtqwfugoraomoyc.supabase.co)",
       SB_KEY = "sb_publishable_ojrdIB0TeCnl8eZXbzWsdQ_2W3JB3xT";
     const EMAIL_DOMAIN = "@sshs.tc.edu.tw";
     const YEAR_OPTIONS = ["113", "114", "115"];
@@ -1149,7 +1149,8 @@
         confirmAction = null,
         lastIsMobile = null,
         currentYear = "113",
-        currentDept = "商經科";
+        currentDept = "商經科",
+        lastUserId = null;
     function selectCurriculum(year, dept) {
       currentYear = year || "113";
       currentDept = dept || "商經科";
@@ -1395,11 +1396,15 @@
           activeStudentDBRecord = null;
           isViewingClassList = false;
           editingStudentId = null;
+          lastUserId = null;
         } else {
           authWorkspace.style.display = 'none';
           appWorkspace.style.display = 'flex';
-          hasLoadedInitialData = false;
-          userDBRecord = null;
+          if (lastUserId !== currentUser.id) {
+            hasLoadedInitialData = false;
+            userDBRecord = null;
+            lastUserId = currentUser.id;
+          }
           updateUI();
         }
       });
@@ -1617,15 +1622,26 @@
           d.data.entry_dept = ed;
           d.email = `${sid}${EMAIL_DOMAIN}`;
           await sb.auth.updateUser(d);
-          await sb.from('grad_checks').update({ 
-            full_name: n,
-            student_id: sid,
-            entry_year: ey,
-            entry_dept: ed
-          }).eq('id', currentUser.id);
+          await sb.rpc('admin_update_grad_checks', {
+            target_id: currentUser.id,
+            target_student_id: sid,
+            target_full_name: n,
+            target_entry_year: ey,
+            target_entry_dept: ed,
+            target_role: role,
+            target_tutor: curData.tutor || '未設定'
+          });
         } else {
           await sb.auth.updateUser(d);
-          await sb.from('grad_checks').update({ full_name: n }).eq('id', currentUser.id);
+          await sb.rpc('admin_update_grad_checks', {
+            target_id: currentUser.id,
+            target_student_id: curData.student_id,
+            target_full_name: n,
+            target_entry_year: curData.entry_year,
+            target_entry_dept: curData.entry_dept,
+            target_role: role,
+            target_tutor: curData.tutor || '未設定'
+          });
         }
         updateSyncStatusIndicator('success');
         showMsg("個人資料已更新！");
@@ -1686,7 +1702,6 @@
         updateSyncStatusIndicator('saving');
         const { error } = await sb.rpc('admin_delete_user', { target_user_id: deleteTargetId });
         if (error) throw error;
-        
         updateSyncStatusIndicator('success');
         showMsg("已成功刪除該帳號及學分資料！");
         toggleUIModal(false, 'confirmModal');
@@ -1852,7 +1867,7 @@
                 .update({ id: uid })
                 .eq('id', preCreated.id);
               if (!updateError) {
-                data = { ...preCreated, id: uid };
+                data = { ...preCreated, id: uuid };
                 showMsg("已成功繼承並綁定您的檢核試算與學分資料！");
               }
             }
@@ -2003,7 +2018,7 @@
           <div class="flex justify-between items-start border-b border-slate-100 pb-2">
             <div>
               <div class="text-sm font-bold text-slate-800">${s.full_name}</div>
-              <div class="text-xs text-slate-500 mt-0.5">帳號(學號): ${s.student_id || '-'}</div>
+              <div class="text-xs text-slate-500 mt-0.5">帳號: ${s.student_id || '-'}</div>
             </div>
             <span class="role-badge ${roleClass} text-xs py-1 px-2.5 rounded-full font-bold text-white">${roleText}</span>
           </div>
