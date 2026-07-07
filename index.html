@@ -1766,7 +1766,7 @@
             y = document.getElementById('editUserEntryYear').value,
             dDept = document.getElementById('editUserEntryDept').value,
             r = document.getElementById('editUserRole').value,
-            t = (r === 'student') ? document.getElementById('editUserTutor').value : '教師帳號(學號/教職員編號)';
+            t = (r === 'student') ? document.getElementById('editUserTutor').value : '教師帳號';
       try {
         updateSyncStatusIndicator('saving');
         const { error: authError } = await sb.rpc('admin_update_user_sid', {
@@ -2006,12 +2006,12 @@
         card.className = "mobile-card p-4 flex flex-col gap-3";
         let btnsMobile = '';
         if (s.role === 'student') {
-          btnsMobile += `<button class="action-btn py-2 px-3 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg shadow-sm transition" onclick="enterAdminEditMode('${s.id}','${s.full_name}')">🔍 檢核學分</button>`;
+          btnsMobile += `<button class="action-btn py-2 px-3 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg shadow-sm transition" onclick="enterAdminEditMode('${s.id}','${s.full_name}')">檢核學分</button>`;
         }
         if (role === 'admin') {
           btnsMobile += `
-            <button class="action-btn py-2 px-3 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg shadow-sm transition" onclick="openAdminUserEdit(${i})">✏️ 帳號(學號/教職員編號)設定</button>
-            <button class="action-btn py-2 px-3 text-xs bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-sm transition" onclick="deleteStudentData('${s.id}','${s.full_name}')">❌ 刪除</button>
+            <button class="action-btn py-2 px-3 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg shadow-sm transition" onclick="openAdminUserEdit(${i})">帳號設定</button>
+            <button class="action-btn py-2 px-3 text-xs bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-sm transition" onclick="deleteStudentData('${s.id}','${s.full_name}')">刪除</button>
           `;
         }
         card.innerHTML = `
