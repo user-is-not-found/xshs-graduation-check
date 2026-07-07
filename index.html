@@ -795,8 +795,8 @@
       <h2 id="authTitle" class="auth-title">帳號登入</h2>
       <p class="auth-subtitle">新社高中畢業自我檢核系統</p>
       <div class="auth-form-group">
-        <label>帳號(學號/教職員編號)</label>
-        <input type="text" id="authID" placeholder="請輸入帳號(學號/教職員編號)">
+        <label>帳號</label>
+        <input type="text" id="authID" placeholder="請輸入帳號">
       </div>
       <div id="regFields" style="display:none">
         <div class="auth-form-group">
@@ -886,7 +886,7 @@
               <thead>
                 <tr>
                   <th>姓名</th>
-                  <th>帳號(學號/教職員編號)</th>
+                  <th>帳號</th>
                   <th>身份</th>
                   <th>入學年/科系</th>
                   <th>操作</th>
@@ -1009,8 +1009,8 @@
         <label>導師</label>
         <div id="newTutorWrapper"></div>
       </div>
-      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號(學號/教職員編號)**作為帳號密碼直接登入！</p>
-      <p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號預設登入密碼亦為其帳號(學號/教職員編號)，請提醒他們登入後進行修改。</p>
+      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號**作為帳號密碼直接登入！</p>
+      <p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號預設登入密碼亦為其帳號，請提醒他們登入後進行修改。</p>
       <button class="action-btn btn-pass-all" style="width:100%;" onclick="saveNewUser()">確認建立新帳號</button>
     </div>
   </div>
@@ -1167,8 +1167,8 @@
     }
     function translateError(msg) {
       if (!msg) return "未知錯誤，請重試。";
-      if (msg.includes("Invalid login credentials") || msg.includes("Invalid credentials")) return "帳號(學號/教職員編號)或密碼輸入錯誤，請重新確認！";
-      if (msg.includes("User already registered") || msg.includes("email already exists") || msg.includes("already registered")) return "此帳號(學號/教職員編號)已被註冊！若忘記密碼請洽管理員。";
+      if (msg.includes("Invalid login credentials") || msg.includes("Invalid credentials")) return "帳號或密碼輸入錯誤，請重新確認！";
+      if (msg.includes("User already registered") || msg.includes("email already exists") || msg.includes("already registered")) return "此帳號已被註冊！若忘記密碼請洽管理員。";
       if (msg.includes("Password should be at least")) return "密碼強度不足：長度至少需要 6 個字元！";
       if (msg.includes("admin_reset_user_password")) return "重設密碼失敗：請先在 Supabase 後台 SQL Editor 部署 admin_reset_user_password 函數！";
       if (msg.includes("admin_update_user_sid")) return "帳號資料更新失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_update_user_sid 函數！";
@@ -1277,11 +1277,11 @@
       const sid = document.getElementById('editUserSid').value.trim();
       const name = document.getElementById('editUserName').value.trim();
       if (!sid) {
-        showMsg("無法重設：此帳號目前沒有設定帳號(學號/教職員編號)！", "error");
+        showMsg("無法重設：此帳號目前沒有設定帳號！", "error");
         return;
       }
       showConfirmModal(
-        `您確定要將「${name}」的登入密碼立即重設為其帳號(學號/教職員編號)「${sid}」嗎？重設後請通知學生使用此預設密碼登入並自行修改。`, 
+        `您確定要將「${name}」的登入密碼立即重設為其帳號「${sid}」嗎？重設後請通知學生使用此預設密碼登入並自行修改。`, 
         "確認重設密碼", 
         async () => {
           try {
@@ -1563,7 +1563,7 @@
         accountInput.style.border = '1px solid #cbd5e1';
         yrSel.disabled = false;
         dtSel.disabled = false;
-        accountLabel.innerText = "帳號(學號/教職員編號)";
+        accountLabel.innerText = "帳號";
         tipMsg.innerText = "※ 您是管理員，可全權修改您的年度、科系與帳號。";
         tipMsg.style.color = "#10b981";
       } else if (role === 'teacher') {
@@ -1572,7 +1572,7 @@
         accountInput.style.border = '1px solid #cbd5e1';
         yrSel.disabled = true;
         dtSel.disabled = true;
-        accountLabel.innerText = "帳號(學號/教職員編號)";
+        accountLabel.innerText = "帳號";
         tipMsg.innerText = "※ 您的負責班級年度與科系如有誤，請洽管理員修正。";
         tipMsg.style.color = "#d946ef";
       } else {
@@ -1581,7 +1581,7 @@
         accountInput.style.border = '1px solid #cbd5e1';
         yrSel.disabled = true;
         dtSel.disabled = true;
-        accountLabel.innerText = "帳號(學號/教職員編號)";
+        accountLabel.innerText = "帳號";
         tipMsg.innerText = "※ 入學年份與科系如有誤請洽管理員更正。";
         tipMsg.style.color = "#d946ef";
       }
@@ -1802,7 +1802,7 @@
       const role = document.getElementById('newUserRole').value;
       const tutor = (role === 'student') ? document.getElementById('newUserTutor').value : '教師帳號';
       if (!sid || !name) {
-        showMsg("請務必填寫帳號(學號/教職員編號)與真實姓名！", "error");
+        showMsg("請務必填寫帳號與真實姓名！", "error");
         return;
       }
       try {
