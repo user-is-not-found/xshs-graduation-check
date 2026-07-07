@@ -1076,6 +1076,52 @@
       role: { student: "學生", teacher: "教師", admin: "管理員" }
     };
     const curriculums = {
+      "112_資處科": [
+        {cat:"dept",type:1,name:"國語文",credits:[3,3,3,3,2,2]},
+        {cat:"dept",type:1,name:"英語文",credits:[2,2,2,2,2,2]},
+        {cat:"dept",type:1,name:"閩南語文",credits:[1,1,0,0,0,0]},
+        {cat:"dept",type:1,name:"數學",credits:[3,3,0,0,0,0]},
+        {cat:"dept",type:1,name:"歷史",credits:[0,2,0,0,0,0]},
+        {cat:"dept",type:1,name:"地理",credits:[2,0,0,0,0,0]},
+        {cat:"dept",type:1,name:"公民與社會",credits:[0,0,0,0,0,2]},
+        {cat:"dept",type:1,name:"物理",credits:[2,0,0,0,0,0]},
+        {cat:"dept",type:1,name:"化學",credits:[0,1,0,0,0,0]},
+        {cat:"dept",type:1,name:"生物",credits:[0,1,0,0,0,0]},
+        {cat:"dept",type:1,name:"音樂",credits:[1,1,0,0,0,0]},
+        {cat:"dept",type:1,name:"美術",credits:[1,1,0,0,0,0]},
+        {cat:"dept",type:1,name:"生涯規劃",credits:[0,0,0,0,1,1]},
+        {cat:"dept",type:1,name:"資訊科技",credits:[0,2,0,0,0,0]},
+        {cat:"dept",type:1,name:"健康與護理",credits:[1,1,0,0,0,0]},
+        {cat:"dept",type:1,name:"體育",credits:[2,2,2,2,2,2]},
+        {cat:"dept",type:1,name:"全民國防教育",credits:[1,1,0,0,0,0]},
+        {cat:"dept",type:2,name:"商業概論",credits:[2,2,0,0,0,0]},
+        {cat:"dept",type:2,name:"數位科技概論",credits:[2,2,0,0,0,0]},
+        {cat:"dept",type:2,name:"會計學",credits:[3,3,2,2,0,0]},
+        {cat:"dept",type:2,name:"經濟學",credits:[0,0,4,4,0,0]},
+        {cat:"dept",type:3,name:"數位科技應用",credits:[0,0,2,2,0,0]},
+        {cat:"dept",type:3,name:"商業溝通",credits:[0,0,0,0,0,2]},
+        {cat:"dept",type:3,name:"程式語言與設計",credits:[2,2,0,0,0,0]},
+        {cat:"dept",type:3,name:"多媒體製作與應用",credits:[0,0,3,3,0,0]},
+        {cat:"dept",type:3,name:"資料庫應用",credits:[0,0,0,0,2,2]},
+        {cat:"sch_req",type:1,name:"各類文選選讀",credits:[0,0,0,0,1,1]},
+        {cat:"sch_req",type:1,name:"英文會話",credits:[1,1,0,0,0,0]},
+        {cat:"sch_req",type:1,name:"英文閱讀初階",credits:[0,0,1,1,0,0]},
+        {cat:"sch_req",type:1,name:"英文閱讀進階",credits:[0,0,0,0,1,1]},
+        {cat:"sch_req",type:1,name:"數學",credits:[0,0,3,3,0,0]},
+        {cat:"sch_req",type:2,name:"計算機探究",credits:[0,0,0,0,4,4]},
+        {cat:"sch_req",type:2,name:"商業專論",credits:[0,0,0,0,2,2]},
+        {cat:"sch_req",type:3,name:"記帳實務",credits:[1,1,0,0,0,0]},
+        {cat:"sch_req",type:3,name:"專題實作",credits:[0,0,0,2,2,0]},
+        {cat:"sch_opt",type:1,name:"數學演習",credits:[0,0,0,0,3,3]},
+        {cat:"sch_opt",type:3,name:"文書處理",credits:[2,0,0,0,0,0]},
+        {cat:"sch_opt",type:3,name:"專題前導",credits:[0,0,2,0,0,0]},
+        {cat:"sch_opt",type:3,name:"軟體應用",credits:[0,0,3,0,0,0]},
+        {cat:"sch_opt",type:3,name:"會計實務",credits:[0,0,2,2,4,4]},
+        {cat:"sch_opt",type:3,name:"經濟應用實務",credits:[0,0,0,0,4,4]},
+        {cat:"sch_opt",type:3,name:"網頁規劃/進階軟體應用",credits:[0,0,0,3,0,0]},
+        {cat:"sch_opt",type:3,name:"進階程式/電腦繪圖實務",credits:[0,0,0,0,2,0]},
+        {cat:"sch_opt",type:3,name:"跨群選修(6選1)",credits:[0,0,2,2,0,0]}
+      ],
       "113_商經科": [
         { cat: "dept", type: 1, name: "國語文", credits: [3,3,3,3,2,2] },
         { cat: "dept", type: 1, name: "英語文", credits: [2,2,2,2,2,2] },
@@ -1150,6 +1196,7 @@
         lastIsMobile = null,
         currentYear = "113",
         currentDept = "商經科";
+
     function selectCurriculum(year, dept) {
       currentYear = year || "113";
       currentDept = dept || "商經科";
@@ -1173,6 +1220,7 @@
       if (msg.includes("admin_reset_user_password")) return "重設密碼失敗：請先在 Supabase 後台 SQL Editor 部署 admin_reset_user_password 函數！";
       if (msg.includes("admin_update_user_sid")) return "帳號資料更新失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_update_user_sid 函數！";
       if (msg.includes("admin_create_auth_user")) return "直接建立帳號失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_create_auth_user 函數！";
+      if (msg.includes("admin_delete_user")) return "刪除帳號失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_delete_user 函數！";
       if (msg.includes("violates foreign key constraint") || msg.includes("foreign key")) return "操作失敗：違反資料庫關聯安全性限制。";
       if (msg.includes("Database error") || msg.includes("database")) return "資料庫連線異常，請稍後重試。";
       return msg;
@@ -1677,19 +1725,28 @@
       deleteTargetId = id;
       showConfirmModal(`確定要刪除「${name}」資料嗎？此操作將會徹底抹除該生的學分數據且無法復原。`, "確認刪除資料", execDelete);
     }
+    
+    // 👑 關鍵修正：將原先直接對 grad_checks 資料表的 delete 操作，升級為調用最高權限的 RPC 'admin_delete_user'
     async function execDelete() {
       if (!deleteTargetId || !sb) return;
       try {
-        const { error } = await sb.from('grad_checks').delete().eq('id', deleteTargetId);
+        updateSyncStatusIndicator('saving');
+        
+        // 呼叫具備 SECURITY DEFINER 的後端 RPC 同步在 Supabase Auth 系統與業務表中完整刪除此使用者
+        const { error } = await sb.rpc('admin_delete_user', { target_user_id: deleteTargetId });
         if (error) throw error;
-        showMsg("已刪除該學生資料！");
+        
+        updateSyncStatusIndicator('success');
+        showMsg("已成功刪除該帳號及學分資料！");
         toggleUIModal(false, 'confirmModal');
         fetchAdminList();
       } catch (e) {
-        showMsg(translateError(e.message), "error");
+        updateSyncStatusIndicator('offline');
+        showMsg("刪除失敗：" + translateError(e.message), "error");
         toggleUIModal(false, 'confirmModal');
       }
     }
+    
     async function enterAdminEditMode(id, name) {
       editingStudentId = id;
       updateUI();
