@@ -165,15 +165,6 @@
       color: #059669;
       text-decoration: underline;
     }
-    .section-dashboard {
-      display: none;
-      background: white;
-      z-index: 50;
-      padding: 15px 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      border-bottom: 1px solid #e2e8f0;
-      box-sizing: border-box;
-    }
     #statusHeader {
       background: linear-gradient(135deg, #1e293b, #0f172a);
       color: #f8fafc;
@@ -324,110 +315,9 @@
     .btn-help { background: linear-gradient(135deg, #06b6d4, #0891b2); }
     .btn-cloud { background: linear-gradient(135deg, #3b82f6, #2563eb); }
     .btn-admin { background: linear-gradient(135deg, #6366f1, #4f46e5); }
-    .table-container {
-      display: none;
-      position: relative;
-      background-color: white;
-      width: 100%;
-      overflow-x: auto;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      border-radius: 16px;
-      margin-top: 15px;
-      margin-bottom: 30px;
-      border: 1px solid #e2e8f0;
-      -webkit-overflow-scrolling: touch;
-    }
-    table.main-table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      margin: 0;
-      padding: 0;
-      min-width: 850px;
-    }
-    .main-table thead th {
-      background-color: #334155;
-      color: #f8fafc;
-      height: 50px;
-      border: 1px solid #475569;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
-    .main-table td {
-      border: 1px solid #e2e8f0;
-      text-align: center;
-      vertical-align: middle;
-      height: 58px;
-      padding: 2px;
-      color: #334155;
-      overflow: hidden;
-      word-break: break-all;
-    }
-    .col-cat-major {
-      writing-mode: vertical-rl;
-      text-orientation: upright;
-      letter-spacing: 3px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      color: #1e293b;
-    }
-    .col-cat-minor {
-      font-weight: bold;
-      font-size: 0.85rem;
-      line-height: 1.3;
-      padding: 0 4px;
-      word-wrap: break-word;
-    }
-    .col-name {
-      text-align: left !important;
-      padding-left: 12px !important;
-      font-weight: 700;
-      background-color: #fff;
-      font-size: 0.88rem;
-      line-height: 1.4;
-      color: #1e293b;
-    }
-    .bg-dept-main { background-color: #fecaca !important; }
-    .bg-dept-sub { background-color: #fee2e2 !important; }
-    .bg-sch-req-main { background-color: #bbf7d0 !important; }
-    .bg-sch-req-sub { background-color: #dcfce7 !important; }
-    .bg-sch-opt-main { background-color: #bfdbfe !important; }
-    .bg-sch-opt-sub { background-color: #dbeafe !important; }
-    .toggle-checkbox { display: none; }
-    .score-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-      font-weight: 800;
-      font-size: 1.3em;
-      position: relative;
-      user-select: none;
-    }
-    .toggle-checkbox:checked + .score-label {
-      background-color: #f0fdf4;
-      color: #166534;
-    }
-    .toggle-checkbox:checked + .score-label::after {
-      content: '✔';
-      font-size: 0.85em;
-      color: #10b981;
-      font-weight: 900;
-      position: absolute;
-      right: 4px;
-      top: 4px;
-      line-height: 1;
-    }
-    .toggle-checkbox:not(:checked) + .score-label {
-      background-color: #fff5f5;
-      color: #ef4444;
-      box-shadow: inset 0 0 0 1px #fee2e2;
-    }
-    .zero-score { color: #cbd5e1; font-size: 1em; background: #f8fafc; }
+
     .mobile-cards-grid {
-      display: none;
+      display: grid !important;
       grid-template-columns: 1fr;
       gap: 16px;
       margin-top: 15px;
@@ -437,46 +327,20 @@
       background-color: white;
       border: 1px solid #e2e8f0;
       border-radius: 14px;
-      padding: 16px;
+      padding: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .mobile-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
-    }
-    .mobile-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #f1f5f9;
-      padding-bottom: 10px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .mobile-card-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #1e293b;
-    }
-    .mobile-card-badges {
-      display: flex;
-      gap: 6px;
-    }
-    .mobile-badge {
-      font-size: 0.72rem;
-      font-weight: bold;
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: #1e293b;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
     }
     .mobile-semesters-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
+      gap: 12px;
     }
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
       .mobile-semesters-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;
@@ -486,7 +350,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
     .mobile-sem-label {
       font-size: 0.72rem;
@@ -498,17 +362,67 @@
       height: 42px;
       border-radius: 8px;
       overflow: hidden;
-      border: 1px solid #cbd5e1;
       display: flex;
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
+      background-color: transparent;
     }
-    .mobile-score-box .score-label { font-size: 1.15em; }
-    @media (max-width: 1024px) {
-      .table-container { display: none !important; }
-      .mobile-cards-grid { display: grid !important; }
+    
+    .toggle-checkbox { display: none; }
+    .score-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1.2rem;
+      position: relative;
+      user-select: none;
+      border-radius: 8px;
+      transition: all 0.15s ease;
     }
+    .toggle-checkbox:checked + .score-label {
+      background-color: #f0fdf4;
+      color: #15803d;
+      border: 2px solid #10b981;
+    }
+    .toggle-checkbox:checked + .score-label::after {
+      content: '✔';
+      font-size: 0.75em;
+      color: #10b981;
+      font-weight: 900;
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      line-height: 1;
+    }
+    .toggle-checkbox:not(:checked) + .score-label {
+      background-color: #fff5f5;
+      color: #ef4444;
+      border: 2px solid #fecaca;
+    }
+    .zero-score { 
+      color: #cbd5e1; 
+      font-size: 1.1em; 
+      background: #f8fafc; 
+      border: 1px dashed #cbd5e1;
+    }
+
+    .mobile-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .bg-dept-main { background-color: #fee2e2 !important; color: #991b1b !important; border: 1px solid #fecaca !important; }
+    .bg-sch-req-main { background-color: #dcfce7 !important; color: #166534 !important; border: 1px solid #bbf7d0 !important; }
+    .bg-sch-opt-main { background-color: #dbeafe !important; color: #1e40af !important; border: 1px solid #bfdbfe !important; }
+
     .modal-overlay {
       display: none;
       position: fixed !important;
@@ -710,8 +624,6 @@
     @media (max-width: 600px) {
       .status-bar { font-size: 1.1rem; border-radius: 10px; }
       .score-label { font-size: 1.1em; }
-      .col-name { font-size: 0.78rem; padding-left: 6px !important; }
-      .main-table thead th { font-size: 0.75rem; }
       .admin-toolbar > * { flex: 1 1 100%; }
       .section-dashboard { padding: 10px; }
       .modal-content { padding: 20px; }
@@ -847,12 +759,12 @@
           <div class="btn-group">
             <button class="action-btn btn-help" onclick="toggleUIModal(true,'helpModal')">使用說明</button>
             <button id="saveBtn" class="action-btn btn-cloud" onclick="handleMainAction()">班級資料</button>
-            <button class="action-btn btn-pass-all" onclick="setAllStatus(true)">全部及格</button>
-            <button class="action-btn btn-fail-all" onclick="setAllStatus(false)">學分歸零</button>
+            <button class="action-btn btn-pass-all" onclick="confirmSetAllStatus(true)">全部及格</button>
+            <button class="action-btn btn-fail-all" onclick="confirmSetAllStatus(false)">學分歸零</button>
           </div>
         </div>
       </div>
-      <div class="app-container mt-4">
+      <div class="app-container mt-4 pb-12">
         <div id="adminBackend" class="admin-backend">
           <div class="admin-header">
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -902,34 +814,6 @@
         <div id="underConstructionBox" class="hidden bg-white border border-slate-200 rounded-2xl p-12 text-center shadow-sm my-6">
           <h3 class="text-xl font-bold text-slate-800 mb-2">資料建置中</h3>
           <p class="text-slate-500 text-sm">目前選擇的年度與科系（<span id="constYearDept" class="font-bold text-[#059669]"></span>）課程學分資料正在建置中，敬請期待！</p>
-        </div>
-        <div id="tableContainer" class="table-container">
-          <table class="main-table">
-            <colgroup>
-              <col style="width:8%;">
-              <col style="width:17%;">
-              <col style="width:27%;">
-              <col style="width:8%;">
-              <col style="width:8%;">
-              <col style="width:8%;">
-              <col style="width:8%;">
-              <col style="width:8%;">
-              <col style="width:8%;">
-            </colgroup>
-            <thead>
-              <tr>
-                <th colspan="2">屬性</th>
-                <th>科目名稱</th>
-                <th>一上</th>
-                <th>一下</th>
-                <th>二上</th>
-                <th>二下</th>
-                <th>三上</th>
-                <th>三下</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-          </table>
         </div>
         <div id="mobileCardsContainer" class="mobile-cards-grid"></div>
       </div>
@@ -991,7 +875,7 @@
   <div id="createUserModal" class="modal-overlay" onclick="handleOutsideClick(event)">
     <div class="modal-content" style="max-width:400px;">
       <div class="modal-header"><span>新增帳號</span><span class="close-modal-btn" onclick="toggleUIModal(false,'createUserModal')">&times;</span></div>
-      <div class="input-group"><label>帳號</label><input type="text" id="newUserSid" placeholder="請輸入帳號(學號/教職員編號)"></div>
+      <div class="input-group"><label>帳號</label><input type="text" id="newUserSid" placeholder="請輸入帳號"></div>
       <div class="input-group"><label>真實姓名</label><input type="text" id="newUserName" placeholder="請輸入使用者真實姓名"></div>
       <div class="input-group">
         <label>入學年份</label>
@@ -1064,13 +948,15 @@
     const SB_URL = "https://tsavuxtqwfugoraomoyc.supabase.co",
       SB_KEY = "sb_publishable_ojrdIB0TeCnl8eZXbzWsdQ_2W3JB3xT";
     const EMAIL_DOMAIN = "@sshs.tc.edu.tw";
-    const YEAR_OPTIONS = ["113", "114", "115"];
-    const DEPT_OPTIONS = ["普通科", "體育班", "農經科", "園藝科", "商經科", "資處科"];
+    
+    const YEAR_OPTIONS = ["113"];
+    const DEPT_OPTIONS = ["商經科"];
+    
     const mapping = {
       cat: {
-        "dept": { text: "部定必修", class: "bg-dept-main", subClass: "bg-dept-sub" },
-        "sch_req": { text: "校定必修", class: "bg-sch-req-main", subClass: "bg-sch-req-sub" },
-        "sch_opt": { text: "校定選修", class: "bg-sch-opt-main", subClass: "bg-sch-opt-sub" }
+        "dept": { text: "部定必修", class: "bg-dept-main" },
+        "sch_req": { text: "校定必修", class: "bg-sch-req-main" },
+        "sch_opt": { text: "校定選修", class: "bg-sch-opt-main" }
       },
       type: { 1: "一般科目", 2: "專業科目", 3: "實習科目" },
       role: { student: "學生", teacher: "教師", admin: "管理員" }
@@ -1147,10 +1033,10 @@
         deleteTargetId = null,
         editingStudentId = null,
         confirmAction = null,
-        lastIsMobile = null,
         currentYear = "113",
         currentDept = "商經科",
         lastUserId = null;
+
     function selectCurriculum(year, dept) {
       currentYear = year || "113";
       currentDept = dept || "商經科";
@@ -1181,14 +1067,16 @@
       if (msg.includes("Database error") || msg.includes("database")) return "資料庫連線異常，請稍後重試。";
       return msg;
     }
-     Bark: function initThresholds() {
-      let maxDept = 0;
-      curriculum.forEach(i => {
-        if (i.cat === 'dept') maxDept += i.credits.reduce((a, b) => a + b, 0);
+    function calculateStats() {
+      let total = 0, dept = 0, prof = 0, prac = 0;
+      document.querySelectorAll(".toggle-checkbox:checked").forEach(input => {
+        let v = parseInt(input.dataset.val), c = input.dataset.cat, t = parseInt(input.dataset.type);
+        total += v;
+        if (c === 'dept') dept += v;
+        if (t == 2 || t == 3) prof += v;
+        if (t == 3) prac += v;
       });
-      DEPT_THRESHOLD = Math.round(maxDept * 0.85);
-      const el = document.getElementById('dept-limit-text');
-      if (el) el.innerText = `(${DEPT_THRESHOLD})`;
+      return { total, pass: (total >= 160 && dept >= DEPT_THRESHOLD && prof >= 60 && prac >= 45) };
     }
     function initDropdowns(showNotSet = false) {
       const yearIds = ['authEntryYear', 'profEntryYear', 'editUserEntryYear', 'adminFilterYear', 'dashSelectYear', 'newUserEntryYear'];
@@ -1264,10 +1152,18 @@
         badge.innerHTML = `<span>雲端已同步</span>`;
       }
     }
-    function showConfirmModal(msg, title, action) {
+    function showConfirmModal(msg, title, action, confirmBtnText, confirmBtnBg) {
       const btn = document.querySelector('#confirmModal .btn-pass-all');
-      btn.style.background = title.includes("重設") ? "linear-gradient(135deg, #6366f1, #4f46e5)" : "#dc3545";
-      btn.innerText = title.includes("重設") ? "確認重設" : "確認刪除";
+      if (confirmBtnBg) {
+        btn.style.background = confirmBtnBg;
+      } else {
+        btn.style.background = title.includes("重設") ? "linear-gradient(135deg, #6366f1, #4f46e5)" : "#dc3545";
+      }
+      if (confirmBtnText) {
+        btn.innerText = confirmBtnText;
+      } else {
+        btn.innerText = title.includes("重設") ? "確認重設" : (title.includes("刪除") ? "確認刪除" : "確認操作");
+      }
       document.getElementById('confirmMsg').innerText = msg;
       document.querySelector('#confirmModal .modal-header span').innerText = title;
       confirmAction = action;
@@ -1422,8 +1318,7 @@
       calculate();
     }
     function updateUI() {
-      const tableContainer = document.getElementById('tableContainer'),
-            mobileContainer = document.getElementById('mobileCardsContainer'),
+      const mobileContainer = document.getElementById('mobileCardsContainer'),
             adminBackend = document.getElementById('adminBackend'),
             dashboard = document.getElementById('dashboardSection'),
             userStatusDisplay = document.getElementById('userStatusDisplay'),
@@ -1486,9 +1381,8 @@
           renderTable();
           adminBackend.style.display = 'none';
           if (lastLoadedStudentId !== editingStudentId) loadFromCloud(editingStudentId);
-        } else if ((role === 'admin' || role === 'teacher') && isViewingClassList) {
+        } else if ((role === 'admin' || role === 'teacher' || role === 'student') && isViewingClassList) {
           dashboard.style.display = 'none';
-          tableContainer.style.display = 'none'; 
           mobileContainer.style.display = 'none';
           
           const constructionBox = document.getElementById("underConstructionBox");
@@ -1496,7 +1390,6 @@
             constructionBox.classList.add("hidden");
           }
 
-          document.getElementById("tableBody").innerHTML = "";
           mobileContainer.innerHTML = "";
           adminBackend.style.display = 'block';
           document.getElementById('backendTitle').innerText = (role === 'admin') ? '管理後台' : '班級資料管理';
@@ -1800,7 +1693,7 @@
       document.getElementById('newUserSid').value = '';
       document.getElementById('newUserName').value = '';
       document.getElementById('newUserEntryYear').value = YEAR_OPTIONS[0];
-      document.getElementById('newUserEntryDept').value = DEPT_OPTIONS[4]; 
+      document.getElementById('newUserEntryDept').value = DEPT_OPTIONS[0]; 
       document.getElementById('newUserRole').value = 'student';
       toggleNewUserTutorField('student');
       toggleUIModal(true, 'createUserModal');
@@ -2006,12 +1899,12 @@
         card.className = "mobile-card p-4 flex flex-col gap-3";
         let btnsMobile = '';
         if (s.role === 'student') {
-          btnsMobile += `<button class="action-btn py-2 px-3 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg shadow-sm transition" onclick="enterAdminEditMode('${s.id}','${s.full_name}')">檢核學分</button>`;
+          btnsMobile += `<button class="action-btn py-2 px-3 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg shadow-sm transition" onclick="enterAdminEditMode('${s.id}','${s.full_name}')">🔍 檢核學分</button>`;
         }
         if (role === 'admin') {
           btnsMobile += `
             <button class="action-btn py-2 px-3 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg shadow-sm transition" onclick="openAdminUserEdit(${i})">帳號設定</button>
-            <button class="action-btn py-2 px-3 text-xs bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-sm transition" onclick="deleteStudentData('${s.id}','${s.full_name}')">刪除</button>
+            <button class="action-btn py-2 px-3 text-xs bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-sm transition" onclick="deleteStudentData('${s.id}','${s.full_name}')">❌ 刪除</button>
           `;
         }
         card.innerHTML = `
@@ -2038,7 +1931,7 @@
       container.innerHTML = "";
       curriculum.forEach((item, index) => {
         const card = document.createElement("div");
-        card.className = "mobile-card";
+        card.className = "mobile-card flex flex-col md:flex-row md:items-center md:justify-between gap-5 p-5";
         const catInfo = mapping.cat[item.cat];
         const typeText = mapping.type[item.type];
         let semHtml = "";
@@ -2055,7 +1948,7 @@
               </div>
             `;
           } else {
-            scoreBoxHtml = `<div class="mobile-score-box zero-score score-label" style="cursor: default; border-color: #f1f5f9;">-</div>`;
+            scoreBoxHtml = `<div class="mobile-score-box zero-score score-label" style="cursor: default;">-</div>`;
           }
           semHtml += `
             <div class="mobile-sem-item">
@@ -2065,71 +1958,21 @@
           `;
         });
         card.innerHTML = `
-          <div class="mobile-card-header">
-            <span class="mobile-card-title">${item.name}</span>
-            <div class="mobile-card-badges">
-              <span class="mobile-badge ${catInfo.class}" style="padding: 2px 6px; border-radius: 4px; font-size: 0.72rem;">${catInfo.text}</span>
-              <span class="mobile-badge" style="background-color: #f1f5f9; color: #475569; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem;">${typeText}</span>
+          <div class="flex flex-col gap-1.5 md:w-1/3">
+            <span class="mobile-card-title text-[1.05rem] font-extrabold text-slate-800 leading-snug">${item.name}</span>
+            <div class="mobile-card-badges flex flex-wrap gap-2 mt-1">
+              <span class="mobile-badge ${catInfo.class}">${catInfo.text}</span>
+              <span class="mobile-badge bg-slate-100 text-slate-600 border border-slate-200">${typeText}</span>
             </div>
           </div>
-          <div class="mobile-semesters-grid">
+          <div class="mobile-semesters-grid flex-grow md:w-2/3">
             ${semHtml}
           </div>
         `;
         container.appendChild(card);
       });
     }
-    function renderDesktopTable(checkedStates = {}) {
-      const tableBody = document.getElementById("tableBody");
-      tableBody.innerHTML = "";
-      let currentCat = "", currentType = "";
-      curriculum.forEach((item, index) => {
-        const tr = document.createElement("tr");
-        const catInfo = mapping.cat[item.cat];
-        if (item.cat !== currentCat) {
-          let catCount = curriculum.filter(i => i.cat === item.cat).length;
-          const tdCat = document.createElement("td");
-          tdCat.className = `col-cat-major ${catInfo.class}`;
-          tdCat.rowSpan = catCount;
-          tdCat.innerText = catInfo.text;
-          tr.appendChild(tdCat);
-          currentCat = item.cat;
-          currentType = "";
-        }
-        if (item.type !== currentType || tr.children.length === 1) {
-          let typeCount = curriculum.filter(i => i.cat === item.cat && i.type === item.type).length;
-          const tdType = document.createElement("td");
-          tdType.className = `col-cat-minor ${catInfo.subClass}`;
-          tdType.rowSpan = typeCount;
-          tdType.innerText = mapping.type[item.type];
-          tr.appendChild(tdType);
-          currentType = item.type;
-        }
-        const tdName = document.createElement("td");
-        tdName.className = "col-name";
-        tdName.innerHTML = item.name;
-        tr.appendChild(tdName);
-        item.credits.forEach((c, sIdx) => {
-          const tdScore = document.createElement("td");
-          const id = `chk-${index}-${sIdx}`;
-          const isChecked = checkedStates[id] !== undefined ? checkedStates[id] : true;
-          if (c > 0) {
-            tdScore.innerHTML = `
-              <input type="checkbox" class="toggle-checkbox" id="${id}" data-val="${c}" data-cat="${item.cat}" data-type="${item.type}" onchange="calculate(); saveToCloud(true);" ${isChecked ? 'checked' : ''}>
-              <label class="score-label" for="${id}">${c}</label>
-            `;
-          } else {
-            tdScore.className = "zero-score";
-            tdScore.innerText = "-";
-          }
-          tr.appendChild(tdScore);
-        });
-        tableBody.appendChild(tr);
-      });
-    }
     function renderTable() {
-      const isMobile = window.innerWidth <= 1024;
-      const tableContainer = document.getElementById("tableContainer");
       const mobileContainer = document.getElementById("mobileCardsContainer");
       const constructionBox = document.getElementById("underConstructionBox");
       const constYearDeptSpan = document.getElementById("constYearDept");
@@ -2138,54 +1981,30 @@
         checkedStates[chk.id] = chk.checked;
       });
       if (curriculum.length === 0) {
-        tableContainer.style.display = "none";
         mobileContainer.style.display = "none";
-        document.getElementById("tableBody").innerHTML = "";
         mobileContainer.innerHTML = "";
         constYearDeptSpan.innerText = `${currentYear}年入學${currentDept}`;
         constructionBox.classList.remove("hidden");
         return;
       }
       constructionBox.classList.add("hidden");
-      if (isMobile) {
-        tableContainer.style.display = "none";
-        document.getElementById("tableBody").innerHTML = "";
-        mobileContainer.style.display = "grid";
-        renderMobileCards(checkedStates);
-      } else {
-        tableContainer.style.display = "block";
-        tableContainer.querySelector("table").style.display = "table";
-        mobileContainer.style.display = "none";
-        mobileContainer.innerHTML = "";
-        renderDesktopTable(checkedStates);
-      }
+      mobileContainer.style.display = "grid";
+      renderMobileCards(checkedStates);
     }
-    window.addEventListener('resize', () => {
-      const isMobile = window.innerWidth <= 1024;
-      if (isMobile !== lastIsMobile) {
-        lastIsMobile = isMobile;
-        renderTable();
-        calculate();
-      }
-    });
-    function calculateStats() {
-      let total = 0, dept = 0, prof = 0, prac = 0;
-      document.querySelectorAll(".toggle-checkbox:checked").forEach(input => {
-        let v = parseInt(input.dataset.val), c = input.dataset.cat, t = parseInt(input.dataset.type);
-        total += v;
-        if (c === 'dept') dept += v;
-        if (t == 2 || t == 3) prof += v;
-        if (t == 3) prac += v;
+    function initThresholds() {
+      let maxDept = 0;
+      curriculum.forEach(i => {
+        if (i.cat === 'dept') maxDept += i.credits.reduce((a, b) => a + b, 0);
       });
-      return { total, pass: (total >= 160 && dept >= DEPT_THRESHOLD && prof >= 60 && prac >= 45) };
+      DEPT_THRESHOLD = Math.round(maxDept * 0.85);
+      const el = document.getElementById('dept-limit-text');
+      if (el) el.innerText = `(${DEPT_THRESHOLD})`;
     }
     function buildCardContent(title, value, target) {
-      const isNullVal = value === null || value === "null";
-      const isNullTarget = target === null || target === "null";
-      const displayVal = isNullVal ? "null" : value;
-      const displayTarget = isNullTarget ? "null" : target;
-      const percentage = (isNullVal || isNullTarget) ? 0 : Math.min(100, Math.round((value / target) * 100));
-      const color = (!isNullVal && !isNullTarget && value >= target) ? '#10b981' : '#f59e0b';
+      const displayVal = value === null || value === "null" ? "null" : value;
+      const displayTarget = target === null || target === "null" ? "null" : target;
+      const percentage = (value === null || target === null) ? 0 : Math.min(100, Math.round((value / target) * 100));
+      const color = (value !== null && target !== null && value >= target) ? '#10b981' : '#f59e0b';
       return `
         <div class="card-title">${title}</div>
         <div style="font-size: 1.8rem; font-weight: 800; display: flex; align-items: baseline; justify-content: center; gap: 4px;">
@@ -2281,6 +2100,19 @@
           st.className = "status-bar " + (pass ? "status-pass text-white" : "status-fail text-white");
         }
       }
+    }
+    function confirmSetAllStatus(p) {
+      const title = p ? "確認全部及格" : "確認學分歸零";
+      const msg = p 
+        ? "您確定要將所有課程學分一次設為「及格」嗎？此操作將會覆蓋您當前勾選的狀態，並同步存檔至雲端。" 
+        : "您確定要將所有及格學分「全部歸零」嗎？此操作將會清空所有勾選狀態，並同步存檔至雲端。";
+      const btnText = p ? "確認全部及格" : "確認學分歸零";
+      const btnBg = p ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" : "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)";
+      
+      showConfirmModal(msg, title, () => {
+        setAllStatus(p);
+        toggleUIModal(false, 'confirmModal');
+      }, btnText, btnBg);
     }
     function setAllStatus(p) {
       document.querySelectorAll(".toggle-checkbox").forEach(chk => { chk.checked = p; });
