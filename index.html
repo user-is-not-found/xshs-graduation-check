@@ -1340,7 +1340,7 @@
           });
           if (error) throw error;
           updateSyncStatusIndicator('success');
-          showMsg("註冊成功！請登入。");
+          showMsg("註冊成功！");
           switchAuthMode();
         } else {
           const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
