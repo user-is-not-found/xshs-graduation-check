@@ -792,10 +792,10 @@
     <div class="auth-glow-1"></div>
     <div class="auth-glow-2"></div>
     <div class="auth-card">
-      <h2 id="authTitle" class="auth-title">帳號(學號/教職員編號)登入</h2>
+      <h2 id="authTitle" class="auth-title">帳號登入</h2>
       <p class="auth-subtitle">新社高中畢業自我檢核系統</p>
       <div class="auth-form-group">
-        <label>帳號(學號/教職員編號)</label>
+        <label>帳號</label>
         <input type="text" id="authID" placeholder="請輸入帳號(學號/教職員編號)">
       </div>
       <div id="regFields" style="display:none">
@@ -817,7 +817,7 @@
         <input type="password" id="authPassword" placeholder="請輸入密碼">
       </div>
       <button class="auth-btn-primary" onclick="handleAuth()">確認登入</button>
-      <div id="authSwitchLink" class="auth-switch-link" onclick="switchAuthMode()">尚未有帳號(學號/教職員編號)？點此註冊</div>
+      <div id="authSwitchLink" class="auth-switch-link" onclick="switchAuthMode()">尚未有帳號？點此註冊</div>
     </div>
   </div>
   <div id="appWorkspace" style="display: none;" class="flex-grow flex flex-col h-full overflow-hidden">
@@ -858,11 +858,11 @@
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
               <span id="backendTitle">資料管理</span>
               <button id="backToTrialBtn" class="btn-mini" style="background:#6c757d; display:none;" onclick="handleReturnToTrial()">返回檢核表試算</button>
-              <button id="createUserBtn" class="btn-mini" style="background:#10b981; display:none;" onclick="openCreateUserModal()">新增帳號(學號/教職員編號)</button>
+              <button id="createUserBtn" class="btn-mini" style="background:#10b981; display:none;" onclick="openCreateUserModal()">新增帳號</button>
             </div>
           </div>
           <div class="admin-toolbar">
-            <input type="text" id="adminSearchInput" class="admin-filter-input" placeholder="搜尋姓名或帳號(學號/教職員編號)" oninput="fetchAdminList(true)">
+            <input type="text" id="adminSearchInput" class="admin-filter-input" placeholder="搜尋姓名或帳號" oninput="fetchAdminList(true)">
             <select id="adminFilterYear" class="sort-select" onchange="fetchAdminList(true)">
               <option value="all">所有年度</option>
             </select>
@@ -870,7 +870,7 @@
               <option value="all">所有科系</option>
             </select>
             <select id="adminSort" class="sort-select" onchange="fetchAdminList(true)">
-              <option value="sid">帳號(學號/教職員編號)排序</option>
+              <option value="sid">帳號排序</option>
               <option value="name">姓名排序</option>
             </select>
           </div>
@@ -886,7 +886,7 @@
               <thead>
                 <tr>
                   <th>姓名</th>
-                  <th>帳號(學號/教職員編號)</th>
+                  <th>帳號</th>
                   <th>身份</th>
                   <th>入學年/科系</th>
                   <th>操作</th>
@@ -939,7 +939,7 @@
     <div class="modal-content" style="max-width:400px;">
       <div class="modal-header"><span>個人資料管理</span><span class="close-modal-btn" onclick="toggleUIModal(false,'profileModal')">&times;</span></div>
       <div class="input-group">
-        <label id="profAccountLabel">帳號(學號/教職員編號)</label>
+        <label id="profAccountLabel">帳號</label>
         <input type="text" id="profAccount" disabled style="background:#f1f5f9; border: 1px solid #cbd5e1; color: #64748b;">
       </div>
       <div class="input-group"><label>姓名</label><input type="text" id="profName" placeholder="請輸入姓名"></div>
@@ -958,9 +958,9 @@
   </div>
   <div id="adminUserModal" class="modal-overlay" onclick="handleOutsideClick(event)">
     <div class="modal-content" style="max-width:400px;">
-      <div class="modal-header"><span>更改帳號(學號/教職員編號)資料</span><span class="close-modal-btn" onclick="toggleUIModal(false,'adminUserModal')">&times;</span></div>
+      <div class="modal-header"><span>更改帳號資料</span><span class="close-modal-btn" onclick="toggleUIModal(false,'adminUserModal')">&times;</span></div>
       <input type="hidden" id="editUserId">
-      <div class="input-group"><label>帳號(學號/教職員編號)</label><input type="text" id="editUserSid"></div>
+      <div class="input-group"><label>帳號</label><input type="text" id="editUserSid"></div>
       <div class="input-group"><label>姓名</label><input type="text" id="editUserName"></div>
       <div class="input-group">
         <label>入學年份</label>
@@ -979,19 +979,19 @@
         <div id="editTutorWrapper"></div>
       </div>
       <div class="input-group" style="border-top: 1px solid #f1f5f9; padding-top: 15px; margin-top: 15px;">
-        <label style="color: #6366f1; font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; display: block;">帳號(學號/教職員編號)安全管理</label>
+        <label style="color: #6366f1; font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; display: block;">帳號安全管理</label>
         <button type="button" class="action-btn" style="border-radius: 8px; background: linear-gradient(135deg, #6366f1, #4f46e5); width: 100%; font-size: 0.9rem; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0;" onclick="directResetPasswordToSid()">
-          一鍵重設密碼為「帳號(學號/教職員編號)」
+          一鍵重設密碼為「帳號」
         </button>
-        <p style="font-size: 0.8rem; color: #64748b; margin-top: 8px; line-height: 1.4;">※ 點擊後，系統會立即將該使用者的登入密碼覆寫為他的「帳號(學號/教職員編號)」（如：112001）。</p>
+        <p style="font-size: 0.8rem; color: #64748b; margin-top: 8px; line-height: 1.4;">※ 點擊後，系統會立即將該使用者的登入密碼覆寫為他的「帳號」（如：112001）。</p>
       </div>
-      <button class="action-btn btn-admin" style="width:100%; margin-top: 15px;" onclick="saveAdminUserEdit()">儲存帳號(學號/教職員編號)基本修改</button>
+      <button class="action-btn btn-admin" style="width:100%; margin-top: 15px;" onclick="saveAdminUserEdit()">儲存帳號修改</button>
     </div>
   </div>
   <div id="createUserModal" class="modal-overlay" onclick="handleOutsideClick(event)">
     <div class="modal-content" style="max-width:400px;">
-      <div class="modal-header"><span>新增帳號(學號/教職員編號)</span><span class="close-modal-btn" onclick="toggleUIModal(false,'createUserModal')">&times;</span></div>
-      <div class="input-group"><label>帳號(學號/教職員編號)</label><input type="text" id="newUserSid" placeholder="請輸入帳號(學號/教職員編號)"></div>
+      <div class="modal-header"><span>新增帳號</span><span class="close-modal-btn" onclick="toggleUIModal(false,'createUserModal')">&times;</span></div>
+      <div class="input-group"><label>帳號</label><input type="text" id="newUserSid" placeholder="請輸入帳號(學號/教職員編號)"></div>
       <div class="input-group"><label>真實姓名</label><input type="text" id="newUserName" placeholder="請輸入使用者真實姓名"></div>
       <div class="input-group">
         <label>入學年份</label>
@@ -1009,9 +1009,9 @@
         <label>導師</label>
         <div id="newTutorWrapper"></div>
       </div>
-      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號(學號/教職員編號)，學生與教師即可憑他們的**帳號(學號/教職員編號)**作為帳號(學號/教職員編號)密碼直接登入！</p>
-      <p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號(學號/教職員編號)預設登入密碼亦為其帳號(學號/教職員編號)，請提醒他們登入後進行修改。</p>
-      <button class="action-btn btn-pass-all" style="width:100%;" onclick="saveNewUser()">確認建立新帳號(學號/教職員編號)</button>
+      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號**作為帳號密碼直接登入！</p>
+      <p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號預設登入密碼亦為其帳號，請提醒他們登入後進行修改。</p>
+      <button class="action-btn btn-pass-all" style="width:100%;" onclick="saveNewUser()">確認建立新帳號</button>
     </div>
   </div>
   <div id="confirmModal" class="modal-overlay">
@@ -1168,13 +1168,13 @@
     }
     function translateError(msg) {
       if (!msg) return "未知錯誤，請重試。";
-      if (msg.includes("Invalid login credentials") || msg.includes("Invalid credentials")) return "帳號(學號/教職員編號)或密碼輸入錯誤，請重新確認！";
-      if (msg.includes("User already registered") || msg.includes("email already exists") || msg.includes("already registered")) return "此帳號(學號/教職員編號)已被註冊！若忘記密碼請洽管理員。";
+      if (msg.includes("Invalid login credentials") || msg.includes("Invalid credentials")) return "帳號或密碼輸入錯誤，請重新確認！";
+      if (msg.includes("User already registered") || msg.includes("email already exists") || msg.includes("already registered")) return "此帳號已被註冊！若忘記密碼請洽管理員。";
       if (msg.includes("Password should be at least")) return "密碼強度不足：長度至少需要 6 個字元！";
       if (msg.includes("admin_reset_user_password")) return "重設密碼失敗：請先在 Supabase 後台 SQL Editor 部署 admin_reset_user_password 函數！";
-      if (msg.includes("admin_update_user_sid")) return "帳號(學號/教職員編號)資料更新失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_update_user_sid 函數！";
-      if (msg.includes("admin_create_auth_user")) return "直接建立帳號(學號/教職員編號)失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_create_auth_user 函數！";
-      if (msg.includes("admin_delete_user")) return "刪除帳號(學號/教職員編號)失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_delete_user 函數！";
+      if (msg.includes("admin_update_user_sid")) return "帳號資料更新失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_update_user_sid 函數！";
+      if (msg.includes("admin_create_auth_user")) return "直接建立帳號失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_create_auth_user 函數！";
+      if (msg.includes("admin_delete_user")) return "刪除帳號失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_delete_user 函數！";
       if (msg.includes("admin_save_grad_checks")) return "學分存檔失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_save_grad_checks 函數！";
       if (msg.includes("admin_update_grad_checks")) return "資料變更失敗：請先在 Supabase 後台 SQL Editor 部署最新版 admin_update_grad_checks 函數！";
       if (msg.includes("violates foreign key constraint") || msg.includes("foreign key")) return "操作失敗：違反資料庫關聯安全性限制。";
@@ -1281,11 +1281,11 @@
       const sid = document.getElementById('editUserSid').value.trim();
       const name = document.getElementById('editUserName').value.trim();
       if (!sid) {
-        showMsg("無法重設：此帳號(學號/教職員編號)目前沒有設定帳號(學號/教職員編號)！", "error");
+        showMsg("無法重設：此帳號目前沒有設定帳號！", "error");
         return;
       }
       showConfirmModal(
-        `您確定要將「${name}」的登入密碼立即重設為其帳號(學號/教職員編號)「${sid}」嗎？重設後請通知學生使用此預設密碼登入並自行修改。`, 
+        `您確定要將「${name}」的登入密碼立即重設為其帳號「${sid}」嗎？重設後請通知學生使用此預設密碼登入並自行修改。`, 
         "確認重設密碼", 
         async () => {
           try {
@@ -1316,7 +1316,7 @@
       const sid = document.getElementById('authID').value.trim();
       const pwd = document.getElementById('authPassword').value;
       if (!sid || !pwd) {
-        showMsg("請填寫帳號(學號/教職員編號)與密碼！", "error");
+        showMsg("請填寫帳號與密碼！", "error");
         return;
       }
       const email = `${sid}${EMAIL_DOMAIN}`;
@@ -1364,12 +1364,12 @@
     function switchAuthMode() {
       const isReg = document.getElementById('regFields').style.display === 'none';
       document.getElementById('regFields').style.display = isReg ? 'block' : 'none';
-      document.getElementById('authTitle').innerText = isReg ? '註冊新帳號(學號/教職員編號)' : '帳號(學號/教職員編號)登入';
+      document.getElementById('authTitle').innerText = isReg ? '註冊新帳號' : '帳號登入';
       const authBtn = document.querySelector(".auth-btn-primary");
       if (authBtn) {
-        authBtn.innerText = isReg ? "確認註冊帳號(學號/教職員編號)" : "確認登入";
+        authBtn.innerText = isReg ? "確認註冊帳號" : "確認登入";
       }
-      document.getElementById('authSwitchLink').innerText = isReg ? '已有帳號(學號/教職員編號)？點此登入吧' : '尚未有帳號(學號/教職員編號)？點此註冊';
+      document.getElementById('authSwitchLink').innerText = isReg ? '已有帳號？點此登入吧' : '尚未有帳號？點此註冊';
       initDropdowns(false); 
     }
     async function handleLogout() {
@@ -1571,8 +1571,8 @@
         accountInput.style.border = '1px solid #cbd5e1';
         yrSel.disabled = false;
         dtSel.disabled = false;
-        accountLabel.innerText = "帳號(學號/教職員編號)";
-        tipMsg.innerText = "※ 您是管理員，可全權修改您的年度、科系與帳號(學號/教職員編號)。";
+        accountLabel.innerText = "帳號";
+        tipMsg.innerText = "※ 您是管理員，可全權修改您的年度、科系與帳號。";
         tipMsg.style.color = "#10b981";
       } else if (role === 'teacher') {
         accountInput.disabled = true;
@@ -1580,7 +1580,7 @@
         accountInput.style.border = '1px solid #cbd5e1';
         yrSel.disabled = true;
         dtSel.disabled = true;
-        accountLabel.innerText = "帳號(學號/教職員編號)";
+        accountLabel.innerText = "帳號";
         tipMsg.innerText = "※ 您的負責班級年度與科系如有誤，請洽管理員修正。";
         tipMsg.style.color = "#d946ef";
       } else {
@@ -1589,7 +1589,7 @@
         accountInput.style.border = '1px solid #cbd5e1';
         yrSel.disabled = true;
         dtSel.disabled = true;
-        accountLabel.innerText = "帳號(學號/教職員編號)";
+        accountLabel.innerText = "帳號";
         tipMsg.innerText = "※ 入學年份與科系如有誤請洽管理員更正。";
         tipMsg.style.color = "#d946ef";
       }
@@ -1670,7 +1670,7 @@
       let matchedTutor = curRecord?.tutor || '未設定';
       if (role === 'student' && (matchedTutor === '未設定' || !matchedTutor)) {
         matchedTutor = await findTutorByYearDept(entryYear, entryDept);
-      } else if (role === 'teacher') matchedTutor = '教師帳號(學號/教職員編號)';
+      } else if (role === 'teacher') matchedTutor = '教師帳號';
 
       const { error = null } = await sb.rpc('admin_save_grad_checks', {
         target_id: targetId,
@@ -1703,7 +1703,7 @@
         const { error } = await sb.rpc('admin_delete_user', { target_user_id: deleteTargetId });
         if (error) throw error;
         updateSyncStatusIndicator('success');
-        showMsg("已成功刪除該帳號(學號/教職員編號)及學分資料！");
+        showMsg("已成功刪除該帳號資料！");
         toggleUIModal(false, 'confirmModal');
         fetchAdminList();
       } catch (e) {
@@ -1787,7 +1787,7 @@
         });
         if (error) throw error;
         updateSyncStatusIndicator('success');
-        showMsg("帳號(學號/教職員編號)資料已同步更新成功！");
+        showMsg("帳號資料已同步更新成功！");
         toggleUIModal(false, 'adminUserModal');
         fetchAdminList();
       } catch (err) { 
@@ -1824,9 +1824,9 @@
       const year = document.getElementById('newUserEntryYear').value;
       const dept = document.getElementById('newUserEntryDept').value;
       const role = document.getElementById('newUserRole').value;
-      const tutor = (role === 'student') ? document.getElementById('newUserTutor').value : '教師帳號(學號/教職員編號)';
+      const tutor = (role === 'student') ? document.getElementById('newUserTutor').value : '教師帳號';
       if (!sid || !name) {
-        showMsg("請務必填寫帳號(學號/教職員編號)與真實姓名！", "error");
+        showMsg("請務必填寫帳號與真實姓名！", "error");
         return;
       }
       try {
@@ -1841,7 +1841,7 @@
         });
         if (error) throw error;
         updateSyncStatusIndicator('success');
-        showMsg(`系統帳號(學號/教職員編號)「${name}」已成功直接建立！使用者可直接使用密碼「${sid}」登入。`);
+        showMsg(`系統帳號「${name}」已成功直接建立！使用者可直接使用密碼「${sid}」登入。`);
         toggleUIModal(false, 'createUserModal');
         fetchAdminList(); 
       } catch (err) {
@@ -1991,7 +1991,7 @@
           btnsDesktop += `<span class="text-slate-400 text-xs italic px-3 select-none">無須檢核學分</span>`;
         }
         if (role === 'admin') {
-          btnsDesktop += `<button class="btn-mini" style="background:#3b82f6" onclick="openAdminUserEdit(${i})">✏️ 帳號(學號/教職員編號)設定</button>
+          btnsDesktop += `<button class="btn-mini" style="background:#3b82f6" onclick="openAdminUserEdit(${i})">帳號設定</button>
                          <button class="btn-mini" style="background:#ef4444" onclick="deleteStudentData('${s.id}','${s.full_name}')">❌ 刪除</button>`;
         }
         tr.innerHTML = `
@@ -2018,7 +2018,7 @@
           <div class="flex justify-between items-start border-b border-slate-100 pb-2">
             <div>
               <div class="text-sm font-bold text-slate-800">${s.full_name}</div>
-              <div class="text-xs text-slate-500 mt-0.5">帳號(學號/教職員編號): ${s.student_id || '-'}</div>
+              <div class="text-xs text-slate-500 mt-0.5">帳號: ${s.student_id || '-'}</div>
             </div>
             <span class="role-badge ${roleClass} text-xs py-1 px-2.5 rounded-full font-bold text-white">${roleText}</span>
           </div>
