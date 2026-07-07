@@ -1150,7 +1150,6 @@
         lastIsMobile = null,
         currentYear = "113",
         currentDept = "商經科";
-
     function selectCurriculum(year, dept) {
       currentYear = year || "113";
       currentDept = dept || "商經科";
@@ -1656,6 +1655,7 @@
       if (role === 'student' && (matchedTutor === '未設定' || !matchedTutor)) {
         matchedTutor = await findTutorByYearDept(entryYear, entryDept);
       } else if (role === 'teacher') matchedTutor = '教師帳號';
+
       const { error = null } = await sb.rpc('admin_save_grad_checks', {
         target_id: targetId,
         target_student_id: curRecord?.student_id || m?.student_id || '',
@@ -1684,8 +1684,6 @@
       if (!deleteTargetId || !sb) return;
       try {
         updateSyncStatusIndicator('saving');
-        
-        // 呼叫具備 SECURITY DEFINER 的後端 RPC 同步在 Supabase Auth 系統與業務表中完整刪除此使用者
         const { error } = await sb.rpc('admin_delete_user', { target_user_id: deleteTargetId });
         if (error) throw error;
         
@@ -1699,7 +1697,6 @@
         toggleUIModal(false, 'confirmModal');
       }
     }
-    
     async function enterAdminEditMode(id, name) {
       editingStudentId = id;
       updateUI();
@@ -1763,6 +1760,7 @@
           new_name: n
         });
         if (authError) throw authError;
+
         const { error } = await sb.rpc('admin_update_grad_checks', {
           target_id: id,
           target_student_id: sid,
@@ -2147,6 +2145,14 @@
         renderDesktopTable(checkedStates);
       }
     }
+    window.addEventListener('resize', () => {
+      const isMobile = window.innerWidth <= 1024;
+      if (isMobile !== lastIsMobile) {
+        lastIsMobile = isMobile;
+        renderTable();
+        calculate();
+      }
+    });
     function calculateStats() {
       let total = 0, dept = 0, prof = 0, prac = 0;
       document.querySelectorAll(".toggle-checkbox:checked").forEach(input => {
