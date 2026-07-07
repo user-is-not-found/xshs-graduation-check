@@ -795,7 +795,7 @@
       <h2 id="authTitle" class="auth-title">帳號登入</h2>
       <p class="auth-subtitle">新社高中畢業自我檢核系統</p>
       <div class="auth-form-group">
-        <label>帳號</label>
+        <label>帳號(學號/教職員編號)</label>
         <input type="text" id="authID" placeholder="請輸入帳號(學號/教職員編號)">
       </div>
       <div id="regFields" style="display:none">
@@ -939,7 +939,7 @@
     <div class="modal-content" style="max-width:400px;">
       <div class="modal-header"><span>個人資料管理</span><span class="close-modal-btn" onclick="toggleUIModal(false,'profileModal')">&times;</span></div>
       <div class="input-group">
-        <label id="profAccountLabel">帳號(學號/教職員編號)</label>
+        <label id="profAccountLabel">帳號</label>
         <input type="text" id="profAccount" disabled style="background:#f1f5f9; border: 1px solid #cbd5e1; color: #64748b;">
       </div>
       <div class="input-group"><label>姓名</label><input type="text" id="profName" placeholder="請輸入姓名"></div>
@@ -960,7 +960,7 @@
     <div class="modal-content" style="max-width:400px;">
       <div class="modal-header"><span>更改帳號資料</span><span class="close-modal-btn" onclick="toggleUIModal(false,'adminUserModal')">&times;</span></div>
       <input type="hidden" id="editUserId">
-      <div class="input-group"><label>帳號(學號/教職員編號)</label><input type="text" id="editUserSid"></div>
+      <div class="input-group"><label>帳號</label><input type="text" id="editUserSid"></div>
       <div class="input-group"><label>姓名</label><input type="text" id="editUserName"></div>
       <div class="input-group">
         <label>入學年份</label>
@@ -981,9 +981,9 @@
       <div class="input-group" style="border-top: 1px solid #f1f5f9; padding-top: 15px; margin-top: 15px;">
         <label style="color: #6366f1; font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; display: block;">帳號安全管理</label>
         <button type="button" class="action-btn" style="border-radius: 8px; background: linear-gradient(135deg, #6366f1, #4f46e5); width: 100%; font-size: 0.9rem; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0;" onclick="directResetPasswordToSid()">
-          一鍵重設密碼為「帳號(學號/教職員編號)」
+          一鍵重設密碼為「帳號」
         </button>
-        <p style="font-size: 0.8rem; color: #64748b; margin-top: 8px; line-height: 1.4;">※ 點擊後，系統會立即將該使用者的登入密碼覆寫為他的「帳號(學號/教職員編號)」（如：112001）。</p>
+        <p style="font-size: 0.8rem; color: #64748b; margin-top: 8px; line-height: 1.4;">※ 點擊後，系統會立即將該使用者的登入密碼覆寫為他的「帳號」（如：112001）。</p>
       </div>
       <button class="action-btn btn-admin" style="width:100%; margin-top: 15px;" onclick="saveAdminUserEdit()">儲存帳號基本修改</button>
     </div>
@@ -991,7 +991,7 @@
   <div id="createUserModal" class="modal-overlay" onclick="handleOutsideClick(event)">
     <div class="modal-content" style="max-width:400px;">
       <div class="modal-header"><span>新增帳號</span><span class="close-modal-btn" onclick="toggleUIModal(false,'createUserModal')">&times;</span></div>
-      <div class="input-group"><label>帳號(學號/教職員編號)</label><input type="text" id="newUserSid" placeholder="請輸入帳號(學號/教職員編號)"></div>
+      <div class="input-group"><label>帳號</label><input type="text" id="newUserSid" placeholder="請輸入帳號"></div>
       <div class="input-group"><label>真實姓名</label><input type="text" id="newUserName" placeholder="請輸入使用者真實姓名"></div>
       <div class="input-group">
         <label>入學年份</label>
@@ -1009,7 +1009,7 @@
         <label>導師</label>
         <div id="newTutorWrapper"></div>
       </div>
-      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">💡 管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號(學號/教職員編號)**作為帳號密碼直接登入！</p>
+      <p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號(學號/教職員編號)**作為帳號密碼直接登入！</p>
       <p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號預設登入密碼亦為其帳號(學號/教職員編號)，請提醒他們登入後進行修改。</p>
       <button class="action-btn btn-pass-all" style="width:100%;" onclick="saveNewUser()">確認建立新帳號</button>
     </div>
@@ -1031,7 +1031,7 @@
         <span class="close-modal-btn" onclick="toggleUIModal(false, 'helpModal')">&times;</span>
       </div>
       <div class="modal-body">
-        <p>新社高中的同學們~歡迎來到畢業自我檢核系統<br>請依自己的成績切換狀態</p>
+        <p>新社高中的同學們~歡迎來到畢業自我檢核系統</p>
         <p style="margin-top: 15px; font-weight:bold;">切換狀態：點擊表格中的數字</p>
         <ul class="score-examples">
           <li>
@@ -1312,7 +1312,7 @@
       const sid = document.getElementById('authID').value.trim();
       const pwd = document.getElementById('authPassword').value;
       if (!sid || !pwd) {
-        showMsg("請務必填寫帳號(學號/教職員編號)與密碼！", "error");
+        showMsg("請填寫帳號與密碼！", "error");
         return;
       }
       const email = `${sid}${EMAIL_DOMAIN}`;
@@ -1994,7 +1994,7 @@
           <div class="flex justify-between items-start border-b border-slate-100 pb-2">
             <div>
               <div class="text-sm font-bold text-slate-800">${s.full_name}</div>
-              <div class="text-xs text-slate-500 mt-0.5">帳號(學號/教職員編號): ${s.student_id || '-'}</div>
+              <div class="text-xs text-slate-500 mt-0.5">帳號(學號): ${s.student_id || '-'}</div>
             </div>
             <span class="role-badge ${roleClass} text-xs py-1 px-2.5 rounded-full font-bold text-white">${roleText}</span>
           </div>
@@ -2249,6 +2249,11 @@
           st.className = "status-bar " + (pass ? "status-pass text-white" : "status-fail text-white");
         }
       }
+    }
+    function setAllStatus(p) {
+      document.querySelectorAll(".toggle-checkbox").forEach(chk => { chk.checked = p; });
+      calculate();
+      saveToCloud(true);
     }
     initDropdowns(false); 
     selectCurriculum(currentYear, currentDept);
