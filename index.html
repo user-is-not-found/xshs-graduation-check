@@ -156,12 +156,12 @@
 			<div id="dashboardSection" class="app-container mt-4" style="display: none;">
 				<div class="bg-white border border-slate-200 rounded-2xl py-6 px-4 shadow-sm">
 					<div id="curriculumSelectorArea" class="flex flex-wrap gap-4 items-center mb-6 pb-4 border-b border-slate-100">
-						<span class="text-sm font-bold text-slate-600">課表檢視版本：</span>
+						<span class="text-sm font-bold text-slate-600">學分表版本：</span>
 						<select id="dashSelectYear" class="sort-select text-sm py-1.5 px-3" onchange="changeDashCurriculum()"></select>
 						<select id="dashSelectDept" class="sort-select text-sm py-1.5 px-3" onchange="changeDashCurriculum()"></select>
 					</div>
 					<div id="adminEditBanner" class="admin-edit-banner" style="display:none; background:#6366f1; color:white; padding:10px; text-align:center; font-weight:bold; border-radius:8px; margin-bottom:12px;">
-						修改模式：正在編輯 <span id="targetStudentName">學生</span> 的資料 | <a href="javascript:void(0)" onclick="exitAdminEditMode()" style="color:white; text-decoration:underline;">取消返回列表</a>
+						正在編輯 <span id="targetStudentName">學生</span> 的資料 | <a href="javascript:void(0)" onclick="exitAdminEditMode()" style="color:white; text-decoration:underline;">取消返回列表</a>
 					</div>
 					<div id="finalStatus" class="status-bar status-fail">計算中...</div>
 					<div class="result-grid">
@@ -257,10 +257,10 @@
 			<div class="input-group"><label id="profYearLabel">入學年</label><select id="profEntryYear" disabled style="background:#f1f5f9; border: 1px solid #cbd5e1; color: #64748b;"></select></div>
 			<div class="input-group"><label id="profDeptLabel">科別</label><select id="profEntryDept" disabled style="background:#f1f5f9; border: 1px solid #cbd5e1; color: #64748b;"></select></div>
 			<div id="profStudentTutorArea" class="input-group">
-				<label id="profTutorLabel">導師 (由系統對應)</label>
+				<label id="profTutorLabel">導師 (系統自動對應)</label>
 				<input type="text" id="profTutor" disabled style="background:#f1f5f9; border: 1px solid #cbd5e1; color: #64748b;">
 			</div>
-			<p id="profTipMessage" style="font-size:0.85rem; color:#d946ef; margin-bottom:15px; font-weight:bold;">※ 姓名、入學年與科別如有誤請洽管理員更正。您目前僅能修改密碼。</p>
+			<p id="profTipMessage" style="font-size:0.85rem; color:#d946ef; margin-bottom:15px; font-weight:bold;">※ 帳號資料有誤請洽管理員更正，僅能修改密碼。</p>
 			<div class="input-group"><label>更改密碼 (不更改保持空白)</label><input type="password" id="profPassword"></div>
 			<div class="flex gap-2">
 				<button class="action-btn btn-admin" style="width:100%;" onclick="updateProfile()">儲存修改</button>
@@ -290,11 +290,11 @@
 				<div id="editTutorWrapper"></div>
 			</div>
 			<div class="input-group" style="border-top: 1px solid #f1f5f9; padding-top: 15px; margin-top: 15px;">
-				<label style="color: #6366f1; font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; display: block;">帳號安全管理</label>
+				<label style="color: #6366f1; font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; display: block;">密碼重設</label>
 				<button type="button" class="action-btn" style="border-radius: 8px; background: linear-gradient(135deg, #6366f1, #4f46e5); width: 100%; font-size: 0.9rem; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0;" onclick="directResetPasswordToSid()">
 					一鍵重設密碼為「帳號」
 				</button>
-				<p style="font-size: 0.8rem; color: #64748b; margin-top: 8px; line-height: 1.4;">※ 點擊後，系統會立即將該使用者的登入密碼覆寫為他的「帳號」碼。</p>
+				<p style="font-size: 0.8rem; color: #64748b; margin-top: 8px; line-height: 1.4;">※ 點擊後，系統會立即將該使用者的登入密碼覆寫為他的「帳號」。</p>
 			</div>
 			<button class="action-btn btn-admin" style="width:100%; margin-top: 15px;" onclick="saveAdminUserEdit()">儲存帳號修改</button>
 		</div>
@@ -359,13 +359,13 @@
 					<div class="mb-6">
 						<span class="text-base font-extrabold text-slate-800 flex items-center gap-1.5 mb-3">
 							<span class="w-2 h-4 rounded-full bg-emerald-500"></span>
-							1. 儀表板狀態示範
+							1. 儀表板狀態說明
 						</span>
 						<div class="space-y-4 max-w-lg mb-4">
 							<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
 								<h5 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center gap-1.5">
 									<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-									(一) 學分勾選狀態
+									(一) 學分勾選
 								</h5>
 								<div class="flex flex-col gap-3">
 									<div class="flex items-center gap-3">
@@ -373,7 +373,7 @@
 											3<span class="absolute right-1 top-0.5 text-[9px] text-green-500">✔</span>
 										</div>
 										<div class="text-xs text-slate-600 font-semibold leading-relaxed">
-											<span class="text-emerald-600 font-black">及格 (已得學分)</span>：代表您已取得該學分，學分數會計入畢業學分累計。
+											<span class="text-emerald-600 font-black">及格 (已得學分)</span>：代表您已取得該學分，學分數計入畢業學分累計。
 										</div>
 									</div>
 									<div class="flex items-center gap-3">
@@ -389,7 +389,7 @@
 							<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
 								<h5 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center gap-1.5">
 									<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-									(二) 總學分狀態卡片示範 (畢業 vs 修業)
+									(二) 學分加總
 								</h5>
 								<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
 									<div class="border border-emerald-200 bg-emerald-50/40 p-3 rounded-xl text-center shadow-sm">
@@ -420,7 +420,7 @@
 								<div class="mt-4 p-3.5 bg-sky-50 border border-sky-200 rounded-xl">
 									<h5 class="text-xs font-black text-sky-800 mb-1.5 flex items-center gap-1.5">
 										<span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
-										💡 證書門檻對照
+										💡 畢業/修業門檻對照
 									</h5>
 									<p class="text-[11px] text-sky-700 leading-relaxed font-semibold">
 										不論何種科別，取得不同證書的學分門檻如下：<br>
@@ -732,8 +732,8 @@
 		}
 		function selectCurriculum(year, dept) {
 			currentYear = year || "113"; currentDept = dept || "商經科";
-			if (currentYear === "未設定" || currentYear === "請選擇入學年") currentYear = "113";
-			if (currentDept === "未設定" || currentDept === "請選擇科別") currentDept = "商經科";
+			if (currentYear === "未設定") currentYear = "113";
+			if (currentDept === "未設定") currentDept = "商經科";
 			curriculum = curriculums[`${currentYear}_${currentDept}`] || [];
 			initThresholds();
 			const ySel = document.getElementById('dashSelectYear'), dSel = document.getElementById('dashSelectDept');
@@ -742,7 +742,7 @@
 		}
 		function translateError(msg) {
 			if (!msg) return "未知錯誤，請重試。";
-			if (msg.includes("Invalid login credentials") || msg.includes("Invalid credentials")) return "帳號或密碼輸入錯誤，請重新確認！";
+			if (msg.includes("Invalid login credentials") || msg.includes("Invalid credentials")) return "帳號或密碼輸入錯誤，請重新輸入！";
 			if (msg.includes("User already registered") || msg.includes("email already exists") || msg.includes("already registered")) return "此帳號已被註冊！若忘記密碼請洽管理員。";
 			if (msg.includes("Password should be at least")) return "密碼強度不足：長度至少需要 6 個字元！";
 			return msg;
@@ -955,15 +955,15 @@
 					saveBtn.style.display = '';
 				}
 				const displayClass = (myYear === '未設定' || myDept === '未設定') ? `(${mapping.role[role] || '使用者'})` : `(${myYear}年入學 ${myDept} ${mapping.role[role] || '使用者'})`;
-				userStatusDisplay.innerHTML = `
-					<div class="truncate max-w-[200px] xs:max-w-none">您好，${displayName}${displayClass}</div>
-					<div class="user-info-actions">
-						<span id="syncStatusIndicator" class="sync-badge">正在連線</span>
-						<a href="javascript:void(0)" onclick="openProfile()">個人資料</a>
-						<a href="javascript:void(0)" onclick="handleLogout()" style="color: #f87171;">登出</a>
-					</div>
-				`;
-				if (currArea) currArea.classList.remove('hidden');
+			userStatusDisplay.innerHTML = `
+				<div class="font-bold text-slate-100 break-words w-full md:w-auto md:flex-1">您好，${displayName}${displayClass}</div>
+				<div class="user-info-actions w-full md:w-auto flex items-center gap-4 mt-2 md:mt-0 justify-start md:justify-end flex-wrap">
+					<span id="syncStatusIndicator" class="sync-badge">正在連線</span>
+					<a href="javascript:void(0)" onclick="openProfile()">個人資料</a>
+					<a href="javascript:void(0)" onclick="handleLogout()" style="color: #f87171;">登出</a>
+				</div>
+			`;
+			if (currArea) currArea.classList.remove('hidden');
 				if (editingStudentId) {
 					dashboard.style.display = 'block'; if (layoutSwitcher) layoutSwitcher.style.display = 'flex';
 					renderTable(); adminBackend.style.display = 'none';
@@ -1037,9 +1037,9 @@
 				yrSel.style.backgroundColor = '#fff'; yrSel.style.color = '#334155'; yrSel.style.borderColor = '#cbd5e1';
 				dtSel.style.backgroundColor = '#fff'; dtSel.style.color = '#334155'; dtSel.style.borderColor = '#cbd5e1';
 				nameInput.style.backgroundColor = '#fff'; nameInput.style.color = '#334155'; nameInput.style.borderColor = '#cbd5e1';
-				tipMsg.innerText = "※ 您是管理員，可修改您的年度、科別與帳號。"; tipMsg.style.color = "#10b981";
+				tipMsg.innerText = "※ 您是管理員，可以修改帳號資料。"; tipMsg.style.color = "#10b981";
 			} else {
-				tipMsg.innerText = "※ 姓名、入學年與科別如有誤請洽管理員更正。您目前僅能修改密碼。";
+				tipMsg.innerText = "※ 帳號資料有誤請洽管理員更正，僅能修改密碼。";
 				tipMsg.style.color = "#d946ef";
 			}
 			tutorArea.style.display = isStudent ? 'block' : 'none';
@@ -1462,16 +1462,16 @@
 					st.innerText = "課程資料建置中，暫不提供試算數據";
 					st.className = "status-bar bg-slate-400 text-white shadow-sm";
 				} else if (pass) {
-					st.innerText = "符合畢業門檻，核發畢業證書。";
+					st.innerText = "試算結果：符合畢業門檻，核發畢業證書。";
 					st.className = "status-bar status-pass text-white";
 				} else if (total >= 160) {
-					st.innerText = "未符合畢業門檻，請重補修。";
+					st.innerText = "試算結果：未符合畢業門檻，請重補修。";
 					st.className = "status-bar bg-gradient-to-r from-orange-500 to-red-500 text-white";
 				} else if (total >= 120) {
-					st.innerText = "未符合畢業門檻，核發修業證明。";
+					st.innerText = "試算結果：未符合畢業門檻，核發修業證明。";
 					st.className = "status-bar bg-gradient-to-r from-amber-500 to-orange-600 text-white";
 				} else {
-					st.innerText = "未符合畢業門檻，核發成績證明。";
+					st.innerText = "試算結果：未符合畢業門檻，核發成績證明。";
 					st.className = "status-bar status-fail text-white";
 				}
 			}
