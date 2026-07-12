@@ -168,7 +168,7 @@
 		#statusHeader {
 			background: linear-gradient(135deg, #1e293b, #0f172a);
 			color: #f8fafc;
-			padding: 12px 20px;
+			padding: calc(12px + env(safe-area-inset-top, 0px)) 20px 12px 20px;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -239,9 +239,6 @@
 		@media (max-width: 900px) {
 			.result-grid { grid-template-columns: repeat(2, 1fr); }
 		}
-		@media (max-width: 480px) {
-			.result-grid { grid-template-columns: 1fr; }
-		}
 		.result-card {
 			background-color: #fff;
 			padding: 14px 12px;
@@ -283,7 +280,7 @@
 		}
 		.btn-group {
 			display: flex;
-			gap: 12px;
+			gap: 8px;
 			margin-top: 15px;
 			width: 100%;
 			margin-left: auto;
@@ -291,24 +288,31 @@
 			flex-wrap: wrap;
 		}
 		.action-btn {
-			flex: 1;
-			padding: 12px 16px;
+			flex: 1 1 calc(50% - 4px); /* Default to 2 columns on mobile for clean balance */
+			min-width: 110px; /* Safeguard minimum width */
+			padding: 12px 6px;
 			border: none;
 			border-radius: 10px;
-			font-size: 0.95rem;
+			font-size: 0.88rem; /* Fit text nicely on narrow viewports */
 			font-weight: bold;
 			cursor: pointer;
 			color: white;
 			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 			transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+			white-space: nowrap; /* CRITICAL: Prevent any word wrapping inside the button */
+			text-align: center;
+			text-overflow: ellipsis;
+			overflow: hidden;
 		}
-		.action-btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-		}
-		.action-btn:active {
-			transform: translateY(0);
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+		@media (min-width: 768px) {
+			.btn-group {
+				gap: 12px;
+			}
+			.action-btn {
+				flex: 1; /* Line up perfectly in a single row on larger screens */
+				padding: 12px 16px;
+				font-size: 0.95rem;
+			}
 		}
 		.btn-pass-all { background: linear-gradient(135deg, #10b981, #059669); }
 		.btn-fail-all { background: linear-gradient(135deg, #94a3b8, #64748b); }
@@ -2296,12 +2300,12 @@
 				card.className = "mobile-card p-4 flex flex-col gap-3";
 				let btnsMobile = '';
 				if (s.role === 'student') {
-					btnsMobile += `<button class="action-btn py-2 px-3 text-xs bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg shadow-sm transition" onclick="enterAdminEditMode('${s.id}','${s.full_name}')">🔍 檢核學分</button>`;
+					btnsMobile += `<button class="flex-1 py-2 px-1 text-[11px] bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg shadow-sm transition text-center whitespace-nowrap overflow-hidden text-ellipsis" onclick="enterAdminEditMode('${s.id}','${s.full_name}')">🔍 檢核</button>`;
 				}
 				if (role === 'admin') {
 					btnsMobile += `
-						<button class="action-btn py-2 px-3 text-xs bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg shadow-sm transition" onclick="openAdminUserEdit(${i})">帳號設定</button>
-						<button class="action-btn py-2 px-3 text-xs bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-sm transition" onclick="deleteStudentData('${s.id}','${s.full_name}')">❌ 刪除</button>
+						<button class="flex-1 py-2 px-1 text-[11px] bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg shadow-sm transition text-center whitespace-nowrap overflow-hidden text-ellipsis" onclick="openAdminUserEdit(${i})">帳號設定</button>
+						<button class="flex-1 py-2 px-1 text-[11px] bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-sm transition text-center whitespace-nowrap overflow-hidden text-ellipsis" onclick="deleteStudentData('${s.id}','${s.full_name}')">❌ 刪除</button>
 					`;
 				}
 				card.innerHTML = `
@@ -2316,14 +2320,13 @@
 						<span>入學年/科別:</span>
 						<span class="font-semibold text-slate-800">${classInfo}</span>
 					</div>
-					<div class="flex gap-2 flex-wrap mt-1">
+					<div class="flex gap-1.5 mt-1 w-full flex-nowrap">
 						${btnsMobile || '<span class="text-slate-400 text-xs italic select-none">無須檢核學分</span>'}
 					</div>
 				`;
 				cardsContainer.appendChild(card);
 			});
 		}
-
 		function renderMobileCards(checkedStates = {}) {
 			const container = document.getElementById("mobileCardsContainer");
 			container.innerHTML = "";
@@ -2414,11 +2417,11 @@
 						let labelTextHtml = `<span class="text-sm font-medium text-slate-400 break-words flex-grow pl-3 transition-colors duration-150 peer-checked:text-slate-800 peer-checked:font-bold leading-tight">${sub.item.name}</span>`;
 						listHtml += `
 							<label for="${sub.id}" class="flex items-center justify-between py-2.5 border-b border-slate-100 last:border-0 hover:bg-slate-50/50 px-2 rounded-lg transition-colors cursor-pointer select-none">
-								<input type="checkbox" class="peer hidden toggle-checkbox" id="${sub.id}" data-val="${sub.c}" data-cat="${sub.item.cat}" data-type="${sub.item.type}" data-name="${sub.item.name}" data-sem="${sIdx}" onchange="calculate(); saveToCloud(true);" ${sub.isChecked ? 'checked' : ''}>
+								<input type="checkbox" class="peer hidden toggle-checkbox" id="${sub.id}" data-val="${sub.c}" data-cat="${sub.item.cat}" data-type="${sub.item.type}" onchange="calculate(); saveToCloud(true);" ${sub.isChecked ? 'checked' : ''}>
 								<div class="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center transition-all duration-150 shrink-0
 									peer-checked:bg-emerald-500 peer-checked:border-emerald-500 peer-checked:shadow-[0_1px_3px_rgba(16,185,129,0.3)]
-									peer-not-checked:bg-white">
-									<span class="text-white text-[0.65rem] font-black select-none hidden peer-checked:inline-block">✓</span>
+									peer-checked:[&_span]:inline-block peer-not-checked:bg-white">
+									<span class="text-white text-[0.65rem] font-black select-none hidden">✓</span>
 								</div>
 								${labelTextHtml}
 								<span class="text-[0.7rem] font-bold px-2.5 py-0.5 rounded transition-all shrink-0 ml-2
@@ -2651,7 +2654,11 @@
 				return;
 			}
 			const unchecked = [];
-			const semNames = ["一上", "一下", "二上", "二下", "三上", "三下"];
+			const semFullNames = [
+				"第一學期 (一上)", "第二學期 (一下)",
+				"第三學期 (二上)", "第四學期 (二下)",
+				"第五學期 (三上)", "第六學期 (三下)"
+			];
 			document.querySelectorAll(".toggle-checkbox:not(:checked)").forEach(input => {
 				const name = input.dataset.name;
 				const semIdx = parseInt(input.dataset.sem);
@@ -2659,7 +2666,7 @@
 				const cat = input.dataset.cat;
 				const type = parseInt(input.dataset.type);
 				if (name) {
-					unchecked.push({ name, sem: semNames[semIdx], val, cat, type });
+					unchecked.push({ name, sem: semFullNames[semIdx], val, cat, type });
 				}
 			});
 
@@ -2683,24 +2690,26 @@
 					grouped[item.sem].push(item);
 				});
 
-				const semOrder = ["一上", "一下", "二上", "二下", "三上", "三下"];
+				const semOrder = semFullNames;
 				semOrder.forEach(sem => {
 					if (grouped[sem] && grouped[sem].length > 0) {
 						html += `
 							<div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 shadow-sm">
 								<h5 class="text-xs font-black text-slate-700 border-b border-slate-200/80 pb-2 mb-2.5 flex justify-between items-center">
-									<span class="flex items-center gap-1.5"><span class="w-1.5 h-3 bg-slate-400 rounded-full"></span>📅 ${sem} 學期</span>
+									<span class="flex items-center gap-1.5"><span class="w-1.5 h-3 bg-slate-400 rounded-full"></span>📅 ${sem}</span>
 									<span class="text-[0.7rem] bg-red-50 text-red-600 px-2 py-0.5 rounded-md font-bold border border-red-100">未得 ${grouped[sem].reduce((sum, i) => sum + i.val, 0)} 學分</span>
 								</h5>
 								<div class="space-y-2">
 						`;
 						grouped[sem].forEach(item => {
 							const catInfo = mapping.cat[item.cat];
+							const typeText = mapping.type[item.type] || "一般科目";
 							html += `
 								<div class="flex items-center justify-between text-xs py-1 px-1.5 rounded hover:bg-slate-200/40 transition-colors">
 									<div class="flex items-center gap-2 min-w-0">
 										<span class="font-bold text-slate-800 truncate">${item.name}</span>
 										<span class="text-[9px] scale-90 ${catInfo.class} py-0.5 px-2 rounded-full font-bold whitespace-nowrap shrink-0">${catInfo.text}</span>
+										<span class="text-[9px] scale-90 bg-slate-100 text-slate-600 border border-slate-200 py-0.5 px-2 rounded-full font-bold whitespace-nowrap shrink-0">${typeText}</span>
 									</div>
 									<span class="font-extrabold text-red-500 shrink-0">${item.val} 學分</span>
 								</div>
