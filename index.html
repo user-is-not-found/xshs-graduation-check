@@ -885,6 +885,7 @@
 				} else {
 					const { error } = await dbClient.auth.signInWithPassword({ email, password: pwd });
 					if (error) throw error;
+					sessionStorage.setItem('just_logged_in', 'true');
 					updateSyncStatusIndicator('success'); showMsg("登入成功！");
 					document.getElementById('authWorkspace').style.display = 'none'; document.getElementById('appWorkspace').style.display = 'flex';
 					hasLoadedInitialData = false; updateUI();
@@ -942,7 +943,10 @@
 				if (adminEditBanner) adminEditBanner.style.display = editingStudentId ? 'block' : 'none';
 				document.getElementById('statusHeader').style.display = 'block';
 				const m = currentUser.user_metadata, role = userDBRecord?.role || m?.role || 'student', displayName = userDBRecord?.full_name || m?.full_name;
-				toggleUIModal(true, 'helpModal');
+				if (sessionStorage.getItem('just_logged_in') === 'true') {
+					toggleUIModal(true, 'helpModal');
+					sessionStorage.removeItem('just_logged_in');
+				}
 				if (!hasLoadedInitialData && !editingStudentId) isViewingClassList = false;
 				const myYear = userDBRecord?.entry_year || m?.entry_year || '未設定', myDept = userDBRecord?.entry_dept || m?.entry_dept || '未設定';
 				if (role === 'teacher' && (myYear === '未設定' || myDept === '未設定')) { saveBtn.style.display = 'none'; }
