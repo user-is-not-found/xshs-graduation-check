@@ -841,7 +841,7 @@
 		function updateSyncStatusIndicator(status) {
 			const badge = document.getElementById('syncStatusIndicator'); if (!badge) return;
 			badge.className = "sync-badge " + (status === 'offline' ? 'sync-offline' : (status === 'saving' ? 'sync-saving' : 'sync-success'));
-			badge.innerHTML = `<span>${status === 'offline' ? '雲端未連線！' : (status === 'saving' ? '正在儲存...' : '雲端已同步')}</span>`;
+			badge.innerHTML = `<span>${status === 'offline' ? '同步失敗，請聯繫管理員！' : (status === 'saving' ? '正在儲存...' : '同步成功')}</span>`;
 		}
 		function showConfirmModal(msg, title, action, confirmBtnText, confirmBtnBg) {
 			const btn = document.querySelector('#confirmModal .btn-pass-all');
@@ -955,15 +955,15 @@
 					saveBtn.style.display = '';
 				}
 				const displayClass = (myYear === '未設定' || myDept === '未設定') ? `(${mapping.role[role] || '使用者'})` : `(${myYear}年入學 ${myDept} ${mapping.role[role] || '使用者'})`;
-			userStatusDisplay.innerHTML = `
-				<div class="font-bold text-slate-100 break-words w-full md:w-auto md:flex-1">您好，${displayName}${displayClass}</div>
-				<div class="user-info-actions w-full md:w-auto flex items-center gap-4 mt-2 md:mt-0 justify-start md:justify-end flex-wrap">
-					<span id="syncStatusIndicator" class="sync-badge">正在連線</span>
-					<a href="javascript:void(0)" onclick="openProfile()">個人資料</a>
-					<a href="javascript:void(0)" onclick="handleLogout()" style="color: #f87171;">登出</a>
-				</div>
-			`;
-			if (currArea) currArea.classList.remove('hidden');
+				userStatusDisplay.innerHTML = `
+					<div class="font-bold text-slate-100 break-words w-full md:w-auto md:flex-1">您好，${displayName}${displayClass}</div>
+					<div class="user-info-actions w-full md:w-auto flex items-center gap-4 mt-2 md:mt-0 justify-start md:justify-end flex-wrap">
+						<span id="syncStatusIndicator" class="sync-badge sync-success"><span>同步成功</span></span>
+						<a href="javascript:void(0)" onclick="openProfile()">個人資料</a>
+						<a href="javascript:void(0)" onclick="handleLogout()" style="color: #f87171;">登出</a>
+					</div>
+				`;
+				if (currArea) currArea.classList.remove('hidden');
 				if (editingStudentId) {
 					dashboard.style.display = 'block'; if (layoutSwitcher) layoutSwitcher.style.display = 'flex';
 					renderTable(); adminBackend.style.display = 'none';
