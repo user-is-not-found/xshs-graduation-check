@@ -156,7 +156,7 @@
 			<div id="dashboardSection" class="app-container mt-4" style="display: none;">
 				<div class="bg-white border border-slate-200 rounded-2xl py-6 px-4 shadow-sm">
 					<div id="curriculumSelectorArea" class="flex flex-wrap gap-4 items-center mb-6 pb-4 border-b border-slate-100">
-						<span class="text-sm font-bold text-slate-600">學分表版本：</span>
+						<span class="text-sm font-bold text-slate-600">學分表檢視版本：</span>
 						<select id="dashSelectYear" class="sort-select text-sm py-1.5 px-3" onchange="changeDashCurriculum()"></select>
 						<select id="dashSelectDept" class="sort-select text-sm py-1.5 px-3" onchange="changeDashCurriculum()"></select>
 					</div>
@@ -1079,8 +1079,13 @@
 			checks['_view_dept'] = version.locked ? entryDept : currentDept;
 			const res = calculateStats();
 			let matchedTutor = curRecord?.tutor || '未設定';
-			if (targetRole === 'student' && (matchedTutor === '未設定' || !matchedTutor)) matchedTutor = await findTutorByYearDept(entryYear, entryDept);
-			else if (targetRole === 'teacher') matchedTutor = '教師帳號';
+			if (targetRole === 'student') {
+				if (matchedTutor === '未設定' || !matchedTutor) matchedTutor = await findTutorByYearDept(entryYear, entryDept);
+			} else if (targetRole === 'admin') {
+				matchedTutor = '管理員免設定';
+			} else if (targetRole === 'teacher') {
+				matchedTutor = '教師帳號免設定';
+			}
 			const { error: rpcError } = await dbClient.rpc('admin_save_grad_checks', {
 				target_id: targetId, target_student_id: targetSid, target_full_name: targetName, target_entry_year: entryYear,
 				target_entry_dept: entryDept, target_role: targetRole, target_tutor: matchedTutor, target_credits_json: checks, target_total_credits: res.total
@@ -1142,7 +1147,7 @@
 			const id = document.getElementById('editUserId').value, sid = document.getElementById('editUserSid').value.split('@')[0].toLowerCase().trim(),
 				n = document.getElementById('editUserName').value.trim(), y = document.getElementById('editUserEntryYear').value,
 				dDept = document.getElementById('editUserEntryDept').value, r = document.getElementById('editUserRole').value,
-				t = (r === 'student') ? document.getElementById('editUserTutor').value : '教師帳號';
+				t = (r === 'student') ? document.getElementById('editUserTutor').value : (r === 'admin' ? '管理員免設定' : '教師帳號免設定');
 			try {
 				updateSyncStatusIndicator('saving');
 				const { error } = await dbClient.rpc('admin_update_user_sid', { target_user_id: id, new_sid: sid, new_name: n, new_year: y, new_dept: dDept, new_role: r, new_tutor: t });
@@ -1169,7 +1174,7 @@
 			if (!dbClient) return;
 			const sid = document.getElementById('newUserSid').value.split('@')[0].toLowerCase().trim(), name = document.getElementById('newUserName').value.trim(),
 				year = document.getElementById('newUserEntryYear').value, dept = document.getElementById('newUserEntryDept').value,
-				role = document.getElementById('newUserRole').value, tutor = (role === 'student') ? document.getElementById('newUserTutor').value : '教師帳號';
+				role = document.getElementById('newUserRole').value, tutor = (role === 'student') ? document.getElementById('newUserTutor').value : (role === 'admin' ? '管理員免設定' : '教師帳號免設定');
 			if (!sid || !name) { showMsg("請務必填寫帳號與姓名！", "error"); return; }
 			try {
 				updateSyncStatusIndicator('saving');
@@ -1204,9 +1209,13 @@
 						}
 					}
 					const role = data.role || 'student', version = determineCurriculumVersion(data);
-					if (role === 'student' && (data.tutor === '未設定' || !data.tutor)) {
+					if (role === 'student') {
 						const activeTutor = await findTutorByYearDept(data.entry_year, data.entry_dept);
-						if (activeTutor && activeTutor !== '未設定') { data.tutor = activeTutor; await dbClient.from('grad_checks').update({ tutor: activeTutor }).eq('id', uid); }
+						if (activeTutor && activeTutor !== data.tutor) { data.tutor = activeTutor; await dbClient.from('grad_checks').update({ tutor: activeTutor }).eq('id', uid); }
+					} else if (role === 'admin' && data.tutor !== '管理員免設定') {
+						data.tutor = '管理員免設定'; await dbClient.from('grad_checks').update({ tutor: '管理員免設定' }).eq('id', uid);
+					} else if (role === 'teacher' && data.tutor !== '教師帳號免設定') {
+						data.tutor = '教師帳號免設定'; await dbClient.from('grad_checks').update({ tutor: '教師帳號免設定' }).eq('id', uid);
 					}
 					let targetYear = version.year, targetDept = version.dept;
 					if (!tid && (role === 'admin' || (role === 'teacher' && data.entry_year === '未設定' && data.entry_dept === '未設定'))) {
@@ -1462,16 +1471,16 @@
 					st.innerText = "課程資料建置中，暫不提供試算數據";
 					st.className = "status-bar bg-slate-400 text-white shadow-sm";
 				} else if (pass) {
-					st.innerText = "試算結果：符合畢業門檻，核發畢業證書。";
+					st.innerText = "符合畢業門檻，核發畢業證書。";
 					st.className = "status-bar status-pass text-white";
 				} else if (total >= 160) {
-					st.innerText = "試算結果：未符合畢業門檻，請重補修。";
+					st.innerText = "未符合畢業門檻，請重補修。";
 					st.className = "status-bar bg-gradient-to-r from-orange-500 to-red-500 text-white";
 				} else if (total >= 120) {
-					st.innerText = "試算結果：未符合畢業門檻，核發修業證明。";
+					st.innerText = "未符合畢業門檻，核發修業證明。";
 					st.className = "status-bar bg-gradient-to-r from-amber-500 to-orange-600 text-white";
 				} else {
-					st.innerText = "試算結果：未符合畢業門檻，核發成績證明。";
+					st.innerText = "未符合畢業門檻，核發成績證明。";
 					st.className = "status-bar status-fail text-white";
 				}
 			}
