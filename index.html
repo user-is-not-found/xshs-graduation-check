@@ -9,7 +9,7 @@
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght=400;500;700;900&display=swap');
 		html, body { margin: 0; padding: 0; font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; background-color: #f4f6f9; color: #2d3748; }
-		.app-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 12px; box-sizing: border-box; }
+		.app-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
 		.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
 		.custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
 		.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -63,7 +63,7 @@
 		.mobile-sem-label { font-size: 0.72rem; color: #64748b; font-weight: 600; }
 		.mobile-score-box { width: 100%; height: 42px; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; }
 		.toggle-checkbox { display: none; }
-		.score-label { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; cursor: pointer; font-weight: 800; font-size: 1.1rem; position: relative; user-select: none; border-radius: 8px; transition: all 0.15s ease; box-sizing: border-box; }
+		.score-label { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; cursor: pointer; font-weight: 800; font-size: 1.1rem; position: relative; user-select: none; border-radius: 8px; transition: all 0.15s ease; box-sizing: border-box; border: 2px solid transparent; }
 		.toggle-checkbox:checked + .score-label { background-color: #f0fdf4; color: #15803d; border: 2px solid #10b981; }
 		.toggle-checkbox:checked + .score-label::after { content: '✔'; font-size: 0.75em; color: #10b981; font-weight: 900; position: absolute; right: 4px; top: 4px; line-height: 1; }
 		.toggle-checkbox:not(:checked) + .score-label { background-color: #fff5f5; color: #ef4444; border: 2px solid #fecaca; }
@@ -72,8 +72,8 @@
 		.bg-dept-main { background-color: #fee2e2 !important; color: #991b1b !important; border: 1px solid #fecaca !important; }
 		.bg-sch-req-main { background-color: #dcfce7 !important; color: #166534 !important; border: 1px solid #bbf7d0 !important; }
 		.bg-sch-opt-main { background-color: #dbeafe !important; color: #1e40af !important; border: 1px solid #bfdbfe !important; }
-		.modal-overlay { display: none; position: fixed !important; z-index: 99999 !important; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; box-sizing: border-box; }
-		.modal-content { background-color: #fff; width: 92%; max-width: 500px; border-radius: 16px; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); position: relative; max-height: 85vh; overflow-y: auto; animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1); box-sizing: border-box; }
+		.modal-overlay { display: none; position: fixed !important; z-index: 99999 !important; left: 0; top: 0; width: 100vw; height: 100vh; height: 100dvh; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; box-sizing: border-box; padding: 16px; }
+		.modal-content { background-color: #fff; width: 100%; max-width: 500px; border-radius: 16px; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); position: relative; max-height: 80dvh; overflow-y: auto; animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1); box-sizing: border-box; margin: auto; }
 		.modal-header { font-size: 1.3rem; font-weight: 700; margin-bottom: 18px; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; display: flex; justify-content: space-between; align-items: center; color: #1e293b; }
 		.close-modal-btn { font-size: 2rem; color: #94a3b8; cursor: pointer; line-height: 1; padding: 0 5px; transition: color 0.2s; }
 		.close-modal-btn:hover { color: #475569; }
@@ -152,9 +152,9 @@
 				<div id="userStatusDisplay"></div>
 			</div>
 		</div>
-		<div class="flex-grow overflow-y-auto custom-scrollbar pb-[calc(32px+env(safe-area-inset-bottom,16px))]">
+		<div id="scrollContainer" class="flex-grow overflow-y-auto custom-scrollbar pb-[calc(32px+env(safe-area-inset-bottom,16px))]">
 			<div id="dashboardSection" class="app-container mt-4" style="display: none;">
-				<div class="bg-white border border-slate-200 rounded-2xl py-6 px-4 shadow-sm">
+				<div class="bg-white border border-slate-200 rounded-2xl py-6 px-5 shadow-sm">
 					<div id="curriculumSelectorArea" class="flex flex-wrap gap-4 items-center mb-6 pb-4 border-b border-slate-100">
 						<span class="text-sm font-bold text-slate-600">學分表檢視版本：</span>
 						<select id="dashSelectYear" class="sort-select text-sm py-1.5 px-3" onchange="changeDashCurriculum()"></select>
@@ -242,6 +242,11 @@
 				<div id="mobileCardsContainer" class="mobile-cards-grid"></div>
 			</div>
 		</div>
+		<button id="backToTopBtn" class="fixed bottom-[calc(24px+env(safe-area-inset-bottom,16px))] right-6 z-40 p-3 rounded-full bg-emerald-500 text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 opacity-0 translate-y-10 pointer-events-none flex items-center justify-center border border-emerald-400" onclick="scrollToTop()">
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"></path>
+			</svg>
+		</button>
 	</div>
 	<div id="profileModal" class="modal-overlay" onclick="handleOutsideClick(event)">
 		<div class="modal-content" style="max-width:400px;">
@@ -325,7 +330,7 @@
 		</div>
 	</div>
 	<div id="missingCreditsModal" class="modal-overlay" onclick="handleOutsideClick(event)">
-		<div class="modal-content !max-w-md !w-[95%]">
+		<div class="modal-content !max-w-md !w-full">
 			<div class="modal-header">
 				<span class="font-black text-slate-800 text-xl flex items-center gap-2">
 					<span class="w-2.5 h-5 rounded-full bg-amber-500"></span>
@@ -334,7 +339,7 @@
 				<span class="close-modal-btn" onclick="toggleUIModal(false,'missingCreditsModal')">&times;</span>
 			</div>
 			<div class="modal-body">
-				<div id="missingCreditsList" class="max-h-[55vh] overflow-y-auto custom-scrollbar space-y-3 pr-1"></div>
+				<div id="missingCreditsList" class="max-h-[50dvh] overflow-y-auto custom-scrollbar space-y-3 pr-1"></div>
 			</div>
 		</div>
 	</div>
@@ -349,17 +354,17 @@
 		</div>
 	</div>
 	<div id="helpModal" class="modal-overlay">
-		<div class="modal-content !max-w-xl !w-[95%] !p-6 md:!p-8" onclick="event.stopPropagation()">
+		<div class="modal-content !max-w-xl !w-full !p-6 md:!p-8" onclick="event.stopPropagation()">
 			<div class="modal-header" style="border-bottom: none; margin-bottom: 8px; padding-bottom: 0;">
 				<span class="font-black text-slate-800 text-2xl">畢業自我檢核系統說明</span>
 			</div>
 			<div class="modal-body">
-				<div id="helpScrollContainer" class="max-h-[50vh] md:max-h-[55vh] overflow-y-auto p-2 custom-scrollbar mb-4">
+				<div id="helpScrollContainer" class="max-h-[48dvh] overflow-y-auto p-2 custom-scrollbar mb-4">
 					<p class="text-sm text-slate-500 font-bold mb-4 pb-2 border-b border-dashed border-slate-200">請完整閱讀以下所有資訊：</p>
 					<div class="mb-6">
 						<span class="text-base font-extrabold text-slate-800 flex items-center gap-1.5 mb-3">
 							<span class="w-2 h-4 rounded-full bg-emerald-500"></span>
-							1. 儀表板狀態說明
+							1. 儀表板狀態示範
 						</span>
 						<div class="space-y-4 max-w-lg mb-4">
 							<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
@@ -389,7 +394,7 @@
 							<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
 								<h5 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center gap-1.5">
 									<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-									(二) 學分加總
+									(二) 總學分狀態卡片示範 (畢業 vs 修業)
 								</h5>
 								<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
 									<div class="border border-emerald-200 bg-emerald-50/40 p-3 rounded-xl text-center shadow-sm">
@@ -841,7 +846,7 @@
 		function updateSyncStatusIndicator(status) {
 			const badge = document.getElementById('syncStatusIndicator'); if (!badge) return;
 			badge.className = "sync-badge " + (status === 'offline' ? 'sync-offline' : (status === 'saving' ? 'sync-saving' : 'sync-success'));
-			badge.innerHTML = `<span>${status === 'offline' ? '同步失敗，請聯繫管理員！' : (status === 'saving' ? '正在儲存...' : '同步成功')}</span>`;
+			badge.innerHTML = `<span>${status === 'offline' ? '同步失敗，請聯繫管理員！' : (status === 'saving' ? '正在儲存...' : '雲端已同步')}</span>`;
 		}
 		function showConfirmModal(msg, title, action, confirmBtnText, confirmBtnBg) {
 			const btn = document.querySelector('#confirmModal .btn-pass-all');
@@ -956,9 +961,9 @@
 				}
 				const displayClass = (myYear === '未設定' || myDept === '未設定') ? `(${mapping.role[role] || '使用者'})` : `(${myYear}年入學 ${myDept} ${mapping.role[role] || '使用者'})`;
 				userStatusDisplay.innerHTML = `
-					<div class="font-bold text-slate-100 break-words w-full md:w-auto md:flex-1">您好，${displayName}${displayClass}</div>
+					<div class="font-bold text-slate-100 break-words flex-1 min-w-0">您好，${displayName}${displayClass}</div>
 					<div class="user-info-actions w-full md:w-auto flex items-center gap-4 mt-2 md:mt-0 justify-start md:justify-end flex-wrap">
-						<span id="syncStatusIndicator" class="sync-badge sync-success"><span>同步成功</span></span>
+						<span id="syncStatusIndicator" class="sync-badge sync-success"><span>雲端已同步</span></span>
 						<a href="javascript:void(0)" onclick="openProfile()">個人資料</a>
 						<a href="javascript:void(0)" onclick="handleLogout()" style="color: #f87171;">登出</a>
 					</div>
@@ -1471,16 +1476,16 @@
 					st.innerText = "課程資料建置中，暫不提供試算數據";
 					st.className = "status-bar bg-slate-400 text-white shadow-sm";
 				} else if (pass) {
-					st.innerText = "符合畢業門檻，核發畢業證書。";
+					st.innerText = "試算結果：符合畢業門檻，核發畢業證書。";
 					st.className = "status-bar status-pass text-white";
 				} else if (total >= 160) {
-					st.innerText = "未符合畢業門檻，請重補修。";
+					st.innerText = "試算結果：未符合畢業門檻，請重補修。";
 					st.className = "status-bar bg-gradient-to-r from-orange-500 to-red-500 text-white";
 				} else if (total >= 120) {
-					st.innerText = "未符合畢業門檻，核發修業證明。";
+					st.innerText = "試算結果：未符合畢業門檻，核發修業證明。";
 					st.className = "status-bar bg-gradient-to-r from-amber-500 to-orange-600 text-white";
 				} else {
-					st.innerText = "未符合畢業門檻，核發成績證明。";
+					st.innerText = "試算結果：未符合畢業門檻，核發成績證明。";
 					st.className = "status-bar status-fail text-white";
 				}
 			}
@@ -1507,6 +1512,26 @@
 			showConfirmModal(msg, p ? "確認全部及格" : "確認學分歸零", () => { setAllStatus(p); toggleUIModal(false, 'confirmModal'); }, p ? "確認全部及格" : "確認學分歸零", p ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" : "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)");
 		}
 		function setAllStatus(p) { document.querySelectorAll(".toggle-checkbox").forEach(chk => chk.checked = p); calculate(); saveToCloud(true); }
+		function initBackToTop() {
+			const sc = document.getElementById('scrollContainer');
+			if (sc) {
+				sc.addEventListener('scroll', () => {
+					const btn = document.getElementById('backToTopBtn');
+					if (!btn) return;
+					if (sc.scrollTop > 300) {
+						btn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+						btn.classList.add('opacity-100', 'translate-y-0');
+					} else {
+						btn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+						btn.classList.remove('opacity-100', 'translate-y-0');
+					}
+				});
+			}
+		}
+		function scrollToTop() {
+			const sc = document.getElementById('scrollContainer');
+			if (sc) sc.scrollTo({ top: 0, behavior: 'smooth' });
+		}
 		function showMissingCreditsModal() {
 			if (curriculum.length === 0) { showMsg("目前版本的課表尚未建置！", "error"); return; }
 			const unchecked = [], semFullNames = ["第一學期 (一上)", "第二學期 (一下)", "第三學期 (二上)", "第四學期 (二下)", "第五學期 (三上)", "第六學期 (三下)"];
@@ -1547,7 +1572,7 @@
 			}
 			toggleUIModal(true, 'missingCreditsModal');
 		}
-		initDropdowns(false); selectCurriculum(currentYear, currentDept); renderTable(); calculate(); initHelpModalScrollGuard();
+		initDropdowns(false); selectCurriculum(currentYear, currentDept); renderTable(); calculate(); initHelpModalScrollGuard(); initBackToTop();
 	</script>
 </body>
 </html>
