@@ -691,6 +691,7 @@
 					</div>
 					<div class="btn-group">
 						<button class="action-btn btn-help" onclick="toggleUIModal(true,'helpModal')">使用說明</button>
+						<button class="action-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="showMissingCreditsModal()">未得學分清單</button>
 						<button id="saveBtn" class="action-btn btn-cloud" onclick="handleMainAction()">班級資料</button>
 						<button class="action-btn btn-pass-all" onclick="confirmSetAllStatus(true)">全部及格</button>
 						<button class="action-btn btn-fail-all" onclick="confirmSetAllStatus(false)">學分歸零</button>
@@ -843,6 +844,23 @@
 			<p style="font-size:0.8rem; color:#888; margin-bottom:15px; line-height:1.4;">管理員在此建立基本資料後，系統將直接在雲端自動產生該使用者的專屬登入帳號，學生與教師即可憑他們的**帳號**作為帳號密碼直接登入！</p>
 			<p style="font-size:0.85rem; color:#ef4444; margin-bottom:15px; font-weight:bold;">※ 請注意：所有建立之新帳號預設登入密碼亦為其帳號，請提醒他們登入後進行修改。</p>
 			<button class="action-btn btn-pass-all" style="width:100%;" onclick="saveNewUser()">確認建立新帳號</button>
+		</div>
+	</div>
+
+	<div id="missingCreditsModal" class="modal-overlay" onclick="handleOutsideClick(event)">
+		<div class="modal-content !max-w-md !w-[95%]">
+			<div class="modal-header">
+				<span class="font-black text-slate-800 text-xl flex items-center gap-2">
+					<span class="w-2.5 h-5 rounded-full bg-amber-500"></span>
+					未獲得學分明細
+				</span>
+				<span class="close-modal-btn" onclick="toggleUIModal(false,'missingCreditsModal')">&times;</span>
+			</div>
+			<div class="modal-body">
+				<div id="missingCreditsList" class="max-h-[55vh] overflow-y-auto custom-scrollbar space-y-3 pr-1">
+					<!-- JS 動態插入 -->
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -2304,7 +2322,7 @@
 					if (c > 0) {
 						scoreBoxHtml = `
 							<div class="mobile-score-box">
-								<input type="checkbox" class="toggle-checkbox" id="${id}" data-val="${c}" data-cat="${item.cat}" data-type="${item.type}" onchange="calculate(); saveToCloud(true);" ${isChecked ? 'checked' : ''}>
+								<input type="checkbox" class="toggle-checkbox" id="${id}" data-val="${c}" data-cat="${item.cat}" data-type="${item.type}" data-name="${item.name}" data-sem="${sIdx}" onchange="calculate(); saveToCloud(true);" ${isChecked ? 'checked' : ''}>
 								<label class="score-label" for="${id}">${c}</label>
 							</div>
 						`;
@@ -2335,6 +2353,10 @@
 						${semHtml}
 					</div>
 				`;
+				card.querySelector('input[type="checkbox"]')?.addEventListener('change', () => {
+					calculate();
+					saveToCloud(true);
+				});
 				container.appendChild(card);
 			});
 		}
@@ -2372,7 +2394,7 @@
 						let labelTextHtml = `<span class="text-sm font-medium text-slate-400 break-words flex-grow pl-3 transition-colors duration-150 peer-checked:text-slate-800 peer-checked:font-bold leading-tight">${sub.item.name}</span>`;
 						listHtml += `
 							<label for="${sub.id}" class="flex items-center justify-between py-2.5 border-b border-slate-100 last:border-0 hover:bg-slate-50/50 px-2 rounded-lg transition-colors cursor-pointer select-none">
-								<input type="checkbox" class="peer hidden toggle-checkbox" id="${sub.id}" data-val="${sub.c}" data-cat="${sub.item.cat}" data-type="${sub.item.type}" onchange="calculate(); saveToCloud(true);" ${sub.isChecked ? 'checked' : ''}>
+								<input type="checkbox" class="peer hidden toggle-checkbox" id="${sub.id}" data-val="${sub.c}" data-cat="${sub.item.cat}" data-type="${sub.item.type}" data-name="${sub.item.name}" data-sem="${sIdx}" onchange="calculate(); saveToCloud(true);" ${sub.isChecked ? 'checked' : ''}>
 								<div class="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center transition-all duration-150 shrink-0
 									peer-checked:bg-emerald-500 peer-checked:border-emerald-500 peer-checked:shadow-[0_1px_3px_rgba(16,185,129,0.3)]
 									peer-not-checked:bg-white">
@@ -2601,6 +2623,78 @@
 			document.querySelectorAll(".toggle-checkbox").forEach(chk => { chk.checked = p; });
 			calculate();
 			saveToCloud(true);
+		}
+
+		function showMissingCreditsModal() {
+			if (curriculum.length === 0) {
+				showMsg("目前版本的課表尚未建置！", "error");
+				return;
+			}
+			const unchecked = [];
+			const semNames = ["一上", "一下", "二上", "二下", "三上", "三下"];
+			document.querySelectorAll(".toggle-checkbox:not(:checked)").forEach(input => {
+				const name = input.dataset.name;
+				const semIdx = parseInt(input.dataset.sem);
+				const val = parseInt(input.dataset.val);
+				const cat = input.dataset.cat;
+				const type = parseInt(input.dataset.type);
+				if (name) {
+					unchecked.push({ name, sem: semNames[semIdx], val, cat, type });
+				}
+			});
+
+			const listContainer = document.getElementById("missingCreditsList");
+			if (unchecked.length === 0) {
+				listContainer.innerHTML = `
+					<div class="text-center py-10 px-4">
+						<div class="text-5xl mb-4">🎉</div>
+						<p class="font-black text-lg text-emerald-600">恭喜！您已獲得所有學分！</p>
+						<p class="text-xs text-slate-400 mt-2">目前沒有任何未獲得學分的科目，繼續保持！</p>
+					</div>
+				`;
+			} else {
+				let html = `<p class="text-xs text-slate-500 font-extrabold mb-4 bg-amber-50 border border-amber-200/60 rounded-lg p-2.5 text-amber-800">
+					以下為您目前「未勾選（不及格）」的科目，共計 <span class="text-red-500 font-black text-sm">${unchecked.length}</span> 科，累計未取得學分為 <span class="text-red-500 font-black text-sm">${unchecked.reduce((sum, i) => sum + i.val, 0)}</span> 學分：
+				</p>`;
+
+				const grouped = {};
+				unchecked.forEach(item => {
+					if (!grouped[item.sem]) grouped[item.sem] = [];
+					grouped[item.sem].push(item);
+				});
+
+				const semOrder = ["一上", "一下", "二上", "二下", "三上", "三下"];
+				semOrder.forEach(sem => {
+					if (grouped[sem] && grouped[sem].length > 0) {
+						html += `
+							<div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 shadow-sm">
+								<h5 class="text-xs font-black text-slate-700 border-b border-slate-200/80 pb-2 mb-2.5 flex justify-between items-center">
+									<span class="flex items-center gap-1.5"><span class="w-1.5 h-3 bg-slate-400 rounded-full"></span>📅 ${sem} 學期</span>
+									<span class="text-[0.7rem] bg-red-50 text-red-600 px-2 py-0.5 rounded-md font-bold border border-red-100">未得 ${grouped[sem].reduce((sum, i) => sum + i.val, 0)} 學分</span>
+								</h5>
+								<div class="space-y-2">
+						`;
+						grouped[sem].forEach(item => {
+							const catInfo = mapping.cat[item.cat];
+							html += `
+								<div class="flex items-center justify-between text-xs py-1 px-1.5 rounded hover:bg-slate-200/40 transition-colors">
+									<div class="flex items-center gap-2 min-w-0">
+										<span class="font-bold text-slate-800 truncate">${item.name}</span>
+										<span class="text-[9px] scale-90 ${catInfo.class} py-0.5 px-2 rounded-full font-bold whitespace-nowrap shrink-0">${catInfo.text}</span>
+									</div>
+									<span class="font-extrabold text-red-500 shrink-0">${item.val} 學分</span>
+								</div>
+							`;
+						});
+						html += `
+								</div>
+							</div>
+						`;
+					}
+				});
+				listContainer.innerHTML = html;
+			}
+			toggleUIModal(true, 'missingCreditsModal');
 		}
 		
 		initDropdowns(false);
