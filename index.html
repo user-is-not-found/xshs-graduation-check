@@ -1462,16 +1462,16 @@
 					st.innerText = "課程資料建置中，暫不提供試算數據";
 					st.className = "status-bar bg-slate-400 text-white shadow-sm";
 				} else if (pass) {
-					st.innerText = "試算結果：符合畢業門檻，核發畢業證書。";
+					st.innerText = "符合畢業門檻，核發畢業證書。";
 					st.className = "status-bar status-pass text-white";
 				} else if (total >= 160) {
-					st.innerText = "試算結果：未符合畢業門檻，請重補修。";
+					st.innerText = "未符合畢業門檻，請重補修。";
 					st.className = "status-bar bg-gradient-to-r from-orange-500 to-red-500 text-white";
 				} else if (total >= 120) {
-					st.innerText = "試算結果：未符合畢業門檻，核發修業證明。";
+					st.innerText = "未符合畢業門檻，核發修業證明。";
 					st.className = "status-bar bg-gradient-to-r from-amber-500 to-orange-600 text-white";
 				} else {
-					st.innerText = "試算結果：未符合畢業門檻，核發成績證明。";
+					st.innerText = "未符合畢業門檻，核發成績證明。";
 					st.className = "status-bar status-fail text-white";
 				}
 			}
