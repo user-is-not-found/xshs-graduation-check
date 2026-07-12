@@ -945,7 +945,7 @@
 				</div>
 				<div class="mt-3">
 					<button id="btnConfirmHelp" disabled class="w-full py-3.5 text-base font-extrabold rounded-xl shadow-md transition duration-150 bg-slate-300 text-slate-500 cursor-not-allowed opacity-60 pointer-events-none" onclick="confirmReadHelp()">
-						我已詳閱並完全理解上述說明
+						我已詳閱上述說明
 					</button>
 				</div>
 			</div>
@@ -1629,10 +1629,17 @@
 				`;
 				if (role === 'admin') {
 					saveBtn.innerText = '管理後台';
+					saveBtn.style.display = '';
 				} else if (role === 'teacher') {
-					saveBtn.innerText = '班級資料';
+					if (myYear === '未設定' || myDept === '未設定') {
+						saveBtn.style.display = 'none';
+					} else {
+						saveBtn.innerText = '班級資料';
+						saveBtn.style.display = '';
+					}
 				} else {
 					saveBtn.innerText = '雲端存檔';
+					saveBtn.style.display = '';
 				}
 				if (currArea) {
 					currArea.classList.remove('hidden');
@@ -1693,7 +1700,20 @@
 		function handleMainAction() {
 			const role = userDBRecord?.role || currentUser?.user_metadata?.role || 'student';
 			if (role === 'student') saveToCloud();
-			else { isViewingClassList = true; editingStudentId = null; updateUI(); }
+			else { 
+				if (role === 'teacher') {
+					const m = currentUser.user_metadata;
+					const myYear = userDBRecord?.entry_year || m?.entry_year || '未設定';
+					const myDept = userDBRecord?.entry_dept || m?.entry_dept || '未設定';
+					if (myYear === '未設定' || myDept === '未設定') {
+						showMsg("您尚未設定負責的班級年度與科別，無法檢視班級資料！", "error");
+						return;
+					}
+				}
+				isViewingClassList = true; 
+				editingStudentId = null; 
+				updateUI(); 
+			}
 		}
 
 		function handleReturnToTrial() {
