@@ -8,7 +8,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght=400;500;700;900&display=swap');
-		html, body { margin: 0; padding: 0; font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; background-color: #f4f6f9; color: #2d3748; }
+		html, body { margin: 0; padding: 0; font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; background-color: #f4f6f9; color: #2d3748; }
+		@media (min-width: 768px) { html, body { font-size: 16px; } }
 		.app-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
 		.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
 		.custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
@@ -38,7 +39,8 @@
 		.sync-offline { color: #ef4444; background-color: rgba(239, 68, 68, 0.15); }
 		.sync-saving { color: #3b82f6; background-color: rgba(59, 130, 246, 0.15); }
 		.sync-success { color: #10b981; background-color: rgba(16, 185, 129, 0.15); }
-		.status-bar { text-align: center; font-size: 1.2rem; font-weight: 900; padding: 12px; margin-bottom: 15px; border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); letter-spacing: 1px; transition: all 0.3s; }
+		.status-bar { text-align: center; font-size: 1rem; font-weight: 900; padding: 12px; margin-bottom: 15px; border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); letter-spacing: 1px; transition: all 0.3s; }
+		@media (min-width: 768px) { .status-bar { font-size: 1.2rem; } }
 		.status-pass { background: linear-gradient(135deg, #10b981, #059669); }
 		.status-fail { background: linear-gradient(135deg, #ef4444, #dc2626); }
 		.result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 10px 0 20px 0; width: 100%; box-sizing: border-box; }
@@ -48,7 +50,7 @@
 		.card-progress-bg { width: 100%; background-color: #e2e8f0; height: 6px; border-radius: 4px; margin-top: 8px; overflow: hidden; }
 		.card-progress-fill { height: 100%; border-radius: 4px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 		.btn-group { display: flex; gap: 8px; margin-top: 15px; width: 100%; box-sizing: border-box; flex-wrap: wrap; }
-		.action-btn { flex: 1 1 calc(50% - 4px); min-width: 110px; padding: 12px 6px; border: none; border-radius: 10px; font-size: 0.88rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; text-align: center; text-overflow: ellipsis; overflow: hidden; box-sizing: border-box; }
+		.action-btn { flex: 1 1 calc(50% - 4px); min-width: 110px; padding: 12px 6px; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: bold; cursor: pointer; color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; text-align: center; text-overflow: ellipsis; overflow: hidden; box-sizing: border-box; }
 		@media (min-width: 768px) { .btn-group { gap: 12px; } .action-btn { flex: 1; padding: 12px 16px; font-size: 0.95rem; } }
 		.btn-pass-all { background: linear-gradient(135deg, #10b981, #059669); }
 		.btn-fail-all { background: linear-gradient(135deg, #94a3b8, #64748b); }
@@ -112,7 +114,7 @@
 		@keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 	</style>
 </head>
-<body class="bg-[#f4f6f9] text-slate-800 h-screen overflow-hidden flex flex-col">
+<body class="bg-[#f4f6f9] text-slate-800 h-[100dvh] overflow-hidden flex flex-col">
 	<div id="msgBox"></div>
 	<div id="authWorkspace">
 		<div class="auth-glow-1"></div>
@@ -152,11 +154,11 @@
 				<div id="userStatusDisplay"></div>
 			</div>
 		</div>
-		<div id="scrollContainer" class="flex-grow overflow-y-auto custom-scrollbar pb-[calc(32px+env(safe-area-inset-bottom,16px))]">
+		<div id="scrollContainer" class="flex-grow overflow-y-auto custom-scrollbar pb-[calc(96px+env(safe-area-inset-bottom,24px))]">
 			<div id="dashboardSection" class="app-container mt-4" style="display: none;">
 				<div class="bg-white border border-slate-200 rounded-2xl py-6 px-5 shadow-sm">
 					<div id="curriculumSelectorArea" class="flex flex-wrap gap-4 items-center mb-6 pb-4 border-b border-slate-100">
-						<span class="text-sm font-bold text-slate-600">學分表版本：</span>
+						<span class="text-sm font-bold text-slate-600">學分表檢視版本：</span>
 						<select id="dashSelectYear" class="sort-select text-sm py-1.5 px-3" onchange="changeDashCurriculum()"></select>
 						<select id="dashSelectDept" class="sort-select text-sm py-1.5 px-3" onchange="changeDashCurriculum()"></select>
 					</div>
@@ -242,7 +244,7 @@
 				<div id="mobileCardsContainer" class="mobile-cards-grid"></div>
 			</div>
 		</div>
-		<button id="backToTopBtn" class="fixed bottom-[calc(24px+env(safe-area-inset-bottom,16px))] right-6 z-40 p-3 rounded-full bg-emerald-500 text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 opacity-0 translate-y-10 pointer-events-none flex items-center justify-center border border-emerald-400" onclick="scrollToTop()">
+		<button id="backToTopBtn" class="fixed bottom-[calc(88px+env(safe-area-inset-bottom,16px))] md:bottom-[calc(24px+env(safe-area-inset-bottom,16px))] right-6 z-40 p-3 rounded-full bg-emerald-500 text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 opacity-0 translate-y-10 pointer-events-none flex items-center justify-center border border-emerald-400" onclick="scrollToTop()">
 			<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"></path>
 			</svg>
@@ -338,8 +340,12 @@
 				</span>
 				<span class="close-modal-btn" onclick="toggleUIModal(false,'missingCreditsModal')">&times;</span>
 			</div>
+			<div class="mb-4 px-1">
+				<label class="block text-xs font-bold text-slate-500 mb-1.5">選擇欲檢視的學期學分：</label>
+				<select id="missingCreditsFilter" class="sort-select text-sm py-1.5 px-3 w-full bg-white border border-slate-200 rounded-xl outline-none" onchange="renderMissingCreditsFiltered()"></select>
+			</div>
 			<div class="modal-body">
-				<div id="missingCreditsList" class="max-h-[50dvh] overflow-y-auto custom-scrollbar space-y-3 pr-1"></div>
+				<div id="missingCreditsList" class="max-h-[45dvh] overflow-y-auto custom-scrollbar space-y-3 pr-1"></div>
 			</div>
 		</div>
 	</div>
@@ -358,17 +364,17 @@
 			<div class="modal-header" style="border-bottom: none; margin-bottom: 8px; padding-bottom: 0;">
 				<span class="font-black text-slate-800 text-2xl">畢業自我檢核系統說明</span>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body !text-sm">
 				<div id="helpScrollContainer" class="max-h-[48dvh] overflow-y-auto p-2 custom-scrollbar mb-4">
-					<p class="text-sm text-slate-500 font-bold mb-4 pb-2 border-b border-dashed border-slate-200">請完整閱讀以下所有資訊：</p>
+					<p class="text-base text-slate-500 font-extrabold mb-4 pb-2 border-b border-dashed border-slate-200">請完整閱讀以下所有資訊：</p>
 					<div class="mb-6">
-						<span class="text-base font-extrabold text-slate-800 flex items-center gap-1.5 mb-3">
+						<span class="text-lg font-black text-slate-800 flex items-center gap-1.5 mb-3">
 							<span class="w-2 h-4 rounded-full bg-emerald-500"></span>
-							1. 儀表板狀態示範
+							1. 儀表板狀態說明
 						</span>
 						<div class="space-y-4 max-w-lg mb-4">
-							<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-								<h5 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center gap-1.5">
+							<div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+								<h5 class="text-sm font-black text-slate-700 mb-2.5 flex items-center gap-1.5">
 									<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
 									(一) 學分勾選
 								</h5>
@@ -377,7 +383,7 @@
 										<div class="w-12 h-10 rounded-lg bg-green-50 border-2 border-green-500 flex items-center justify-center font-black text-sm text-green-700 relative shrink-0">
 											3<span class="absolute right-1 top-0.5 text-[9px] text-green-500">✔</span>
 										</div>
-										<div class="text-xs text-slate-600 font-semibold leading-relaxed">
+										<div class="text-sm text-slate-600 font-semibold leading-relaxed">
 											<span class="text-emerald-600 font-black">及格 (已得學分)</span>：代表您已取得該學分，學分數計入畢業學分累計。
 										</div>
 									</div>
@@ -385,49 +391,49 @@
 										<div class="w-12 h-10 rounded-lg bg-red-50 border-2 border-red-200 flex items-center justify-center font-black text-sm text-red-500 shrink-0">
 											3
 										</div>
-										<div class="text-xs text-slate-600 font-semibold leading-relaxed">
+										<div class="text-sm text-slate-600 font-semibold leading-relaxed">
 											<span class="text-red-500 font-black">不及格 (未得學分)</span>：代表您未獲得學分，不計入任何統計數據中。
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-								<h5 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center gap-1.5">
+							<div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+								<h5 class="text-sm font-black text-slate-700 mb-2.5 flex items-center gap-1.5">
 									<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-									(二) 總學分狀態卡片示範 (畢業 vs 修業)
+									(二) 總學分狀態卡片（畢業、修業、成績證明）
 								</h5>
 								<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
 									<div class="border border-emerald-200 bg-emerald-50/40 p-3 rounded-xl text-center shadow-sm">
-										<div class="text-[10px] font-black text-emerald-800">畢業證書資格</div>
-										<div class="text-base font-black text-emerald-700 mt-1">190 <span class="text-xs text-emerald-500 font-bold">/ 160</span></div>
+										<div class="text-[11px] font-black text-emerald-800">畢業證書資格</div>
+										<div class="text-lg font-black text-emerald-700 mt-1">190</div>
 										<div class="w-full bg-emerald-100 h-1 rounded-full overflow-hidden mt-2">
 											<div class="h-full bg-emerald-500" style="width: 100%"></div>
 										</div>
-										<div class="text-[9px] font-extrabold text-emerald-600 mt-1.5 leading-snug">符合畢業門檻，<br>核發畢業證書。</div>
+										<div class="text-[10px] font-extrabold text-emerald-600 mt-1.5 leading-snug">符合畢業門檻，<br>核發畢業證書。</div>
 									</div>
 									<div class="border border-amber-200 bg-amber-50/40 p-3 rounded-xl text-center shadow-sm">
-										<div class="text-[10px] font-black text-amber-800">修業證明資格</div>
-										<div class="text-base font-black text-amber-700 mt-1">120 <span class="text-xs text-amber-500 font-bold">/ 160</span></div>
+										<div class="text-[11px] font-black text-amber-800">修業證明資格</div>
+										<div class="text-lg font-black text-amber-700 mt-1">120</div>
 										<div class="w-full bg-amber-100 h-1 rounded-full overflow-hidden mt-2">
 											<div class="h-full bg-amber-500" style="width: 75%"></div>
 										</div>
-										<div class="text-[9px] font-extrabold text-amber-600 mt-1.5 leading-snug">未符合畢業門檻，<br>核發修業證明。</div>
+										<div class="text-[10px] font-extrabold text-amber-600 mt-1.5 leading-snug">未符合畢業門檻，<br>核發修業證明。</div>
 									</div>
 									<div class="border border-rose-200 bg-rose-50/40 p-3 rounded-xl text-center shadow-sm">
-										<div class="text-[10px] font-black text-rose-800">僅發成績證明</div>
-										<div class="text-base font-black text-rose-700 mt-1">90 <span class="text-xs text-rose-500 font-bold">/ 160</span></div>
+										<div class="text-[11px] font-black text-rose-800">僅發成績證明</div>
+										<div class="text-lg font-black text-rose-700 mt-1">90</div>
 										<div class="w-full bg-rose-100 h-1 rounded-full overflow-hidden mt-2">
 											<div class="h-full bg-rose-500" style="width: 56%"></div>
 										</div>
-										<div class="text-[9px] font-extrabold text-rose-500 mt-1.5 leading-snug">未符合畢業門檻，<br>核發成績證明。</div>
+										<div class="text-[10px] font-extrabold text-rose-500 mt-1.5 leading-snug">未符合畢業門檻，<br>核發成績證明。</div>
 									</div>
 								</div>
-								<div class="mt-4 p-3.5 bg-sky-50 border border-sky-200 rounded-xl">
-									<h5 class="text-xs font-black text-sky-800 mb-1.5 flex items-center gap-1.5">
+								<div class="mt-4 p-4 bg-sky-50 border border-sky-200 rounded-xl">
+									<h5 class="text-sm font-black text-sky-800 mb-1.5 flex items-center gap-1.5">
 										<span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
 										💡 畢業/修業門檻對照
 									</h5>
-									<p class="text-[11px] text-sky-700 leading-relaxed font-semibold">
+									<p class="text-xs sm:text-sm text-sky-700 leading-relaxed font-semibold">
 										不論何種科別，取得不同證書的學分門檻如下：<br>
 										• <b class="text-emerald-600">畢業證書</b>：普通科與體育班需滿 <b>150 學分</b>、專業群科（技術型）需滿 <b>160 學分</b>，且須同時通過所有部定/專業/實習學分要求。<br>
 										• <b class="text-orange-600">重補修提醒</b>：若總學分已達畢業門檻，但因部定必修、專業或實習等分類未過關而無法畢業，狀態列將顯示<b>「未符合畢業門檻，請重補修」</b>。<br>
@@ -437,7 +443,7 @@
 								</div>
 							</div>
 						</div>
-						<span class="text-base font-extrabold text-slate-800 flex items-center gap-1.5 mb-3 mt-6">
+						<span class="text-lg font-black text-slate-800 flex items-center gap-1.5 mb-3 mt-6">
 							<span class="w-2 h-4 rounded-full bg-emerald-500"></span>
 							2. 畢業條件規定
 						</span>
@@ -445,13 +451,13 @@
 						<div class="space-y-3 max-w-lg mb-6">
 							<details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden [&_summary::-webkit-details-marker]:hidden">
 								<summary class="flex justify-between items-center p-3.5 font-bold text-slate-800 cursor-pointer select-none hover:bg-slate-100 transition-colors duration-150">
-									<span class="flex items-center gap-2 text-sm">
+									<span class="flex items-center gap-2 text-sm md:text-base">
 										<span class="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-black">普</span>
 										(一) 普通型高中畢業條件
 									</span>
 									<span class="text-xs text-slate-400 group-open:rotate-180 transition-transform duration-200">▼</span>
 								</summary>
-								<div class="p-4 border-t border-slate-200/60 text-xs text-slate-600 space-y-2 leading-relaxed bg-white">
+								<div class="p-4 border-t border-slate-200/60 text-sm text-slate-600 space-y-2 leading-relaxed bg-white">
 									<div class="flex gap-1.5"><span class="text-blue-500 font-bold shrink-0">1.</span><p><b>應修習總學分</b>：180 學分</p></div>
 									<div class="flex gap-1.5"><span class="text-blue-500 font-bold shrink-0">2.</span><p><b>畢業之最低學分數</b>：150 學分成績及格</p></div>
 									<div class="flex gap-1.5"><span class="text-blue-500 font-bold shrink-0">3.</span><p><b>必修及選修學分</b>：部定必修及校訂必修至少需 <b>102 學分</b>且成績及格；同時選修學分至少需修習 <b>40 學分</b>且成績及格。</p></div>
@@ -460,13 +466,13 @@
 							</details>
 							<details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden [&_summary::-webkit-details-marker]:hidden" open>
 								<summary class="flex justify-between items-center p-3.5 font-bold text-slate-800 cursor-pointer select-none hover:bg-slate-100 transition-colors duration-150">
-									<span class="flex items-center gap-2 text-sm">
+									<span class="flex items-center gap-2 text-sm md:text-base">
 										<span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-black">技</span>
 										(二) 技術型高中畢業條件
 									</span>
 									<span class="text-xs text-slate-400 group-open:rotate-180 transition-transform duration-200">▼</span>
 								</summary>
-								<div class="p-4 border-t border-slate-200/60 text-xs text-slate-600 space-y-2 leading-relaxed bg-white">
+								<div class="p-4 border-t border-slate-200/60 text-sm text-slate-600 space-y-2 leading-relaxed bg-white">
 									<div class="flex gap-1.5"><span class="text-emerald-500 font-bold shrink-0">1.</span><p><b>應修習總學分</b>：180-192 學分，畢業及格學分數至少為 <b>160 學分</b>。</p></div>
 									<div class="flex gap-1.5"><span class="text-emerald-500 font-bold shrink-0">2.</span><p><b>部定必修要求</b>：表列部定必修科目 111-136 學分均須修習，並至少 <b>85% 及格</b>。</p></div>
 									<div class="flex gap-1.5"><span class="text-emerald-500 font-bold shrink-0">3.</span><p><b>專業與實習學分</b>：專業科目及實習科目至少須修習 80 學分以上，其中至少 <b>60 學分及格</b>，且含實習(實驗、實務)科目至少 <b>45 學分以上及格</b>。</p></div>
@@ -475,13 +481,13 @@
 							</details>
 							<details class="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden [&_summary::-webkit-details-marker]:hidden">
 								<summary class="flex justify-between items-center p-3.5 font-bold text-slate-800 cursor-pointer select-none hover:bg-slate-100 transition-colors duration-150">
-									<span class="flex items-center gap-2 text-sm">
+									<span class="flex items-center gap-2 text-sm md:text-base">
 										<span class="w-5 h-5 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-black">體</span>
 										(三) 體育班畢業條件
 									</span>
 									<span class="text-xs text-slate-400 group-open:rotate-180 transition-transform duration-200">▼</span>
 								</summary>
-								<div class="p-4 border-t border-slate-200/60 text-xs text-slate-600 space-y-2 leading-relaxed bg-white">
+								<div class="p-4 border-t border-slate-200/60 text-sm text-slate-600 space-y-2 leading-relaxed bg-white">
 									<div class="flex gap-1.5"><span class="text-amber-500 font-bold shrink-0">1.</span><p><b>應修習總學分</b>：180 學分</p></div>
 									<div class="flex gap-1.5"><span class="text-amber-500 font-bold shrink-0">2.</span><p><b>畢業之最低學分數</b>：150 學分成績及格</p></div>
 									<div class="flex gap-1.5"><span class="text-amber-500 font-bold shrink-0">3.</span><p><b>部定必修一般科目要求</b>：至少須 <b>80% 及格</b>。</p></div>
@@ -492,7 +498,7 @@
 							</details>
 						</div>
 					</div>
-					<p class="text-xs text-red-600 font-extrabold border-t border-dashed border-slate-200 pt-3 text-center">
+					<p class="text-sm text-red-600 font-extrabold border-t border-dashed border-slate-200 pt-3 text-center">
 						※ 本系統僅供自我檢核參考，最終結果以學校註冊組為準。
 					</p>
 				</div>
@@ -717,7 +723,8 @@
 		let currentUser = null, DEPT_THRESHOLD = 0, userDBRecord = null, activeStudentDBRecord = null,
 			hasLoadedInitialData = false, lastLoadedStudentId = null, adminListData = [], teacherNames = [],
 			isViewingClassList = false, deleteTargetId = null, editingStudentId = null, confirmAction = null,
-			currentYear = "113", currentDept = "商經科", lastUserId = null, currentLayoutMode = "subject";
+			currentYear = "113", currentDept = "商經科", lastUserId = null, currentLayoutMode = "subject",
+			currentUncheckedCredits = [];
 		function getChkId(name, sIdx) { return `chk-${name.replace(/<[^>]*>/g, '').replace(/\s+/g, '').trim()}-${sIdx}`; }
 		function determineCurriculumVersion(record) {
 			const role = record?.role || 'student', officialYear = record?.entry_year || '未設定', officialDept = record?.entry_dept || '未設定';
@@ -961,11 +968,13 @@
 				}
 				const displayClass = (myYear === '未設定' || myDept === '未設定') ? `(${mapping.role[role] || '使用者'})` : `(${myYear}年入學 ${myDept} ${mapping.role[role] || '使用者'})`;
 				userStatusDisplay.innerHTML = `
-					<div class="font-bold text-slate-100 break-words flex-1 min-w-0">您好，${displayName}${displayClass}</div>
-					<div class="user-info-actions w-full md:w-auto flex items-center gap-4 mt-2 md:mt-0 justify-start md:justify-end flex-wrap">
-						<span id="syncStatusIndicator" class="sync-badge sync-success"><span>同步成功</span></span>
-						<a href="javascript:void(0)" onclick="openProfile()">個人資料</a>
-						<a href="javascript:void(0)" onclick="handleLogout()" style="color: #f87171;">登出</a>
+					<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4 w-full">
+						<div class="font-extrabold text-slate-100 break-words flex-1 min-w-0 text-sm md:text-base leading-snug">您好，${displayName}${displayClass}</div>
+						<div class="user-info-actions w-full md:w-auto flex items-center gap-4 mt-1 md:mt-0 justify-start md:justify-end flex-wrap">
+							<span id="syncStatusIndicator" class="sync-badge sync-success shrink-0"><span>同步成功</span></span>
+							<a href="javascript:void(0)" onclick="openProfile()" class="hover:underline text-sky-400 font-bold text-xs md:text-sm">個人資料</a>
+							<a href="javascript:void(0)" onclick="handleLogout()" class="hover:underline text-rose-400 font-bold text-xs md:text-sm">登出</a>
+						</div>
 					</div>
 				`;
 				if (currArea) currArea.classList.remove('hidden');
@@ -1337,7 +1346,8 @@
 				});
 				card.innerHTML = `
 					<div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:w-[38%] min-w-0">
-						<div class="flex flex-col gap-1 w-full"><span class="mobile-card-title text-[0.98rem] font-black text-slate-800 break-words leading-tight">${item.name}</span>
+						<div class="flex flex-col gap-1 w-full">
+							<span class="mobile-card-title text-[0.85rem] md:text-[0.98rem] font-extrabold text-slate-800 break-words leading-tight">${item.name}</span>
 							<div class="mobile-card-badges flex flex-wrap gap-1.5 shrink-0 mt-0.5">
 								<span class="mobile-badge ${mapping.cat[item.cat].class} text-[0.7rem] px-2 py-0.5">${mapping.cat[item.cat].text}</span>
 								<span class="mobile-badge bg-slate-100 text-slate-600 border border-slate-200 text-[0.7rem] px-2 py-0.5">${mapping.type[item.type]}</span>
@@ -1425,7 +1435,7 @@
 			}
 			return `
 				<div class="card-title">${title}</div>
-				<div style="font-size: 1.5rem; font-weight: 800; display: flex; align-items: baseline; justify-content: center; gap: 4px;"><span>${value === null ? "-" : value}</span><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;">/ ${target === null ? "-" : target}</span></div>
+				<div class="flex items-baseline justify-center gap-1 text-lg xs:text-xl md:text-2xl font-extrabold"><span>${value === null ? "-" : value}</span><span style="font-size: 0.8rem; color: #64748b; font-weight: 500;">/ ${target === null ? "-" : target}</span></div>
 				<div class="card-progress-bg"><div class="card-progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div></div>`;
 		}
 		function calculate() {
@@ -1476,16 +1486,16 @@
 					st.innerText = "課程資料建置中，暫不提供試算數據";
 					st.className = "status-bar bg-slate-400 text-white shadow-sm";
 				} else if (pass) {
-					st.innerText = "符合畢業門檻，核發畢業證書。";
+					st.innerText = "試算結果：符合畢業門檻，核發畢業證書。";
 					st.className = "status-bar status-pass text-white";
 				} else if (total >= 160) {
-					st.innerText = "未符合畢業門檻，請重補修。";
+					st.innerText = "試算結果：未符合畢業門檻，請重補修。";
 					st.className = "status-bar bg-gradient-to-r from-orange-500 to-red-500 text-white";
 				} else if (total >= 120) {
-					st.innerText = "未符合畢業門檻，核發修業證明。";
+					st.innerText = "試算結果：未符合畢業門檻，核發修業證明。";
 					st.className = "status-bar bg-gradient-to-r from-amber-500 to-orange-600 text-white";
 				} else {
-					st.innerText = "未符合畢業門檻，核發成績證明。";
+					st.innerText = "試算結果：未符合畢業門檻，核發成績證明。";
 					st.className = "status-bar status-fail text-white";
 				}
 			}
@@ -1534,21 +1544,43 @@
 		}
 		function showMissingCreditsModal() {
 			if (curriculum.length === 0) { showMsg("目前版本的課表尚未建置！", "error"); return; }
-			const unchecked = [], semFullNames = ["第一學期 (一上)", "第二學期 (一下)", "第三學期 (二上)", "第四學期 (二下)", "第五學期 (三上)", "第六學期 (三下)"];
+			const semFullNames = ["第一學期 (一上)", "第二學期 (一下)", "第三學期 (二上)", "第四學期 (二下)", "第五學期 (三上)", "第六學期 (三下)"];
+			currentUncheckedCredits = [];
 			document.querySelectorAll(".toggle-checkbox:not(:checked)").forEach(input => {
 				const name = input.dataset.name, semIdx = parseInt(input.dataset.sem), val = parseInt(input.dataset.val), cat = input.dataset.cat, type = parseInt(input.dataset.type);
-				if (name) unchecked.push({ name, sem: semFullNames[semIdx], val, cat, type });
+				if (name) currentUncheckedCredits.push({ name, sem: semFullNames[semIdx], val, cat, type, semIdx });
 			});
+			const filterSel = document.getElementById("missingCreditsFilter");
+			if (filterSel) {
+				let optionsHtml = `<option value="all">全部學期</option>`;
+				semFullNames.forEach((sem, idx) => {
+					optionsHtml += `<option value="${idx}">${sem}</option>`;
+				});
+				filterSel.innerHTML = optionsHtml;
+				filterSel.value = "all";
+			}
+			renderMissingCreditsFiltered();
+			toggleUIModal(true, 'missingCreditsModal');
+		}
+		function renderMissingCreditsFiltered() {
+			const filterVal = document.getElementById("missingCreditsFilter").value;
 			const listContainer = document.getElementById("missingCreditsList");
-			if (unchecked.length === 0) {
-				listContainer.innerHTML = `<div class="text-center py-10 px-4"><div class="text-5xl mb-4">🎉</div><p class="font-black text-lg text-emerald-600">恭喜！您已獲得所有學分！</p><p class="text-xs text-slate-400 mt-2">目前沒有任何未獲得學分的科目，繼續保持！</p></div>`;
+			const semFullNames = ["第一學期 (一上)", "第二學期 (一下)", "第三學期 (二上)", "第四學期 (二下)", "第五學期 (三上)", "第六學期 (三下)"];
+			let filtered = [...currentUncheckedCredits];
+			if (filterVal !== "all") {
+				const targetIdx = parseInt(filterVal);
+				filtered = filtered.filter(item => item.semIdx === targetIdx);
+			}
+			if (filtered.length === 0) {
+				listContainer.innerHTML = `<div class="text-center py-10 px-4"><div class="text-5xl mb-4">🎉</div><p class="font-black text-lg text-emerald-600">目前無任何未得學分！</p></div>`;
 			} else {
-				let html = `<p class="text-xs text-slate-500 font-extrabold mb-4 bg-amber-50 border border-amber-200/60 rounded-lg p-2.5 text-amber-800">以下為您目前「未勾選」的科目，共計 <span class="text-red-500 font-black text-sm">${unchecked.length}</span> 科，累計未取得學分為 <span class="text-red-500 font-black text-sm">${unchecked.reduce((sum, i) => sum + i.val, 0)}</span> 學分：</p>`;
-				const grouped = {}; unchecked.forEach(item => { if (!grouped[item.sem]) grouped[item.sem] = []; grouped[item.sem].push(item); });
+				let totalCredits = filtered.reduce((sum, i) => sum + i.val, 0);
+				let html = `<p class="text-xs text-slate-500 font-extrabold mb-4 bg-amber-50 border border-amber-200/60 rounded-lg p-2.5 text-amber-800">篩選結果共計 <span class="text-red-500 font-black text-sm">${filtered.length}</span> 科，累計未取得：<span class="text-red-500 font-black text-sm">${totalCredits}</span> 學分</p>`;
+				const grouped = {}; filtered.forEach(item => { if (!grouped[item.sem]) grouped[item.sem] = []; grouped[item.sem].push(item); });
 				semFullNames.forEach(sem => {
 					if (grouped[sem] && grouped[sem].length > 0) {
 						html += `
-							<div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 shadow-sm">
+							<div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 shadow-sm mb-3">
 								<h5 class="text-xs font-black text-slate-700 border-b border-slate-200/80 pb-2 mb-2.5 flex justify-between items-center">
 									<span class="flex items-center gap-1.5"><span class="w-1.5 h-3 bg-slate-400 rounded-full"></span>📅 ${sem}</span>
 									<span class="text-[0.7rem] bg-red-50 text-red-600 px-2 py-0.5 rounded-md font-bold border border-red-100">未得 ${grouped[sem].reduce((sum, i) => sum + i.val, 0)} 學分</span>
@@ -1570,7 +1602,6 @@
 				});
 				listContainer.innerHTML = html;
 			}
-			toggleUIModal(true, 'missingCreditsModal');
 		}
 		initDropdowns(false); selectCurriculum(currentYear, currentDept); renderTable(); calculate(); initHelpModalScrollGuard(); initBackToTop();
 	</script>
